@@ -51,7 +51,7 @@ app.use('/reg', function (req, res, next) {
             } else {
                 // if everything is good, save to request for use in other routes
                 // get the decoded payload and header
-                var decoded = jwt.decode(token, {complete: true});
+                let decoded = jwt.decode(token, {complete: true});
                 req.decoded= decoded;
                 console.log(decoded.header);
                 console.log(decoded.payload);

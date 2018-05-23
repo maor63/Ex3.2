@@ -3,7 +3,7 @@ var router = express.Router();
 var bodyParser = require('body-parser');
 var morgan = require('morgan');
 var jwt = require('jsonwebtoken'); // used to create, sign, and verify tokens
-
+var db = require("../DButils");
 var crypto = require("crypto");
 
 
@@ -34,13 +34,18 @@ router.post('/signup', function (req, res) {
             "password": password
         };
 
-    res.send({
-        "userName: ": userName,
-        "password: ": password
-    });
     Users[id] = user;
     id++;
+    let query = "INSERT INTO Users \n" +
+        "VALUES\n" +
+        " ('"+user.userName +"'," +
+        "'"+ user.password +"'," +
+        " '"+user.firstName+"', " +
+        "'"+user.lastName+"', " +
+        "'"+user.city+"','"+user.country+"','"+user.email+"');"
 
+    db.execQuery(query);
+    res.send(query);
 
 });
 

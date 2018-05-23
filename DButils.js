@@ -15,7 +15,7 @@ var connectionConfig = {
     userName: 'serveradmin',
     password: 'yaEl1892',
     server: 'mynewserver-181992.database.windows.net',
-    options: { encrypt: true, database: 'sampledatabase' }
+    options: { encrypt: true, database: 'ex3.2' }
 };
 
 //create the pool

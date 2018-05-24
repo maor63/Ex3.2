@@ -118,15 +118,14 @@ exports.addCategoriesPerUser = function(userName, categories){
     }
 };
 
-exports.addAnswersForVerification=function(userName, queIDs, answer){// insert to the db the answer for questions
-    for (let i = 0, len = queIDs.length; i < len; i++) {
-        let queID = queIDs[i];
-        let answer= answer;// need to change to see how we get question id and answer together
+exports.addAnswersForVerification=function(userName, answers){// insert to the db the answer for questions
+    for (let i = 0, len = answers.length; i < len; i++) {
+        let answeredQuestion = answers[i];
         let query = "INSERT INTO VerifyQuestion(userName, questionID,answer) VALUES(@userName, @questionID, @answer);";
         let dbRequest = createRequest(query);
         dbRequest.addParameter('userName', TYPES.NVarChar, userName);
-        dbRequest.addParameter('questionID', TYPES.Int, category);
-        dbRequest.addParameter('answer', TYPES.NVarChar, answer);
+        dbRequest.addParameter('questionID', TYPES.Int, answeredQuestion.question_id);
+        dbRequest.addParameter('answer', TYPES.NVarChar, answeredQuestion.answer);
         exports.execQuery(dbRequest);
     }
 

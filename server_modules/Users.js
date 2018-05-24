@@ -38,7 +38,16 @@ router.post('/signup', function (req, res) {
     //need to be change to categories
     db.addCategoriesPerUser(userName, [1, 2, 3]);
     //------------------------------------>
-    // db.addAnswersForVerification(userName, [1, 2, 3]);// yael added need to check the parameters to send
+    db.addAnswersForVerification(userName, [
+        {
+            "question_id": 1,
+            "answer": "hi"
+        },
+        {
+            "question_id": 3,
+            "answer": "hihi"
+        }
+    ]);// yael added need to check the parameters to send
     //------------------------------------.
     res.send({
         "userName": userName,
@@ -79,6 +88,7 @@ router.get('/restore', function (req, res) {
 //need to complete
 
 });
+
 router.post('/restore', function (req, res) {//maybe need to change here the restore in the green part
     let userName = req.body.userName;
     let question_id = req.body.question_id;
@@ -142,8 +152,6 @@ function makeUserName() {
 }
 
 //----------------------------------------Suppose it's Sites.js---------------------------------------------------------------------------------------------------------
-
-
 
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------

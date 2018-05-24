@@ -161,7 +161,7 @@ exports.verifyAnswer = function (userName, questionID, answer) {// get answer fr
     return exports.execQuery(dbRequest);
 };
 
-exports.getQuestion = function (userName) {
+exports.getQuestions = function (userName) {
     let query = "SELECT q.questionID, question FROM VerifyQuestion as v INNER JOIN Questions as q on q.questionID = v.questionID WHERE userName = @userName;"
     let dbRequest = createRequest(query);
     dbRequest.addParameter('userName', TYPES.NVarChar, userName);

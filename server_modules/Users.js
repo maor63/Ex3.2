@@ -84,7 +84,7 @@ router.post('/login', function (req, res) {
 router.get('/verification_questions/:userName', function (req, res) {
     let userName = req.params.userName;
     let question_id = req.body.question_id;// not sure if return all question or by ID
-    db.getQuestion(userName).then(function (questions) {
+    db.getQuestions(userName).then(function (questions) {
         res.send(questions);
     });
 });

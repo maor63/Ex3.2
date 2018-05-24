@@ -25,24 +25,18 @@ router.post('/review', function (req, res) {//maybe need to change here the rest
         let review = req.body.review;
         let date = req.body.date;
         let dbAnswer = db.postReview(siteID, review, date, userName);
-        if (dbAnswer) {
-            //return password
-            res.send({success: false, message: 'Authentication succeeded'});//add password
-        }
-        else {
-            //return message answer is incorrect
-            res.send({success: false, message: 'Authentication failed. Answer is incorrect'});
-        }
+        res.end();
     }
 });
 
+router.delete('/delFavorite', function (req, res) {// delete favorite site for user
+    let siteID = req.body.siteID;
+    let userName = req.body.userName;
+    let dbAnswer = db.deleteFavorite(siteID, userName);
 
-exports.postReview=function(siteID, review, date, userName){
-    let query = "INSERT INTO Reviews VALUES(DEFAULT,@siteID, @review, @date,@userName);";
-    let dbRequest = createRequest(query);
-    dbRequest.addParameter('siteID', TYPES.Int,siteID);
-    dbRequest.addParameter('review', TYPES.NVarChar, review);
-    dbRequest.addParameter('lastName', TYPES.DateTimeFormat,date);
-    dbRequest.addParameter('userName', TYPES.NVarChar,userName);
-    exports.execQuery(dbRequest);
-};
+    res.end();
+
+
+});
+
+module.exports = router;

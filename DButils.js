@@ -195,3 +195,13 @@ exports.deleteFavorite=function (siteID,userName) {
 
 
 };
+
+exports.postReview=function(siteID, review, date, userName){
+    let query = "INSERT INTO Reviews VALUES(@siteID, @review, @date, @userName);";
+    let dbRequest = createRequest(query);
+    dbRequest.addParameter('siteID', TYPES.Int,siteID);
+    dbRequest.addParameter('review', TYPES.NVarChar, review);
+    dbRequest.addParameter('date', TYPES.NVarChar,date);
+    dbRequest.addParameter('userName', TYPES.NVarChar,userName);
+    exports.execQuery(dbRequest);
+};

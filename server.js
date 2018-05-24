@@ -8,12 +8,12 @@ var morgan = require('morgan');
 
 var jwt = require('jsonwebtoken'); // used to create, sign, and verify tokens
 var Users = require('./server_modules/Users'); // get our users model
+var Sites = require('./server_modules/Sites'); // get our sites model
 var poi = require('./server_modules/POI')
 // =======================
 // configuration =========
 // =======================
 var port = process.env.PORT || 8080;
-
 
 // use body parser so we can get info from POST and/or URL parameters
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -75,6 +75,7 @@ app.use('/reg', function (req, res, next) {
 
 app.use('/reg/poi', poi);
 app.use('/users', Users);
+app.use('/sites', Sites);
 
 
 

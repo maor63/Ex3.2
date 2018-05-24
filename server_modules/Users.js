@@ -18,10 +18,6 @@ router.post('/signup', function (req, res) {
 
     let password = crypto.randomBytes(5).toString('hex');
     let userName = makeUserName();
-    while (isExists(userName)){
-        userName = makeUserName();
-    }
-
     let user =
         {
             "firstName": req.body.firstName,
@@ -31,8 +27,7 @@ router.post('/signup', function (req, res) {
             "email": req.body.email,
             "categories": req.body.categories,
             //------------------------------------>
-            "verificationQuestionsID": req.body.verificationQuestionsID,
-            "verificationAnswers": req.body.verificationAnswers,
+            "verificationQuestions": req.body.verificationQuestions,
             // yael added need to receive array of answer that match the array of questions id
             //---------------------------------------.
             "userName": userName,
@@ -41,9 +36,9 @@ router.post('/signup', function (req, res) {
 
     db.addUser(user);
     //need to be change to categories
-    db.addCategoriesPerUser(userName, [1,2,3]);
+    db.addCategoriesPerUser(userName, [1, 2, 3]);
     //------------------------------------>
-    db.addAnswersForVerification(userName, [1,2,3]);// yael added need to check the parameters to send
+    // db.addAnswersForVerification(userName, [1, 2, 3]);// yael added need to check the parameters to send
     //------------------------------------.
     res.send({
         "userName": userName,
@@ -57,43 +52,30 @@ router.post('/login', function (req, res) {
     if (!req.body.userName || !req.body.password)
         res.send({message: "bad values"});
     else {
-        // let password = req.body.password;
-        // let user = getUser(req.body.userName);
-        // if(user){
-        //     if (password === answers[0].password) {
-        //         sendToken(answers[0], res);
-        //     }
-        //     else {
-        //         res.send({success: false, message: 'Authentication failed. No such user name'});
-        //     }
-        // }
-        // res.send({success: false, message: 'Authentication failed. No such user name'});
-
         let password = req.body.password;
-        let answer = db.getUser(req.body.userName);
-        answer.then(function (answers) {
-            if(answers.length === 0) {
+        let user = getUser(req.body.userName);
+        user.then(function (userObj) {
+            if (userObj) {
+                if (password === userObj.password) {
+                    sendToken(userObj, res);
+                }
+                else {
+                    res.send({success: false, message: 'Authentication failed. No such user name'});
+                }
+            }
+            else
                 res.send({success: false, message: 'Authentication failed. No such user name'});
-                return;
-            }
-            if (password === answers[0].password) {
-                sendToken(answers[0], res);
-            }
-            else {
-                res.send({success: false, message: 'Authentication failed. No such user name'});
-            }
         }).catch(function (err) {
             console.log(err);
             res.send({success: false, message: 'Authentication failed. No such user name'});
         });
     }
-
 });
 //-------------------------------------------------------------------------------------->
-router.get('/restore',function (req,res){
+router.get('/restore', function (req, res) {
     let userName = req.body.userName;
     let question_id = req.body.question_id;// not sure if return all question or by ID
-    let dbAnswer=  db.getQuestion(userName);
+    let dbAnswer = db.getQuestion(userName);
 //need to complete
 
 });
@@ -101,13 +83,12 @@ router.post('/restore', function (req, res) {//maybe need to change here the res
     let userName = req.body.userName;
     let question_id = req.body.question_id;
     let recoveryAnswer = req.body.recoveryAnswer;
-    let dbAnswer=  db.getAnswer(userName, question_id,recoveryAnswer);
-    if(dbAnswer)
-    {
+    let dbAnswer = db.getAnswer(userName, question_id, recoveryAnswer);
+    if (dbAnswer) {
         //return password
         res.send({success: false, message: 'Authentication succeeded'});//add password
     }
-    else{
+    else {
         //return message answer is incorrect
         res.send({success: false, message: 'Authentication failed. Answer is incorrect'});
     }
@@ -117,27 +98,19 @@ router.post('/restore', function (req, res) {//maybe need to change here the res
 
 //-----------------------------------------------------------------------------------.
 
-function getUser(userName){
+function getUser(userName) {
     let answer = db.getUser(userName);
-    answer.then(function (answers) {
-        if(answers.length === 0)
-            return answers[0];
-        else
-            return undefined;
-    }).catch(function (err) {
-        console.log(err);
-        return undefined;
+    return new Promise(function (resolve, reject) {
+        answer.then(function (answers) {
+            if (answers.length !== 0)
+                resolve(answers[0]);
+            else
+                resolve(undefined);
+        }).catch(function (err) {
+            console.log(err);
+            reject(err);
+        });
     });
-}
-
-function isExists(userName) {
-    for (let i in Users) {
-        let user = Users[i];
-        if(user.userName === userName){
-            return true;
-        }
-    }
-    return false;
 }
 
 function sendToken(user, res) {
@@ -167,22 +140,21 @@ function makeUserName() {
         text += possible.charAt(Math.floor(Math.random() * possible.length));
     return text;
 }
+
 //----------------------------------------Suppose it's Sites.js---------------------------------------------------------------------------------------------------------
 
-router.get('/sites/search',function (req,res){
+router.get('/sites/search', function (req, res) {
     let siteName = req.body.siteName;
-    let dbAnswer=  db.getSearchResult(siteName);
+    let dbAnswer = db.getSearchResult(siteName);
 
 });
 
-router.delete('/sites',function (req,res) {
+router.delete('/sites', function (req, res) {
     let siteID = req.body.siteID;
     let userName = req.body.userName;
-    let dbAnswer=  db.deleteFavorite(siteID,userName);
+    let dbAnswer = db.deleteFavorite(siteID, userName);
 
     res.end();
-
-
 
 
 });

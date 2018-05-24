@@ -88,4 +88,4 @@ app.use('/users', Users);
 // =======================
 // start the server ======
 // =======================
-app.listen(port, function(){ console.log('Magic happens at http://localhost:' + port); })
+app.listen(port, function(){ console.log('Magic happens at http://localhost:' + port); });

@@ -31,7 +31,7 @@ console.log('pool connection on');
 
 
 //----------------------------------------------------------------------------------------------------------------------
-exports.execQuery = function (query) {
+exports.execQuery = function (dbReq) {
     return new Promise(function (resolve, reject) {
 
         try {
@@ -47,12 +47,12 @@ exports.execQuery = function (query) {
                 }
                 console.log('connection on');
 
-                var dbReq = new Request(query, function (err, rowCount) {
-                    if (err) {
-                        console.log('Request ' + err);
-                        reject(err);
-                    }
-                });
+                // var dbReq = new Request(query, function (err, rowCount) {
+                //     if (err) {
+                //         console.log('Request ' + err);
+                //         reject(err);
+                //     }
+                // });
 
                 dbReq.on('columnMetadata', function (columns) {
                     columns.forEach(function (column) {
@@ -85,3 +85,44 @@ exports.execQuery = function (query) {
     });
 
 };
+
+function createRequest(query) {
+    return new Request(query, function (err, row_count) {
+        if (err) {
+            console.log(err);
+        }
+    });
+}
+
+exports.addUser = function (user) {
+    let query = "INSERT INTO Users VALUES(@userName, @password, @firstName, @lastName, @city, @country, @email);";
+    let dbRequest = createRequest(query);
+    dbRequest.addParameter('userName', TYPES.NVarChar, user.userName);
+    dbRequest.addParameter('password', TYPES.NVarChar, user.password);
+    dbRequest.addParameter('firstName', TYPES.NVarChar, user.firstName);
+    dbRequest.addParameter('lastName', TYPES.NVarChar, user.lastName);
+    dbRequest.addParameter('city', TYPES.NVarChar, user.city);
+    dbRequest.addParameter('country', TYPES.NVarChar, user.country);
+    dbRequest.addParameter('email', TYPES.NVarChar, user.email);
+    exports.execQuery(dbRequest);
+};
+
+exports.addCategoriesPerUser = function(userName, categories){
+    for (let i = 0, len = categories.length; i < len; i++) {
+        let category = categories[i];
+        let query = "INSERT INTO CategoryForUser(userID, categoryID) VALUES(@userName, @categoryID);";
+        let dbRequest = createRequest(query);
+        dbRequest.addParameter('userName', TYPES.NVarChar, userName);
+        dbRequest.addParameter('categoryID', TYPES.Int, category);
+        exports.execQuery(dbRequest);
+    }
+   // categories.forEach(function(category){
+   //     let query = "INSERT INTO CatagoryPerUser VALUES(@catagoryID, @userName);";
+   //     let dbRequest = createRequest(query);
+   //     dbRequest.addParameter('userName', TYPES.NVarChar, userName);
+   //     dbRequest.addParameter('userName', TYPES.Int, category);
+   //     exports.execQuery(dbRequest);
+   // });
+};
+
+

@@ -145,14 +145,6 @@ function makeUserName() {
 
 
 
-router.delete('/sites', function (req, res) {
-    let siteID = req.body.siteID;
-    let userName = req.body.userName;
-    let dbAnswer = db.deleteFavorite(siteID, userName);
 
-    res.end();
-
-
-});
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 module.exports = router;

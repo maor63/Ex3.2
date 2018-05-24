@@ -178,7 +178,7 @@ exports.getQuestion=function (userName) {
 };
 
 //------------------------------------->
-exports.getSearchResult=function(siteName){
+exports.getSearchResult=function(siteName){ //oved
     let query="SELECT * FROM Sites  WHERE siteName = @siteName;";
     let dbRequest = createRequest(query);
     dbRequest.addParameter('siteName', TYPES.NVarChar, siteName);

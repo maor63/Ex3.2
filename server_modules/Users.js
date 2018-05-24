@@ -81,28 +81,27 @@ router.post('/login', function (req, res) {
     }
 });
 //-------------------------------------------------------------------------------------->
-router.get('/restore', function (req, res) {
-    let userName = req.body.userName;
+router.get('/verification_questions/:userName', function (req, res) {
+    let userName = req.params.userName;
     let question_id = req.body.question_id;// not sure if return all question or by ID
-    let dbAnswer = db.getQuestion(userName);
-//need to complete
-
+    db.getQuestion(userName).then(function (questions) {
+        res.send(questions);
+    });
 });
 
 router.post('/restore', function (req, res) {//maybe need to change here the restore in the green part
     let userName = req.body.userName;
     let question_id = req.body.question_id;
-    let recoveryAnswer = req.body.recoveryAnswer;
-    let dbAnswer = db.getAnswer(userName, question_id, recoveryAnswer);
-    if (dbAnswer) {
-        //return password
-        res.send({success: false, message: 'Authentication succeeded'});//add password
-    }
-    else {
-        //return message answer is incorrect
-        res.send({success: false, message: 'Authentication failed. Answer is incorrect'});
-    }
+    let answer = req.body.answer;
+    db.verifyAnswer(userName, question_id, answer).then(function (answers) {
+        if(answers.length === 1)
+            res.send({success: true, message: 'Authentication succeeded', "password": answers[0]});//add password
+        else
+            res.send({success: false, message: 'Authentication failed'});//add password
 
+    }).catch(function (err) {
+        console.log(err);
+    });
 });
 
 

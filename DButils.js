@@ -15,7 +15,7 @@ var connectionConfig = {
     userName: 'serveradmin',
     password: 'yaEl1892',
     server: 'mynewserver-181992.database.windows.net',
-    options: { encrypt: true, database: 'ex3.2' }
+    options: {encrypt: true, database: 'ex3.2'}
 };
 
 //create the pool
@@ -107,7 +107,7 @@ exports.addUser = function (user) {
     exports.execQuery(dbRequest);
 };
 
-exports.addCategoriesPerUser = function(userName, categories){
+exports.addCategoriesPerUser = function (userName, categories) {
     for (let i = 0, len = categories.length; i < len; i++) {
         let category = categories[i];
         let query = "INSERT INTO CategoryForUser(userID, categoryID) VALUES(@userName, @categoryID);";
@@ -118,7 +118,7 @@ exports.addCategoriesPerUser = function(userName, categories){
     }
 };
 
-exports.addAnswersForVerification=function(userName, answers){// insert to the db the answer for questions
+exports.addAnswersForVerification = function (userName, answers) {// insert to the db the answer for questions
     for (let i = 0, len = answers.length; i < len; i++) {
         let answeredQuestion = answers[i];
         let query = "INSERT INTO VerifyQuestion(userName, questionID,answer) VALUES(@userName, @questionID, @answer);";
@@ -143,7 +143,7 @@ exports.isUserExists = function (userName) {
     let dbRequest = createRequest(query);
     dbRequest.addParameter('userName', TYPES.NVarChar, userName);
     exports.execQuery(dbRequest).then(function (answers) {
-        if(answers.length === 0)
+        if (answers.length === 0)
             return false;
     }).catch(function (err) {
         console.log(err);
@@ -151,41 +151,33 @@ exports.isUserExists = function (userName) {
     });
 };
 
-exports.getAnswer=function(userName,questionID,replay){// get answer from db and compare to user replay
- let query="SELECT answer FROM VerifyQuestion WHERE userName = @userName AND questionID = @questionID;"
+exports.verifyAnswer = function (userName, questionID, answer) {// get answer from db and compare to user replay
+    let query = "SELECT password FROM VerifyQuestion as v INNER JOIN Users as u ON u.user_name = v.userName " +
+        " WHERE v.userName = @userName AND questionID = @questionID AND answer = @answer;";
     let dbRequest = createRequest(query);
     dbRequest.addParameter('userName', TYPES.NVarChar, userName);
+    dbRequest.addParameter('answer', TYPES.NVarChar, answer);
     dbRequest.addParameter('questionID', TYPES.Int, questionID);
-    exports.execQuery(dbRequest).then(function (answer) {
-        if(answer[0] === replay)//check if users replay is same as answer in DB
-            return true;
-    }).catch(function (err) {
-        console.log(err);
-        return false;
-    });
-
+    return exports.execQuery(dbRequest);
 };
-exports.getQuestion=function (userName) {
-    let query="SELECT Questions.questionID, Questions.question FROM VerifyQuestion INNER JOIN Questions on userName = @userName;"
+
+exports.getQuestion = function (userName) {
+    let query = "SELECT q.questionID, question FROM VerifyQuestion as v INNER JOIN Questions as q on q.questionID = v.questionID WHERE userName = @userName;"
     let dbRequest = createRequest(query);
     dbRequest.addParameter('userName', TYPES.NVarChar, userName);
-    exports.execQuery(dbRequest).then(function (answer) {
-       //add what to do we the questions from DB
-        //need to return to the user
-        // the question he wants to answer for the verification
-    });
+    return exports.execQuery(dbRequest);
 };
 
 //------------------------------------->
-exports.getSearchResult=function(siteName){ //oved
-    let query="SELECT * FROM Sites  WHERE siteName = @siteName;";
+exports.getSearchResult = function (siteName) { //oved
+    let query = "SELECT * FROM Sites  WHERE siteName = @siteName;";
     let dbRequest = createRequest(query);
     dbRequest.addParameter('siteName', TYPES.NVarChar, siteName);
     return exports.execQuery(dbRequest);
 };
 
-exports.deleteFavorite=function (siteID,userName) {//oved maybe change
-    let query="DELETE FROM FavoritePerUser WHERE siteID = @siteID AND userName = @userName;";
+exports.deleteFavorite = function (siteID, userName) {//oved maybe change
+    let query = "DELETE FROM FavoritePerUser WHERE siteID = @siteID AND userName = @userName;";
     let dbRequest = createRequest(query);
     dbRequest.addParameter('siteID', TYPES.Int, siteID);
     dbRequest.addParameter('userName', TYPES.NVarChar, userName);
@@ -193,12 +185,12 @@ exports.deleteFavorite=function (siteID,userName) {//oved maybe change
 
 };
 
-exports.postReview=function(siteID, review, date, userName){// oved
+exports.postReview = function (siteID, review, date, userName) {// oved
     let query = "INSERT INTO Reviews VALUES(@siteID, @review, @date, @userName);";
     let dbRequest = createRequest(query);
-    dbRequest.addParameter('siteID', TYPES.Int,siteID);
+    dbRequest.addParameter('siteID', TYPES.Int, siteID);
     dbRequest.addParameter('review', TYPES.NVarChar, review);
-    dbRequest.addParameter('date', TYPES.NVarChar,date);
-    dbRequest.addParameter('userName', TYPES.NVarChar,userName);
+    dbRequest.addParameter('date', TYPES.NVarChar, date);
+    dbRequest.addParameter('userName', TYPES.NVarChar, userName);
     exports.execQuery(dbRequest);
 };

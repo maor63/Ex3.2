@@ -118,6 +118,18 @@ exports.addCategoriesPerUser = function(userName, categories){
     }
 };
 
+exports.addFavoritePerUser = function(userName, siteIDs){
+    for (let i = 0, len = siteIDs.length; i < len; i++) {
+        let siteID = siteIDs[i];
+        let query = "INSERT INTO FavoritePerUser(userName, siteID, number) VALUES(@userName, @siteID ,@i);";
+        let dbRequest = createRequest(query);
+        dbRequest.addParameter('userName', TYPES.NVarChar, userName);
+        dbRequest.addParameter('siteID', TYPES.Int, siteID);
+        dbRequest.addParameter('i', TYPES.Int, i);
+        exports.execQuery(dbRequest);
+    }
+};
+
 exports.addAnswersForVerification=function(userName, queIDs, answer){// insert to the db the answer for questions
     for (let i = 0, len = queIDs.length; i < len; i++) {
         let queID = queIDs[i];

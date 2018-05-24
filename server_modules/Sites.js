@@ -16,8 +16,8 @@ const superSecret = "SUMsumOpen"; // secret variable
 
 
 router.post('/review', function (req, res) {//maybe need to change here the restore in the green part
-    if(!req.body.userName|| !req.body.siteID||!req.body.review||!req.body.date) {
-        res.send({ message: "bad values" })
+    if (!req.body.userName || !req.body.siteID || !req.body.review || !req.body.date) {
+        res.send({message: "bad values"})
     }
     else {
         let userName = req.body.userName;
@@ -35,6 +35,20 @@ router.delete('/delFavorite', function (req, res) {// delete favorite site for u
     let dbAnswer = db.deleteFavorite(siteID, userName);
 
     res.end();
+
+
+});
+
+router.get('/search/:sitename', function (req, res) {//oved
+
+    let siteName = req.params.sitename;
+    let dbAnswer = db.getSearchResult(siteName);
+    dbAnswer.then(function (sites) {
+       res.send(sites);
+    }).catch(function (err) {
+        console.log(err);
+        res.end();
+    });
 
 
 });

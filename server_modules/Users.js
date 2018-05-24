@@ -143,11 +143,7 @@ function makeUserName() {
 
 //----------------------------------------Suppose it's Sites.js---------------------------------------------------------------------------------------------------------
 
-router.get('/sites/search', function (req, res) {
-    let siteName = req.body.siteName;
-    let dbAnswer = db.getSearchResult(siteName);
 
-});
 
 router.delete('/sites', function (req, res) {
     let siteID = req.body.siteID;

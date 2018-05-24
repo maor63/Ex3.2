@@ -182,21 +182,19 @@ exports.getSearchResult=function(siteName){
     let query="SELECT * FROM Sites  WHERE siteName = @siteName;";
     let dbRequest = createRequest(query);
     dbRequest.addParameter('siteName', TYPES.NVarChar, siteName);
-    exports.execQuery(dbRequest).then(function (answer) {
-        //add what to do we the sites that match the search
-    });
+    return exports.execQuery(dbRequest);
 };
 
-exports.deleteFavorite=function (siteID,userName) {
+exports.deleteFavorite=function (siteID,userName) {//oved maybe change
     let query="DELETE FROM FavoritePerUser WHERE siteID = @siteID AND userName = @userName;";
     let dbRequest = createRequest(query);
     dbRequest.addParameter('siteID', TYPES.Int, siteID);
     dbRequest.addParameter('userName', TYPES.NVarChar, userName);
-
+    exports.execQuery(dbRequest);
 
 };
 
-exports.postReview=function(siteID, review, date, userName){
+exports.postReview=function(siteID, review, date, userName){// oved
     let query = "INSERT INTO Reviews VALUES(@siteID, @review, @date, @userName);";
     let dbRequest = createRequest(query);
     dbRequest.addParameter('siteID', TYPES.Int,siteID);

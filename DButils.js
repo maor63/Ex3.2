@@ -195,15 +195,15 @@ exports.postReview = function (siteID, review, date, userName) {// oved
     exports.execQuery(dbRequest);
 };
 
-exports.getAllSites=function(){
-    let query="SELECT * FROM Sites;";
+exports.getAllSites = function () {
+    let query = "SELECT * FROM Sites;";
     let dbRequest = createRequest(query);
     //dbRequest.addParameter('siteName', TYPES.NVarChar, siteName);
     return exports.execQuery(dbRequest);
 };
 
-exports.getAllSitesByCategory=function(categoryID){
-    let query="SELECT * FROM Sites WHERE categoryID = @categoryID ;";
+exports.getAllSitesByCategory = function (categoryID) {
+    let query = "SELECT * FROM Sites WHERE categoryID = @categoryID ;";
     let dbRequest = createRequest(query);
     dbRequest.addParameter('categoryID', TYPES.Int, categoryID);
     return exports.execQuery(dbRequest);

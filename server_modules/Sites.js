@@ -51,4 +51,29 @@ router.get('/search/:sitename', function (req, res) {//oved
 
 });
 
+router.get('/all', function (req, res) {// this function return all of the sites
+    //let siteName = req.params.sitename;
+    let dbAnswer = db.getAllSites();
+    dbAnswer.then(function (sites) {
+        res.send(sites);
+    }).catch(function (err) {
+        console.log(err);
+        res.end();
+    });
+
+});
+
+router.get('/allbycategoryid/:categoryid', function (req, res) {// this function return all of the sites
+    let categoryid = req.params.categoryid;
+    let dbAnswer = db.getAllSitesByCategory(categoryid);
+    dbAnswer.then(function (sites) {
+        res.send(sites);
+    }).catch(function (err) {
+        console.log(err);
+        res.end();
+    });
+
+});
+
+
 module.exports = router;

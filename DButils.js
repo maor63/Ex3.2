@@ -118,6 +118,20 @@ exports.addCategoriesPerUser = function(userName, categories){
     }
 };
 
+exports.addAnswersForVerification=function(userName, queIDs, answer){// insert to the db the answer for questions
+    for (let i = 0, len = queIDs.length; i < len; i++) {
+        let queID = queIDs[i];
+        let answer= answer;// need to change to see how we get question id and answer together
+        let query = "INSERT INTO VerifyQuestion(userName, questionID,answer) VALUES(@userName, @questionID, @answer);";
+        let dbRequest = createRequest(query);
+        dbRequest.addParameter('userName', TYPES.NVarChar, userName);
+        dbRequest.addParameter('questionID', TYPES.Int, category);
+        dbRequest.addParameter('answer', TYPES.NVarChar, answer);
+        exports.execQuery(dbRequest);
+    }
+
+};
+
 exports.getUser = function (userName) {
     let query = "SELECT * FROM Users WHERE user_name = @userName;";
     let dbRequest = createRequest(query);
@@ -136,4 +150,48 @@ exports.isUserExists = function (userName) {
         console.log(err);
         return false;
     });
+};
+
+exports.getAnswer=function(userName,questionID,replay){// get answer from db and compare to user replay
+ let query="SELECT answer FROM VerifyQuestion WHERE userName = @userName AND questionID = @questionID;"
+    let dbRequest = createRequest(query);
+    dbRequest.addParameter('userName', TYPES.NVarChar, userName);
+    dbRequest.addParameter('questionID', TYPES.Int, questionID);
+    exports.execQuery(dbRequest).then(function (answer) {
+        if(answer[0] === replay)//check if users replay is same as answer in DB
+            return true;
+    }).catch(function (err) {
+        console.log(err);
+        return false;
+    });
+
+};
+exports.getQuestion=function (userName) {
+    let query="SELECT Questions.questionID, Questions.question FROM VerifyQuestion INNER JOIN Questions on userName = @userName;"
+    let dbRequest = createRequest(query);
+    dbRequest.addParameter('userName', TYPES.NVarChar, userName);
+    exports.execQuery(dbRequest).then(function (answer) {
+       //add what to do we the questions from DB
+        //need to return to the user
+        // the question he wants to answer for the verification
+    });
+};
+
+//------------------------------------->
+exports.getSearchResult=function(siteName){
+    let query="SELECT * FROM Sites  WHERE siteName = @siteName;";
+    let dbRequest = createRequest(query);
+    dbRequest.addParameter('siteName', TYPES.NVarChar, siteName);
+    exports.execQuery(dbRequest).then(function (answer) {
+        //add what to do we the sites that match the search
+    });
+};
+
+exports.deleteFavorite=function (siteID,userName) {
+    let query="DELETE FROM FavoritePerUser WHERE siteID = @siteID AND userName = @userName;";
+    let dbRequest = createRequest(query);
+    dbRequest.addParameter('siteID', TYPES.Int, siteID);
+    dbRequest.addParameter('userName', TYPES.NVarChar, userName);
+
+
 };

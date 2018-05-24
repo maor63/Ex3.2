@@ -14,7 +14,6 @@ Users = [];
 
 const superSecret = "SUMsumOpen"; // secret variable
 
-
 router.post('/signup', function (req, res) {
 
     let password = crypto.randomBytes(5).toString('hex');
@@ -31,7 +30,11 @@ router.post('/signup', function (req, res) {
             "country": req.body.country,
             "email": req.body.email,
             "categories": req.body.categories,
-            "verificationQuestions": req.body.verificationQuestions,
+            //------------------------------------>
+            "verificationQuestionsID": req.body.verificationQuestionsID,
+            "verificationAnswers": req.body.verificationAnswers,
+            // yael added need to receive array of answer that match the array of questions id
+            //---------------------------------------.
             "userName": userName,
             "password": password
         };
@@ -39,6 +42,9 @@ router.post('/signup', function (req, res) {
     db.addUser(user);
     //need to be change to categories
     db.addCategoriesPerUser(userName, [1,2,3]);
+    //------------------------------------>
+    db.addAnswersForVerification(userName, [1,2,3]);// yael added need to check the parameters to send
+    //------------------------------------.
     res.send({
         "userName": userName,
         "password": password
@@ -83,13 +89,33 @@ router.post('/login', function (req, res) {
     }
 
 });
+//-------------------------------------------------------------------------------------->
+router.get('/restore',function (req,res){
+    let userName = req.body.userName;
+    let question_id = req.body.question_id;// not sure if return all question or by ID
+    let dbAnswer=  db.getQuestion(userName);
+//need to complete
 
-router.post('/restore', function (req, res) {
+});
+router.post('/restore', function (req, res) {//maybe need to change here the restore in the green part
     let userName = req.body.userName;
     let question_id = req.body.question_id;
     let recoveryAnswer = req.body.recoveryAnswer;
+    let dbAnswer=  db.getAnswer(userName, question_id,recoveryAnswer);
+    if(dbAnswer)
+    {
+        //return password
+        res.send({success: false, message: 'Authentication succeeded'});//add password
+    }
+    else{
+        //return message answer is incorrect
+        res.send({success: false, message: 'Authentication failed. Answer is incorrect'});
+    }
 
 });
+
+
+//-----------------------------------------------------------------------------------.
 
 function getUser(userName){
     let answer = db.getUser(userName);
@@ -141,6 +167,24 @@ function makeUserName() {
         text += possible.charAt(Math.floor(Math.random() * possible.length));
     return text;
 }
+//----------------------------------------Suppose it's Sites.js---------------------------------------------------------------------------------------------------------
+
+router.get('/sites/search',function (req,res){
+    let siteName = req.body.siteName;
+    let dbAnswer=  db.getSearchResult(siteName);
+
+});
+
+router.delete('/sites',function (req,res) {
+    let siteID = req.body.siteID;
+    let userName = req.body.userName;
+    let dbAnswer=  db.deleteFavorite(siteID,userName);
+
+    res.end();
 
 
+
+
+});
+//------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 module.exports = router;

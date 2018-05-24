@@ -37,7 +37,8 @@ router.post('/signup', function (req, res) {
         };
 
     db.addUser(user);
-    // db.addCategoriesPerUser(userName, user.categories);
+    //need to be change to categories
+    db.addCategoriesPerUser(userName, [1,2,3]);
     res.send({
         "userName": userName,
         "password": password
@@ -49,23 +50,36 @@ router.post('/login', function (req, res) {
 
     if (!req.body.userName || !req.body.password)
         res.send({message: "bad values"});
-
     else {
+        // let password = req.body.password;
+        // let user = getUser(req.body.userName);
+        // if(user){
+        //     if (password === answers[0].password) {
+        //         sendToken(answers[0], res);
+        //     }
+        //     else {
+        //         res.send({success: false, message: 'Authentication failed. No such user name'});
+        //     }
+        // }
+        // res.send({success: false, message: 'Authentication failed. No such user name'});
 
-        for (id in Users) {
-            let user = Users[id];
-
-            if (req.body.userName === user.userName)
-                if (req.body.password === user.password)
-                    sendToken(user, res);
-                else {
-                    res.send({success: false, message: 'Authentication failed. Wrong Password'});
-                    return
-                }
-
-        }
-
-        res.send({success: false, message: 'Authentication failed. No such user name'})
+        let password = req.body.password;
+        let answer = db.getUser(req.body.userName);
+        answer.then(function (answers) {
+            if(answers.length === 0) {
+                res.send({success: false, message: 'Authentication failed. No such user name'});
+                return;
+            }
+            if (password === answers[0].password) {
+                sendToken(answers[0], res);
+            }
+            else {
+                res.send({success: false, message: 'Authentication failed. No such user name'});
+            }
+        }).catch(function (err) {
+            console.log(err);
+            res.send({success: false, message: 'Authentication failed. No such user name'});
+        });
     }
 
 });
@@ -77,6 +91,18 @@ router.post('/restore', function (req, res) {
 
 });
 
+function getUser(userName){
+    let answer = db.getUser(userName);
+    answer.then(function (answers) {
+        if(answers.length === 0)
+            return answers[0];
+        else
+            return undefined;
+    }).catch(function (err) {
+        console.log(err);
+        return undefined;
+    });
+}
 
 function isExists(userName) {
     for (let i in Users) {

@@ -116,13 +116,24 @@ exports.addCategoriesPerUser = function(userName, categories){
         dbRequest.addParameter('categoryID', TYPES.Int, category);
         exports.execQuery(dbRequest);
     }
-   // categories.forEach(function(category){
-   //     let query = "INSERT INTO CatagoryPerUser VALUES(@catagoryID, @userName);";
-   //     let dbRequest = createRequest(query);
-   //     dbRequest.addParameter('userName', TYPES.NVarChar, userName);
-   //     dbRequest.addParameter('userName', TYPES.Int, category);
-   //     exports.execQuery(dbRequest);
-   // });
 };
 
+exports.getUser = function (userName) {
+    let query = "SELECT * FROM Users WHERE user_name = @userName;";
+    let dbRequest = createRequest(query);
+    dbRequest.addParameter('userName', TYPES.NVarChar, userName);
+    return exports.execQuery(dbRequest);
+};
 
+exports.isUserExists = function (userName) {
+    let query = "SELECT * FROM Users WHERE user_name = @userName;";
+    let dbRequest = createRequest(query);
+    dbRequest.addParameter('userName', TYPES.NVarChar, userName);
+    exports.execQuery(dbRequest).then(function (answers) {
+        if(answers.length === 0)
+            return false;
+    }).catch(function (err) {
+        console.log(err);
+        return false;
+    });
+};

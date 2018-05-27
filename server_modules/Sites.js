@@ -43,7 +43,7 @@ router.get('/search/:sitename', function (req, res) {//oved
     let siteName = req.params.sitename;
     let dbAnswer = db.getSearchResult(siteName);
     dbAnswer.then(function (sites) {
-       res.send(sites);
+        res.send(sites);
     }).catch(function (err) {
         console.log(err);
         res.end();
@@ -52,8 +52,18 @@ router.get('/search/:sitename', function (req, res) {//oved
 });
 
 router.get('/all', function (req, res) {// this function return all of the sites - OVED
-    //let siteName = req.params.sitename;
     let dbAnswer = db.getAllSites();
+    dbAnswer.then(function (sites) {
+        res.send(sites);
+    }).catch(function (err) {
+        console.log(err);
+        res.end();
+    });
+
+});
+
+router.get('/popular', function (req, res) {// this function return all of the sites - OVED
+    let dbAnswer = db.getPopularSites();
     dbAnswer.then(function (sites) {
         res.send(sites);
     }).catch(function (err) {
@@ -74,15 +84,13 @@ router.get('/allbycategoryid/:categoryid', function (req, res) {// this function
     });
 
 });
-//addFavoritePerUser
+
 router.post('/addFavoriteSites', function (req, res) {//maybe need to change here the restore in the green part -oved
     if (!req.body.userName)
         res.send({message: "bad values"});
-    else
-    {
+    else {
         let userName = req.body.userName;
-       // let siteIDs=req.body.siteIDs;
-        db.addFavoritePerUser(userName, [1,2]);
+        db.addFavoritePerUser(userName, [1, 2]);
         res.end();
     }
 
@@ -126,4 +134,21 @@ router.post('/rank', function (req, res) {//maybe need to change here the restor
         res.end();
     //}
 });
+
+router.get('/favorites/:userName', function (req, res) {//maybe need to change here the restore in the green part -oved
+    if (!req.params.userName) {
+        res.send({message: "bad values"})
+    }
+    else {
+        let userName = req.params.userName;
+        let dbAnswer = db.getFavorites(userName);
+        dbAnswer.then(function (favorites) {
+            res.send(favorites);
+        }).catch(function (err) {
+            console.log(err);
+            res.end();
+        });
+    }
+});
+
 module.exports = router;

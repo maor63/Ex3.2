@@ -46,6 +46,7 @@ exports.execQuery = function (dbReq) {
                     reject(err);
                 }
                 console.log('connection on');
+
                 dbReq.on('columnMetadata', function (columns) {
                     columns.forEach(function (column) {
                         if (column.colName != null)
@@ -110,6 +111,17 @@ exports.addCategoriesPerUser = function (userName, categories) {
     }
 };
 
+exports.addFavoritePerUser = function (userName, siteIDs) {
+    for (let i = 0, len = siteIDs.length; i < len; i++) {
+        let siteID = siteIDs[i];
+        let query = "INSERT INTO FavoritePerUser(userName, siteID, number) VALUES(@userName, @siteID ,@i);";
+        let dbRequest = createRequest(query);
+        dbRequest.addParameter('userName', TYPES.NVarChar, userName);
+        dbRequest.addParameter('siteID', TYPES.Int, siteID);
+        dbRequest.addParameter('i', TYPES.Int, i);
+        exports.execQuery(dbRequest);
+    }
+};
 exports.addAnswersForVerification = function (userName, answers) {// insert to the db the answer for questions
     for (let i = 0, len = answers.length; i < len; i++) {
         let answeredQuestion = answers[i];
@@ -201,6 +213,11 @@ exports.getAllSitesByCategory = function (categoryID) {
     return exports.execQuery(dbRequest);
 };
 
+exports.getPopularSites = function () {
+    let query = "SELECT * FROM Sites WHERE rank >= 3;";
+    let dbRequest = createRequest(query);
+    return exports.execQuery(dbRequest);
+};
 
 exports.getAllPhotoUrlBySite = function (siteID) {
     let query = "SELECT url FROM pictureUrls WHERE siteID = @siteID ;";// Should we return also picture id ??
@@ -243,4 +260,12 @@ exports.updateRank = function (siteID, rank) {
     }).catch(function (err) {
         console.log(err);
     })
+};
+
+exports.getFavorites = function (userName) {
+    let query = "SELECT s.siteID, number, categoryID FROM FavoritePerUser AS f, Sites AS s WHERE f.userName = @userName AND s.siteID = f.siteID" +
+        " ORDER BY number;";
+    let dbRequest = createRequest(query);
+    dbRequest.addParameter('userName', TYPES.NVarChar, userName);
+    return exports.execQuery(dbRequest);
 };

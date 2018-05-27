@@ -88,4 +88,42 @@ router.post('/addFavoriteSites', function (req, res) {//maybe need to change her
 
 });
 
+router.get('/photourl/:siteid', function (req, res) {// this function return all of the urls- OVED
+    let siteid = req.params.siteid;
+    let dbAnswer = db.getAllPhotoUrlBySite(siteid);
+    dbAnswer.then(function (urls) {
+        res.send(urls);
+    }).catch(function (err) {
+        console.log(err);
+        res.end();
+    });
+
+});
+
+
+router.get('/sitereviews/:siteid', function (req, res) {// this function return all of the reviews -oved
+    let siteid = req.params.siteid;
+    let dbAnswer = db.getAllReviewsBySite(siteid);
+    dbAnswer.then(function (reviews) {
+        res.send(reviews);
+    }).catch(function (err) {
+        console.log(err);
+        res.end();
+    });
+
+});
+
+router.post('/rank', function (req, res) {//maybe need to change here the restore in the green part -oved
+    if (!req.body.userName || !req.body.siteID || !req.body.review || !req.body.date) {
+        res.send({message: "bad values"})
+    }
+    else {
+        //let userName = req.body.userName;
+        let siteID = req.body.siteID;
+        let rank = req.body.rank;
+        //let date = req.body.date;
+        let dbAnswer = db.updateRank(siteID, rank);
+        res.end();
+    }
+});
 module.exports = router;

@@ -104,6 +104,17 @@ router.post('/restore', function (req, res) {//maybe need to change here the res
     });
 });
 
+router.get('/categories/:username', function (req, res) {//maybe need to change here the restore in the green part
+    let userName = req.params.username;
+    let dbAnswer = db.getAllCategoriesByUser(userName);
+    dbAnswer.then(function (categories) {
+        res.send(categories);
+    }).catch(function (err) {
+        console.log(err);
+        res.end();
+    });
+
+});
 
 //-----------------------------------------------------------------------------------.
 

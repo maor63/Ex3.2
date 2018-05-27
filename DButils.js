@@ -110,7 +110,7 @@ exports.addUser = function (user) {
 exports.addCategoriesPerUser = function (userName, categories) {
     for (let i = 0, len = categories.length; i < len; i++) {
         let category = categories[i];
-        let query = "INSERT INTO CategoryForUser(userID, categoryID) VALUES(@userName, @categoryID);";
+        let query = "INSERT INTO CategoryPerUser(userID, categoryID) VALUES(@userName, @categoryID);";
         let dbRequest = createRequest(query);
         dbRequest.addParameter('userName', TYPES.NVarChar, userName);
         dbRequest.addParameter('categoryID', TYPES.Int, category);
@@ -208,3 +208,42 @@ exports.getAllSitesByCategory = function (categoryID) {
     dbRequest.addParameter('categoryID', TYPES.Int, categoryID);
     return exports.execQuery(dbRequest);
 };
+
+
+exports.getAllPhotoUrlBySite = function (siteID) {
+    let query = "SELECT url FROM pictureUrls WHERE siteID = @siteID ;";// Should we return also picture id ??
+    let dbRequest = createRequest(query);
+    dbRequest.addParameter('siteID', TYPES.Int, siteID);
+    return exports.execQuery(dbRequest);
+};
+
+exports.getAllReviewsBySite= function (siteID) {
+    let query = "SELECT review FROM Reviews WHERE siteID = @siteID ;";// Should we return also date??
+    let dbRequest = createRequest(query);
+    dbRequest.addParameter('siteID', TYPES.Int, siteID);
+    return exports.execQuery(dbRequest);
+};
+
+exports.getAllCategoriesByUser= function (userID) {
+    let query = "SELECT C.categoryID, categoryName FROM Categories AS C, CategoryPerUser AS CP WHERE C.categoryID = CP.categoryID AND userID = @userID ;";
+    let dbRequest = createRequest(query);
+    dbRequest.addParameter('userID', TYPES.NVarChar, userID);
+    return exports.execQuery(dbRequest);
+};
+
+exports.updateRank=function (siteID,rank) {
+    //retreive the number of people that ranked and the avg now
+    let queryFirst = "Select rank, rankedPeople From Sites WHERE siteID = @siteID ;";
+    let dbRequestFirst = createRequest(queryFirst);
+    dbRequestFirst.addParameter('siteID', TYPES.Int, siteID);
+    dbRequestFirst.addParameter('rank', TYPES.Numeric, rank);
+    exports.execQuery(dbRequest);
+
+
+
+    let query = "UPDATE Sites SET column1 = value1, column2 = value2, WHERE siteID = @siteID ;";
+    let dbRequest = createRequest(query);
+    dbRequest.addParameter('siteID', TYPES.Int, siteID);
+    dbRequest.addParameter('rank', TYPES.Numeric, rank);
+    return exports.execQuery(dbRequest);
+}

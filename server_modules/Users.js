@@ -94,7 +94,7 @@ router.post('/restore', function (req, res) {//maybe need to change here the res
     let question_id = req.body.question_id;
     let answer = req.body.answer;
     db.verifyAnswer(userName, question_id, answer).then(function (answers) {
-        if(answers.length === 1)
+        if (answers.length === 1)
             res.send({success: true, message: 'Authentication succeeded', "password": answers[0]});//add password
         else
             res.send({success: false, message: 'Authentication failed'});//add password

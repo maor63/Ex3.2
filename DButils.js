@@ -47,13 +47,6 @@ exports.execQuery = function (dbReq) {
                 }
                 console.log('connection on');
 
-                // var dbReq = new Request(query, function (err, rowCount) {
-                //     if (err) {
-                //         console.log('Request ' + err);
-                //         reject(err);
-                //     }
-                // });
-
                 dbReq.on('columnMetadata', function (columns) {
                     columns.forEach(function (column) {
                         if (column.colName != null)
@@ -118,6 +111,17 @@ exports.addCategoriesPerUser = function (userName, categories) {
     }
 };
 
+exports.addFavoritePerUser = function (userName, siteIDs) {
+    for (let i = 0, len = siteIDs.length; i < len; i++) {
+        let siteID = siteIDs[i];
+        let query = "INSERT INTO FavoritePerUser(userName, siteID, number) VALUES(@userName, @siteID ,@i);";
+        let dbRequest = createRequest(query);
+        dbRequest.addParameter('userName', TYPES.NVarChar, userName);
+        dbRequest.addParameter('siteID', TYPES.Int, siteID);
+        dbRequest.addParameter('i', TYPES.Int, i);
+        exports.execQuery(dbRequest);
+    }
+};
 exports.addAnswersForVerification = function (userName, answers) {// insert to the db the answer for questions
     for (let i = 0, len = answers.length; i < len; i++) {
         let answeredQuestion = answers[i];
@@ -209,6 +213,11 @@ exports.getAllSitesByCategory = function (categoryID) {
     return exports.execQuery(dbRequest);
 };
 
+exports.getPopularSites = function () {
+    let query = "SELECT * FROM Sites WHERE rank >= 3;";
+    let dbRequest = createRequest(query);
+    return exports.execQuery(dbRequest);
+};
 
 exports.getAllPhotoUrlBySite = function (siteID) {
     let query = "SELECT url FROM pictureUrls WHERE siteID = @siteID ;";// Should we return also picture id ??
@@ -217,28 +226,27 @@ exports.getAllPhotoUrlBySite = function (siteID) {
     return exports.execQuery(dbRequest);
 };
 
-exports.getAllReviewsBySite= function (siteID) {
+exports.getAllReviewsBySite = function (siteID) {
     let query = "SELECT review FROM Reviews WHERE siteID = @siteID ;";// Should we return also date??
     let dbRequest = createRequest(query);
     dbRequest.addParameter('siteID', TYPES.Int, siteID);
     return exports.execQuery(dbRequest);
 };
 
-exports.getAllCategoriesByUser= function (userID) {
+exports.getAllCategoriesByUser = function (userID) {
     let query = "SELECT C.categoryID, categoryName FROM Categories AS C, CategoryPerUser AS CP WHERE C.categoryID = CP.categoryID AND userID = @userID ;";
     let dbRequest = createRequest(query);
     dbRequest.addParameter('userID', TYPES.NVarChar, userID);
     return exports.execQuery(dbRequest);
 };
 
-exports.updateRank=function (siteID,rank) {
+exports.updateRank = function (siteID, rank) {
     //retreive the number of people that ranked and the avg now
     let queryFirst = "Select rank, rankedPeople From Sites WHERE siteID = @siteID ;";
     let dbRequestFirst = createRequest(queryFirst);
     dbRequestFirst.addParameter('siteID', TYPES.Int, siteID);
     dbRequestFirst.addParameter('rank', TYPES.Numeric, rank);
     exports.execQuery(dbRequest);
-
 
 
     let query = "UPDATE Sites SET column1 = value1, column2 = value2, WHERE siteID = @siteID ;";
@@ -248,8 +256,9 @@ exports.updateRank=function (siteID,rank) {
     return exports.execQuery(dbRequest);
 };
 
-exports.getFavorites = function(userName) {
-    let query = "SELECT siteID, number FROM FavoritePerUser WHERE userName = @userName ;";
+exports.getFavorites = function (userName) {
+    let query = "SELECT s.siteID, number, categoryID FROM FavoritePerUser AS f, Sites AS s WHERE f.userName = @userName AND s.siteID = f.siteID" +
+        " ORDER BY number;";
     let dbRequest = createRequest(query);
     dbRequest.addParameter('userName', TYPES.NVarChar, userName);
     return exports.execQuery(dbRequest);

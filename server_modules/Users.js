@@ -34,26 +34,31 @@ router.post('/signup', function (req, res) {
             "password": password
         };
 
-    db.addUser(user);
-    //need to be change to categories
-    db.addCategoriesPerUser(userName, [1, 2, 3]);
-    //------------------------------------>
-    db.addAnswersForVerification(userName, [
-        {
-            "question_id": 1,
-            "answer": "hi"
-        },
-        {
-            "question_id": 3,
-            "answer": "hihi"
-        }
-    ]);// yael added need to check the parameters to send
-    //------------------------------------.
-    res.send({
-        "userName": userName,
-        "password": password
-    });
+    db.addUser(user).then(function (ans) {
+        //need to be change to categories
+        //TODO Change the input array of categories
+        db.addCategoriesPerUser(userName, [1, 2, 3]);
+        //------------------------------------>
+        db.addAnswersForVerification(userName, [
+            {
+                "question_id": 1,
+                "answer": "hi"
+            },
+            {
+                "question_id": 3,
+                "answer": "hihi"
+            }
+        ]);// yael added need to check the parameters to send
+        //------------------------------------.
+        res.send({
+            "userName": userName,
+            "password": password
+        });
 
+    }).catch(function (err) {
+        console.log(err);
+        res.send({message: "Something went wrong please try again"});
+    });
 });
 
 router.post('/login', function (req, res) {

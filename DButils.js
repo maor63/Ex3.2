@@ -97,7 +97,7 @@ exports.addUser = function (user) {
     dbRequest.addParameter('city', TYPES.NVarChar, user.city);
     dbRequest.addParameter('country', TYPES.NVarChar, user.country);
     dbRequest.addParameter('email', TYPES.NVarChar, user.email);
-    exports.execQuery(dbRequest);
+    return exports.execQuery(dbRequest);
 };
 
 exports.addCategoriesPerUser = function (userName, categories) {

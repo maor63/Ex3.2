@@ -9,7 +9,7 @@ var morgan = require('morgan');
 var jwt = require('jsonwebtoken'); // used to create, sign, and verify tokens
 var Users = require('./server_modules/Users'); // get our users model
 var Sites = require('./server_modules/Sites'); // get our sites model
-var poi = require('./server_modules/POI')
+var poi = require('./server_modules/reg')
 // =======================
 // configuration =========
 // =======================
@@ -70,7 +70,7 @@ app.use('/reg', function (req, res, next) {
 
 
 
-app.use('/reg/poi', poi);
+app.use('/reg', poi);
 app.use('/users', Users);
 app.use('/sites', Sites);
 

@@ -1,15 +1,9 @@
 var express = require('express');
 var router = express.Router();
-var bodyParser = require('body-parser');
-var morgan = require('morgan');
-
+var db = require("../DButils");
 
 router.get('/', function (req, res) {
-
-
     res.send({message: 'Welcome to area for registered users only!!'})
-
-
 });
 router.post('/review', function (req, res) {//
     if (!req.body.userName || !req.body.siteID || !req.body.review || !req.body.date) {
@@ -37,6 +31,8 @@ router.post('/add_favorite_sites', function (req, res) {//maybe need to change h
         res.send({message: "bad values"});
     else {
         let userName = req.body.userName;
+
+        //TODO Change the input array of sites ids
         db.addFavoritesPerUser(userName, [1, 2]);
         res.end();
     }
@@ -67,7 +63,7 @@ router.get('/favorites/:userName', function (req, res) {//maybe need to change h
             res.send(favorites);
         }).catch(function (err) {
             console.log(err);
-            res.end();
+            res.send({message: "bad values"})
         });
     }
 });
@@ -83,7 +79,7 @@ router.get('/last_saved/:userName', function (req, res) {//maybe need to change 
             res.send(favorites);
         }).catch(function (err) {
             console.log(err);
-            res.end();
+            res.send({message: "bad values"})
         });
     }
 });

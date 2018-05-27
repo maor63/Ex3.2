@@ -1,12 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var bodyParser = require('body-parser');
-var morgan = require('morgan');
-var jwt = require('jsonwebtoken'); // used to create, sign, and verify tokens
 var db = require("../DButils");
-var crypto = require("crypto");
-var Request = require('tedious').Request;
-var TYPES = require('tedious').TYPES;
 
 
 router.get('/search/:sitename', function (req, res) {//oved
@@ -17,7 +11,7 @@ router.get('/search/:sitename', function (req, res) {//oved
         res.send(sites);
     }).catch(function (err) {
         console.log(err);
-        res.end();
+        res.send({message: "bad values"})
     });
 
 });
@@ -64,7 +58,7 @@ router.get('/photo_url/:siteid', function (req, res) {// this function return al
         res.send(urls);
     }).catch(function (err) {
         console.log(err);
-        res.end();
+        res.send({message: "bad values"})
     });
 
 });
@@ -77,7 +71,7 @@ router.get('/site_reviews/:siteid', function (req, res) {// this function return
         res.send(reviews);
     }).catch(function (err) {
         console.log(err);
-        res.end();
+        res.send({message: "bad values"})
     });
 
 });

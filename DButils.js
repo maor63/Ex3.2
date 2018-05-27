@@ -46,14 +46,6 @@ exports.execQuery = function (dbReq) {
                     reject(err);
                 }
                 console.log('connection on');
-
-                // var dbReq = new Request(query, function (err, rowCount) {
-                //     if (err) {
-                //         console.log('Request ' + err);
-                //         reject(err);
-                //     }
-                // });
-
                 dbReq.on('columnMetadata', function (columns) {
                     columns.forEach(function (column) {
                         if (column.colName != null)
@@ -217,33 +209,38 @@ exports.getAllPhotoUrlBySite = function (siteID) {
     return exports.execQuery(dbRequest);
 };
 
-exports.getAllReviewsBySite= function (siteID) {
+exports.getAllReviewsBySite = function (siteID) {
     let query = "SELECT review FROM Reviews WHERE siteID = @siteID ;";// Should we return also date??
     let dbRequest = createRequest(query);
     dbRequest.addParameter('siteID', TYPES.Int, siteID);
     return exports.execQuery(dbRequest);
 };
 
-exports.getAllCategoriesByUser= function (userID) {
+exports.getAllCategoriesByUser = function (userID) {
     let query = "SELECT C.categoryID, categoryName FROM Categories AS C, CategoryPerUser AS CP WHERE C.categoryID = CP.categoryID AND userID = @userID ;";
     let dbRequest = createRequest(query);
     dbRequest.addParameter('userID', TYPES.NVarChar, userID);
     return exports.execQuery(dbRequest);
 };
 
-exports.updateRank=function (siteID,rank) {
+exports.updateRank = function (siteID, rank) {
     //retreive the number of people that ranked and the avg now
     let queryFirst = "Select rank, rankedPeople From Sites WHERE siteID = @siteID ;";
     let dbRequestFirst = createRequest(queryFirst);
     dbRequestFirst.addParameter('siteID', TYPES.Int, siteID);
     dbRequestFirst.addParameter('rank', TYPES.Numeric, rank);
-    exports.execQuery(dbRequest);
-
-
-
-    let query = "UPDATE Sites SET column1 = value1, column2 = value2, WHERE siteID = @siteID ;";
-    let dbRequest = createRequest(query);
-    dbRequest.addParameter('siteID', TYPES.Int, siteID);
-    dbRequest.addParameter('rank', TYPES.Numeric, rank);
-    return exports.execQuery(dbRequest);
-}
+    let dbResult = exports.execQuery(dbRequestFirst);
+    dbResult.then(function (answers) {
+        let currRank = answers[0].rank;
+        let currRankedPeople = answers[0].rankedPeople;
+        let calcRank = (currRank * currRankedPeople + parseInt(rank)) / (currRankedPeople + 1);
+        let query = "UPDATE Sites SET rank =@calcRank, rankedPeople=@currRankedPeople WHERE siteID = @siteID ;";
+        let dbRequest = createRequest(query);
+        dbRequest.addParameter('siteID', TYPES.Int, siteID);
+        dbRequest.addParameter('calcRank', TYPES.Numeric, calcRank);
+        dbRequest.addParameter('currRankedPeople', TYPES.Int, currRankedPeople + 1);
+        return exports.execQuery(dbRequest);
+    }).catch(function (err) {
+        console.log(err);
+    })
+};

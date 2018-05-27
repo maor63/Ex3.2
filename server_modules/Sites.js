@@ -15,7 +15,7 @@ Users = [];
 const superSecret = "SUMsumOpen"; // secret variable
 
 
-router.post('/review', function (req, res) {//maybe need to change here the restore in the green part -oved
+router.post('/review', function (req, res) {//
     if (!req.body.userName || !req.body.siteID || !req.body.review || !req.body.date) {
         res.send({message: "bad values"})
     }
@@ -114,16 +114,16 @@ router.get('/sitereviews/:siteid', function (req, res) {// this function return 
 });
 
 router.post('/rank', function (req, res) {//maybe need to change here the restore in the green part -oved
-    if (!req.body.userName || !req.body.siteID || !req.body.review || !req.body.date) {
+  /*  if ( !req.body.siteID || !req.body.rank) {
         res.send({message: "bad values"})
-    }
-    else {
+    }*/
+    //else {
         //let userName = req.body.userName;
         let siteID = req.body.siteID;
         let rank = req.body.rank;
         //let date = req.body.date;
         let dbAnswer = db.updateRank(siteID, rank);
         res.end();
-    }
+    //}
 });
 module.exports = router;

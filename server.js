@@ -16,13 +16,13 @@ var poi = require('./server_modules/reg')
 var port = process.env.PORT || 8080;
 
 // use body parser so we can get info from POST and/or URL parameters
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
 // use morgan to log requests to the console
 app.use(morgan('dev'));
 
-var  superSecret = "SUMsumOpen"; // secret variable
+var superSecret = "SUMsumOpen"; // secret variable
 
 
 // =======================
@@ -34,7 +34,6 @@ app.get('/', function (req, res) {
 });
 
 
-
 // route middleware to verify a token
 app.use('/reg', function (req, res, next) {
     // check header or url parameters or post parameters for token
@@ -44,12 +43,12 @@ app.use('/reg', function (req, res, next) {
         // verifies secret and checks exp
         jwt.verify(token, superSecret, function (err, decoded) {
             if (err) {
-                return res.json({ success: false, message: 'Failed to authenticate token.' });
+                return res.json({success: false, message: 'Failed to authenticate token.'});
             } else {
                 // if everything is good, save to request for use in other routes
                 // get the decoded payload and header
                 let decoded = jwt.decode(token, {complete: true});
-                req.decoded= decoded;
+                req.decoded = decoded;
                 console.log(decoded.header);
                 console.log(decoded.payload);
                 next();
@@ -69,14 +68,14 @@ app.use('/reg', function (req, res, next) {
 });
 
 
-
 app.use('/reg', poi);
 app.use('/users', Users);
 app.use('/sites', Sites);
 
 
-
 // =======================
 // start the server ======
 // =======================
-app.listen(port, function(){ console.log('Magic happens at http://localhost:' + port); });
+app.listen(port, function () {
+    console.log('Magic happens at http://localhost:' + port);
+});

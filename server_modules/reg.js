@@ -31,9 +31,7 @@ router.post('/add_favorite_sites', function (req, res) {//maybe need to change h
         res.send({message: "bad values"});
     else {
         let userName = req.body.userName;
-
-        //TODO Change the input array of sites ids
-        db.addFavoritesPerUser(userName, [1, 2]);
+        db.addFavoritesPerUser(userName, req.body.favorites);
         res.end();
     }
 

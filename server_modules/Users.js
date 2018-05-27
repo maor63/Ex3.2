@@ -9,9 +9,6 @@ var Request = require('tedious').Request;
 var TYPES = require('tedious').TYPES;
 
 
-id = 1;
-Users = [];
-
 const superSecret = "SUMsumOpen"; // secret variable
 
 router.post('/signup', function (req, res) {
@@ -26,10 +23,8 @@ router.post('/signup', function (req, res) {
             "country": req.body.country,
             "email": req.body.email,
             "categories": req.body.categories,
-            //------------------------------------>
             "verificationQuestions": req.body.verificationQuestions,
-            // yael added need to receive array of answer that match the array of questions id
-            //---------------------------------------.
+            "verificationAnswers": req.body.verificationAnswers,
             "userName": userName,
             "password": password
         };
@@ -37,18 +32,15 @@ router.post('/signup', function (req, res) {
     db.addUser(user).then(function (ans) {
         //need to be change to categories
         //TODO Change the input array of categories
-        db.addCategoriesPerUser(userName, [1, 2, 3]);
+        db.addCategoriesPerUser(userName, req.body.categories);
         //------------------------------------>
-        db.addAnswersForVerification(userName, [
-            {
-                "question_id": 1,
-                "answer": "hi"
-            },
-            {
-                "question_id": 3,
-                "answer": "hihi"
-            }
-        ]);// yael added need to check the parameters to send
+        let questionsWithAnswers = [];
+        for (let i = 0; i < req.body.verificationQuestions.length; i++) {
+            questionsWithAnswers[i] = {};
+            questionsWithAnswers[i].question_id = req.body.verificationQuestions[i];
+            questionsWithAnswers[i].answer = req.body.verificationAnswers[i];
+        }
+        db.addAnswersForVerification(userName, questionsWithAnswers);// yael added need to check the parameters to send
         //------------------------------------.
         res.send({
             "userName": userName,

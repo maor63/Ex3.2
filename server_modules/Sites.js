@@ -9,11 +9,6 @@ var Request = require('tedious').Request;
 var TYPES = require('tedious').TYPES;
 
 
-id = 1;
-Users = [];
-
-const superSecret = "SUMsumOpen"; // secret variable
-
 
 router.post('/review', function (req, res) {//
     if (!req.body.userName || !req.body.siteID || !req.body.review || !req.body.date) {
@@ -24,7 +19,7 @@ router.post('/review', function (req, res) {//
         let siteID = req.body.siteID;
         let review = req.body.review;
         let date = req.body.date;
-        let dbAnswer = db.postReview(siteID, review, date, userName);
+        db.postReview(siteID, review, date, userName);
         res.end();
     }
 });
@@ -32,12 +27,10 @@ router.post('/review', function (req, res) {//
 router.delete('/delFavorite', function (req, res) {// delete favorite site for user - oved
     let siteID = req.body.siteID;
     let userName = req.body.userName;
-    let dbAnswer = db.deleteFavorite(siteID, userName);
-
+    db.deleteFavorite(siteID, userName);
     res.end();
-
-
 });
+
 router.get('/search/:sitename', function (req, res) {//oved
 
     let siteName = req.params.sitename;
@@ -90,7 +83,7 @@ router.post('/addFavoriteSites', function (req, res) {//maybe need to change her
         res.send({message: "bad values"});
     else {
         let userName = req.body.userName;
-        db.addFavoritePerUser(userName, [1, 2]);
+        db.addFavoritesPerUser(userName, [1, 2]);
         res.end();
     }
 
@@ -142,6 +135,22 @@ router.get('/favorites/:userName', function (req, res) {//maybe need to change h
     else {
         let userName = req.params.userName;
         let dbAnswer = db.getFavorites(userName);
+        dbAnswer.then(function (favorites) {
+            res.send(favorites);
+        }).catch(function (err) {
+            console.log(err);
+            res.end();
+        });
+    }
+});
+
+router.get('/last_saved/:userName', function (req, res) {//maybe need to change here the restore in the green part -oved
+    if (!req.params.userName) {
+        res.send({message: "bad values"})
+    }
+    else {
+        let userName = req.params.userName;
+        let dbAnswer = db.getLastSaved(userName);
         dbAnswer.then(function (favorites) {
             res.send(favorites);
         }).catch(function (err) {

@@ -111,17 +111,20 @@ exports.addCategoriesPerUser = function (userName, categories) {
     }
 };
 
-exports.addFavoritePerUser = function (userName, siteIDs) {
+exports.addFavoritesPerUser = function (userName, siteIDs) {
+    let now = new Date();
     for (let i = 0, len = siteIDs.length; i < len; i++) {
         let siteID = siteIDs[i];
-        let query = "INSERT INTO FavoritePerUser(userName, siteID, number) VALUES(@userName, @siteID ,@i);";
+        let query = "INSERT INTO FavoritePerUser(userName, siteID, number, dateAdded) VALUES(@userName, @siteID ,@i, @now);";
         let dbRequest = createRequest(query);
         dbRequest.addParameter('userName', TYPES.NVarChar, userName);
         dbRequest.addParameter('siteID', TYPES.Int, siteID);
         dbRequest.addParameter('i', TYPES.Int, i);
+        dbRequest.addParameter('now', TYPES.Date, now);
         exports.execQuery(dbRequest);
     }
 };
+
 exports.addAnswersForVerification = function (userName, answers) {// insert to the db the answer for questions
     for (let i = 0, len = answers.length; i < len; i++) {
         let answeredQuestion = answers[i];
@@ -263,8 +266,16 @@ exports.updateRank = function (siteID, rank) {
 };
 
 exports.getFavorites = function (userName) {
-    let query = "SELECT s.siteID, number, categoryID FROM FavoritePerUser AS f, Sites AS s WHERE f.userName = @userName AND s.siteID = f.siteID" +
+    let query = "SELECT s.siteID, number, categoryID, dateAdded FROM FavoritePerUser AS f, Sites AS s WHERE f.userName = @userName AND s.siteID = f.siteID" +
         " ORDER BY number;";
+    let dbRequest = createRequest(query);
+    dbRequest.addParameter('userName', TYPES.NVarChar, userName);
+    return exports.execQuery(dbRequest);
+};
+
+exports.getLastSaved = function (userName) {
+    let query = "SELECT s.siteID, number, categoryID, dateAdded FROM FavoritePerUser AS f, Sites AS s WHERE f.userName = @userName AND s.siteID = f.siteID" +
+        " ORDER BY dateAdded;";
     let dbRequest = createRequest(query);
     dbRequest.addParameter('userName', TYPES.NVarChar, userName);
     return exports.execQuery(dbRequest);

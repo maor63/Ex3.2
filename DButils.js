@@ -246,4 +246,11 @@ exports.updateRank=function (siteID,rank) {
     dbRequest.addParameter('siteID', TYPES.Int, siteID);
     dbRequest.addParameter('rank', TYPES.Numeric, rank);
     return exports.execQuery(dbRequest);
-}
+};
+
+exports.getFavorites = function(userName) {
+    let query = "SELECT siteID, number FROM FavoritePerUser WHERE userName = @userName ;";
+    let dbRequest = createRequest(query);
+    dbRequest.addParameter('userName', TYPES.NVarChar, userName);
+    return exports.execQuery(dbRequest);
+};

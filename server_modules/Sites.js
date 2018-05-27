@@ -126,4 +126,21 @@ router.post('/rank', function (req, res) {//maybe need to change here the restor
         res.end();
     }
 });
+
+router.get('/favorites/:userName', function (req, res) {//maybe need to change here the restore in the green part -oved
+    if (!req.params.userName) {
+        res.send({message: "bad values"})
+    }
+    else {
+        let userName = req.params.userName;
+        let dbAnswer = db.getFavorites(userName);
+        dbAnswer.then(function (favorites) {
+            res.send(favorites);
+        }).catch(function (err) {
+            console.log(err);
+            res.end();
+        });
+    }
+});
+
 module.exports = router;

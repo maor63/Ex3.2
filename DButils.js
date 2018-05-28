@@ -280,3 +280,9 @@ exports.getLastSaved = function (userName) {
     dbRequest.addParameter('userName', TYPES.NVarChar, userName);
     return exports.execQuery(dbRequest);
 };
+
+exports.getAllUserNames = function () {
+    let query = "SELECT user_name FROM Users";
+    let dbRequest = createRequest(query);
+    return exports.execQuery(dbRequest);
+};

@@ -14,43 +14,15 @@ const superSecret = "SUMsumOpen"; // secret variable
 router.post('/signup', function (req, res) {
 
     let password = crypto.randomBytes(5).toString('hex');
-    let userName = makeUserName();
-    let user =
-        {
-            "firstName": req.body.firstName,
-            "lastName": req.body.lastName,
-            "city": req.body.city,
-            "country": req.body.country,
-            "email": req.body.email,
-            "categories": req.body.categories,
-            "verificationQuestions": req.body.verificationQuestions,
-            "verificationAnswers": req.body.verificationAnswers,
-            "userName": userName,
-            "password": password
-        };
 
-    db.addUser(user).then(function (ans) {
-        //need to be change to categories
-        //TODO Change the input array of categories
-        db.addCategoriesPerUser(userName, req.body.categories);
-        //------------------------------------>
-        let questionsWithAnswers = [];
-        for (let i = 0; i < req.body.verificationQuestions.length; i++) {
-            questionsWithAnswers[i] = {};
-            questionsWithAnswers[i].question_id = req.body.verificationQuestions[i];
-            questionsWithAnswers[i].answer = req.body.verificationAnswers[i];
-        }
-        db.addAnswersForVerification(userName, questionsWithAnswers);// yael added need to check the parameters to send
-        //------------------------------------.
-        res.send({
-            "userName": userName,
-            "password": password
-        });
-
-    }).catch(function (err) {
-        console.log(err);
-        res.send({message: "Something went wrong please try again"});
+    db.getAllUserNames().then(function (user_names) {
+        let users_set = new Set(user_names);
+        let userName = makeUserName();
+        while (users_set.has(userName))
+            userName = makeUserName();
+        registarUser(req, res, userName, password);
     });
+
 });
 
 router.post('/login', function (req, res) {
@@ -77,6 +49,7 @@ router.post('/login', function (req, res) {
         });
     }
 });
+
 //-------------------------------------------------------------------------------------->
 router.get('/verification_questions/:userName', function (req, res) {
     let userName = req.params.userName;
@@ -85,7 +58,6 @@ router.get('/verification_questions/:userName', function (req, res) {
         res.send(questions);
     });
 });
-
 router.post('/restore', function (req, res) {//maybe need to change here the restore in the green part
     let userName = req.body.userName;
     let question_id = req.body.question_id;
@@ -156,6 +128,39 @@ function makeUserName() {
     for (let i = 0; i < 7; i++)
         text += possible.charAt(Math.floor(Math.random() * possible.length));
     return text;
+}
+
+function registarUser(req, res, userName, password) {
+    let user =
+        {
+            "firstName": req.body.firstName,
+            "lastName": req.body.lastName,
+            "city": req.body.city,
+            "country": req.body.country,
+            "email": req.body.email,
+            "categories": req.body.categories,
+            "verificationQuestions": req.body.verificationQuestions,
+            "verificationAnswers": req.body.verificationAnswers,
+            "userName": userName,
+            "password": password
+        };
+
+    db.addUser(user);
+    //need to be change to categories
+    db.addCategoriesPerUser(userName, req.body.categories);
+    //------------------------------------>
+    let questionsWithAnswers = [];
+    for (let i = 0; i < req.body.verificationQuestions.length; i++) {
+        questionsWithAnswers[i] = {};
+        questionsWithAnswers[i].question_id = req.body.verificationQuestions[i];
+        questionsWithAnswers[i].answer = req.body.verificationAnswers[i];
+    }
+    db.addAnswersForVerification(userName, questionsWithAnswers);// yael added need to check the parameters to send
+    //------------------------------------.
+    res.send({
+        "userName": userName,
+        "password": password
+    });
 }
 
 //----------------------------------------Suppose it's Sites.js---------------------------------------------------------------------------------------------------------

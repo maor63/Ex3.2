@@ -120,7 +120,7 @@ exports.addFavoritesPerUser = function (userName, siteIDs) {
         dbRequest.addParameter('userName', TYPES.NVarChar, userName);
         dbRequest.addParameter('siteID', TYPES.Int, siteID);
         dbRequest.addParameter('i', TYPES.Int, i);
-        dbRequest.addParameter('now', TYPES.Date, now);
+        dbRequest.addParameter('now', TYPES.DateTime, now);
         exports.execQuery(dbRequest);
     }
 };
@@ -175,8 +175,7 @@ exports.getQuestions = function (userName) {
     return exports.execQuery(dbRequest);
 };
 
-//------------------------------------->
-exports.getSearchResult = function (siteName) { //oved
+exports.getSearchResult = function (siteName) {
     let query = "SELECT * FROM Sites  WHERE siteName = @siteName;";
     let dbRequest = createRequest(query);
     dbRequest.addParameter('siteName', TYPES.NVarChar, siteName);

@@ -3,7 +3,7 @@ var router = express.Router();
 var db = require("../DButils");
 
 
-router.get('/search/:sitename', function (req, res) {//oved
+router.get('/search/:sitename', function (req, res) {//this function return a site by search of a name.
 
     let siteName = req.params.sitename;
     let dbAnswer = db.getSearchResult(siteName);
@@ -16,7 +16,7 @@ router.get('/search/:sitename', function (req, res) {//oved
 
 });
 
-router.get('/all', function (req, res) {// this function return all of the sites - OVED
+router.get('/all', function (req, res) {// this function return all of the sites
     let dbAnswer = db.getAllSites();
     dbAnswer.then(function (sites) {
         res.send(sites);
@@ -27,7 +27,7 @@ router.get('/all', function (req, res) {// this function return all of the sites
 
 });
 
-router.get('/popular', function (req, res) {// this function return all of the sites - OVED
+router.get('/popular', function (req, res) {// this function return all of the sites that their rank is more then 3
     let dbAnswer = db.getPopularSites();
     dbAnswer.then(function (sites) {
         res.send(sites);
@@ -38,7 +38,7 @@ router.get('/popular', function (req, res) {// this function return all of the s
 
 });
 
-router.get('/all_by_category_id/:categoryid', function (req, res) {// this function return all of the sites - OVED
+router.get('/all_by_category_id/:categoryid', function (req, res) {// this function return all of the sites of a specific category
     let categoryid = req.params.categoryid;
     let dbAnswer = db.getAllSitesByCategory(categoryid);
     dbAnswer.then(function (sites) {
@@ -51,7 +51,7 @@ router.get('/all_by_category_id/:categoryid', function (req, res) {// this funct
 });
 
 
-router.get('/photo_url/:siteid', function (req, res) {// this function return all of the urls- OVED
+router.get('/photo_url/:siteid', function (req, res) {// this function return all of the urls
     let siteid = req.params.siteid;
     let dbAnswer = db.getAllPhotoUrlBySite(siteid);
     dbAnswer.then(function (urls) {
@@ -64,7 +64,7 @@ router.get('/photo_url/:siteid', function (req, res) {// this function return al
 });
 
 
-router.get('/site_reviews/:siteid', function (req, res) {// this function return all of the reviews -oved
+router.get('/site_reviews/:siteid', function (req, res) {// this function return all of the reviews
     let siteid = req.params.siteid;
     let dbAnswer = db.getAllReviewsBySite(siteid);
     dbAnswer.then(function (reviews) {

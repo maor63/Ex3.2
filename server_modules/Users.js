@@ -50,15 +50,13 @@ router.post('/login', function (req, res) {
     }
 });
 
-//-------------------------------------------------------------------------------------->
 router.get('/verification_questions/:userName', function (req, res) {
     let userName = req.params.userName;
-    let question_id = req.body.question_id;// not sure if return all question or by ID
     db.getQuestions(userName).then(function (questions) {
         res.send(questions);
     });
 });
-router.post('/restore', function (req, res) {//maybe need to change here the restore in the green part
+router.post('/restore', function (req, res) {
     let userName = req.body.userName;
     let question_id = req.body.question_id;
     let answer = req.body.answer;
@@ -85,7 +83,6 @@ router.get('/categories/:username', function (req, res) {//maybe need to change 
 
 });
 
-//-----------------------------------------------------------------------------------.
 
 function getUser(userName) {
     let answer = db.getUser(userName);
@@ -112,7 +109,6 @@ function sendToken(user, res) {
         expiresIn: "1d" // expires in 24 hours
     });
 
-    // return the information including token as JSON
     res.json({
         success: true,
         message: 'Enjoy your token!',
@@ -148,23 +144,18 @@ function registarUser(req, res, userName, password) {
     db.addUser(user);
     //need to be change to categories
     db.addCategoriesPerUser(userName, req.body.categories);
-    //------------------------------------>
     let questionsWithAnswers = [];
     for (let i = 0; i < req.body.verificationQuestions.length; i++) {
         questionsWithAnswers[i] = {};
         questionsWithAnswers[i].question_id = req.body.verificationQuestions[i];
         questionsWithAnswers[i].answer = req.body.verificationAnswers[i];
     }
-    db.addAnswersForVerification(userName, questionsWithAnswers);// yael added need to check the parameters to send
-    //------------------------------------.
+    db.addAnswersForVerification(userName, questionsWithAnswers);
+
     res.send({
         "userName": userName,
         "password": password
     });
 }
 
-//----------------------------------------Suppose it's Sites.js---------------------------------------------------------------------------------------------------------
-
-
-//------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 module.exports = router;

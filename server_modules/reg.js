@@ -19,14 +19,14 @@ router.post('/review', function (req, res) {//
     }
 });
 
-router.delete('/delFavorite', function (req, res) {// delete favorite site for user - oved
+router.delete('/delFavorite', function (req, res) {// delete favorite site for user
     let siteID = req.body.siteID;
     let userName = req.body.userName;
     db.deleteFavorite(siteID, userName);
     res.end();
 });
 
-router.post('/add_favorite_sites', function (req, res) {//maybe need to change here the restore in the green part -oved
+router.post('/add_favorite_sites', function (req, res) {// add favorite site for user
     if (!req.body.userName)
         res.send({message: "bad values"});
     else {
@@ -36,21 +36,14 @@ router.post('/add_favorite_sites', function (req, res) {//maybe need to change h
     }
 
 });
-router.post('/rank', function (req, res) {//maybe need to change here the restore in the green part -oved
-    /*  if ( !req.body.siteID || !req.body.rank) {
-          res.send({message: "bad values"})
-      }*/
-    //else {
-    //let userName = req.body.userName;
+router.post('/rank', function (req, res) {// add new rank to site and update
     let siteID = req.body.siteID;
     let rank = req.body.rank;
-    //let date = req.body.date;
-    let dbAnswer = db.updateRank(siteID, rank);
+    db.updateRank(siteID, rank);
     res.end();
-    //}
 });
 
-router.get('/favorites/:userName', function (req, res) {//maybe need to change here the restore in the green part -oved
+router.get('/favorites/:userName', function (req, res) {//return all the favorite sites of  a user
     if (!req.params.userName) {
         res.send({message: "bad values"})
     }
@@ -66,7 +59,7 @@ router.get('/favorites/:userName', function (req, res) {//maybe need to change h
     }
 });
 
-router.get('/last_saved/:userName', function (req, res) {//maybe need to change here the restore in the green part -oved
+router.get('/last_saved/:userName', function (req, res) {//return all favorites sites of a user sorted by date
     if (!req.params.userName) {
         res.send({message: "bad values"})
     }

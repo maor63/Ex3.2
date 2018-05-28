@@ -286,3 +286,20 @@ exports.getAllUserNames = function () {
     let dbRequest = createRequest(query);
     return exports.execQuery(dbRequest);
 };
+
+exports.addView = function (siteID) {
+    let queryFirst = "Select views From Sites WHERE siteID = @siteID ;";
+    let dbRequestFirst = createRequest(queryFirst);
+    dbRequestFirst.addParameter('siteID', TYPES.Int, siteID);
+    let dbResult = exports.execQuery(dbRequestFirst);
+    dbResult.then(function (views) {
+        let currViews = views[0].views;
+        let query = "UPDATE Sites SET views =@views WHERE siteID = @siteID ;";
+        let dbRequest = createRequest(query);
+        dbRequest.addParameter('siteID', TYPES.Int, siteID);
+        dbRequest.addParameter('views', TYPES.Int, parseInt(currViews) + 1);
+        return exports.execQuery(dbRequest);
+    }).catch(function (err) {
+        console.log(err);
+    })
+};

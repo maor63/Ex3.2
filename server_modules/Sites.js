@@ -75,6 +75,11 @@ router.get('/site_reviews/:siteid', function (req, res) {// this function return
     });
 
 });
+router.post('/views', function (req, res) {//
+    let siteID = req.body.siteID;
+    let dbAnswer = db.addView(siteID);
+    res.end();
 
+});
 
 module.exports = router;

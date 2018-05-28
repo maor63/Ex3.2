@@ -56,33 +56,6 @@ router.get('/verification_questions/:userName', function (req, res) {
         res.send(questions);
     });
 });
-router.post('/restore', function (req, res) {
-    let userName = req.body.userName;
-    let question_id = req.body.question_id;
-    let answer = req.body.answer;
-    db.verifyAnswer(userName, question_id, answer).then(function (answers) {
-        if (answers.length === 1)
-            res.send({success: true, message: 'Authentication succeeded', "password": answers[0]});//add password
-        else
-            res.send({success: false, message: 'Authentication failed'});//add password
-
-    }).catch(function (err) {
-        console.log(err);
-    });
-});
-
-router.get('/categories/:username', function (req, res) {//maybe need to change here the restore in the green part
-    let userName = req.params.username;
-    let dbAnswer = db.getAllCategoriesByUser(userName);
-    dbAnswer.then(function (categories) {
-        res.send(categories);
-    }).catch(function (err) {
-        console.log(err);
-        res.end();
-    });
-
-});
-
 
 function getUser(userName) {
     let answer = db.getUser(userName);

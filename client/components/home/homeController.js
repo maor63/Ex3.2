@@ -4,8 +4,9 @@ angular.module('citiesApp')
         self.cities = {};
         $http.get("http://localhost:8080/sites/popular").then(function (answers) {
                 let sites = answers.data;
-                for (let i = 0; i < sites.length; i++) {
-                    let site = sites[i];
+                let indexes = getRandomSubarray(sites, 3);
+                for (let i = 0; i < indexes.length; i++) {
+                    let site = indexes[i];
                     self.cities[i] =
                         {
                             name: site["siteName"],
@@ -17,6 +18,17 @@ angular.module('citiesApp')
             }).catch(function (err) {
             console.log(err);
         });
+
+        function getRandomSubarray(arr, size) {
+            let shuffled = arr.slice(0), i = arr.length, min = i - size, temp, index;
+            while (i-- > min) {
+                index = Math.floor((i + 1) * Math.random());
+                temp = shuffled[index];
+                shuffled[index] = shuffled[i];
+                shuffled[i] = temp;
+            }
+            return shuffled.slice(min);
+        }
     }])
 ;
 

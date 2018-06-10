@@ -1,13 +1,20 @@
 angular.module('citiesApp')
-    .controller('homeController', [function() {
-
-
+    .controller('homeController', ['$http', function ($http) {
         self = this;
-
-        self.cities = {
-            1 : {name:"Paris", state: "France", image: "https://media-cdn.tripadvisor.com/media/photo-s/0d/f5/7c/f2/eiffel-tower-priority.jpg"}
-            ,2 : {name:"Jerusalem", state: "Israel", image: "https://cdni.rt.com/files/2017.12/article/5a3fe04efc7e93cd698b4567.jpg"}
-            ,3 : {name:"London", state: "England", image: "http://www.ukguide.co.il/Photos/England/London/British-Royal-Tour.jpg"}
-        }
-
+        $http.get("http://localhost:9000/sites/popular")
+            .then(function (answers) {
+                for (let i = 0; i < answers.length; i++) {
+                    let site = answers[i];
+                    self.cities = {
+                        i: {
+                            name: site["siteName"],
+                            state: "France",
+                            image: "https://media-cdn.tripadvisor.com/media/photo-s/0d/f5/7c/f2/eiffel-tower-priority.jpg"
+                        }
+                    }
+                }
+            }).catch(function (err) {
+            console.log(err);
+        });
     }]);
+

@@ -13,7 +13,7 @@ var poi = require('./server_modules/reg')
 // =======================
 // configuration =========
 // =======================
-var port = process.env.PORT || 9000;
+var port = process.env.PORT || 8080;
 
 // use body parser so we can get info from POST and/or URL parameters
 app.use(bodyParser.urlencoded({extended: false}));

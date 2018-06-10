@@ -7,7 +7,8 @@ app.config(['$locationProvider', '$routeProvider', function($locationProvider, $
 
 
     $routeProvider.when('/', {
-        template: '<h1>This is the default route</h1>'
+        templateUrl: 'components/home/home.html',
+        controller : 'homeController as homeCtrl'
     })
         .when('/about', {
             templateUrl: 'components/About/about.html',

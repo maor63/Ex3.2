@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ex3</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
+    <script src="app.js"></script>
+</head>
+<body ng-app="citiesApp">
+<ul>
+    <li><a class="active" href="#/">Home</a></li>
+    <li><a href="#/about">About</a></li>
+    <li><a href="#/poi">POI</a></li>
+    <li><a href="#/register">register</a></li>
+    <li><a href="#/login">login</a></li>
+</ul>
+<div ng-view>
+    <!--Contains random popular sites above-->
+</div>
+</body>
+</html>

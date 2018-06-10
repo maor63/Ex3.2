@@ -1,6 +1,6 @@
 let app = angular.module('citiesApp', ["ngRoute"]);
 
-app.config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider)  {
+app.config(['$locationProvider', '$routeProvider', function ($locationProvider, $routeProvider) {
 
 
     $locationProvider.hashPrefix('');
@@ -8,15 +8,18 @@ app.config(['$locationProvider', '$routeProvider', function($locationProvider, $
 
     $routeProvider.when('/', {
         templateUrl: 'components/home/home.html',
-        controller : 'homeController as homeCtrl'
+        controller: 'homeController as homeCtrl'
     })
         .when('/about', {
-            templateUrl: 'components/About/about.html',
-            controller : 'aboutController as abtCtrl'
+            templateUrl: 'components/About/about.html'
         })
         .when('/poi', {
             templateUrl: 'components/POI/poi.html',
-            controller : 'poiCtrl as poiCtrl'
+            controller: 'poiCtrl as poiCtrl'
         })
-        .otherwise({ redirectTo: '/' });
+        .when('/login', {
+            templateUrl: 'components/login/login.html',
+            controller: 'LoginController as loginCtrl'
+        })
+        .otherwise({redirectTo: '/'});
 }]);

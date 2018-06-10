@@ -7,12 +7,15 @@ angular.module('citiesApp')
                 let indexes = getRandomSubarray(sites, 3);
                 for (let i = 0; i < indexes.length; i++) {
                     let site = indexes[i];
-                    self.cities[i] =
-                        {
-                            name: site["siteName"],
-                            state: "France",
-                            image: "https://media-cdn.tripadvisor.com/media/photo-s/0d/f5/7c/f2/eiffel-tower-priority.jpg"
-                        }
+                    $http.get("http://localhost:8080/sites/photo_url/" + site.siteID)
+                        .then(function (answer) {
+                            self.cities[i] =
+                                {
+                                    name: site["siteName"],
+                                    state: getRandomSubarray(answer.data, 1)[0],
+                                    image: "https://media-cdn.tripadvisor.com/media/photo-s/0d/f5/7c/f2/eiffel-tower-priority.jpg"
+                                }
+                        });
                 }
 
             }).catch(function (err) {

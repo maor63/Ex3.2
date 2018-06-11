@@ -1,0 +1,51 @@
+<h2> Register here:</h2>
+<form name="registerForm" ng-submit="regCtrl.register(registerForm.$valid)" novalidate>
+    <p>
+        <label>First Name: </label>
+        <input type="text" name="fname" ng-model="regCtrl.user.firstname" required ng-minlength="4"/>
+        <span class="error" ng-show="registerForm.fname.$error.minlength">more then 4</span>
+        <span class="error" ng-show="registerForm.fname.$error.required">This is a required field</span>
+    </p>
+    <p>
+        <label>Last Name: </label>
+        <input type="text" name="lname" ng-model="regCtrl.user.lastname" />
+        <span class="error" ng-show="registerForm.lname.$error.required">This is a required field</span>
+    </p>
+    <p>
+        <label>City: </label>
+        <input type="text" name="city" ng-model="regCtrl.user.city" />
+        <span class="error" ng-show="registerForm.city.$error.required">This is a required field</span>
+    </p>
+    <p>
+        <label>Country: </label>
+        <select ng-model="regCtrl.user.country" ng-options="country for country in regCtrl.countries"> </select>
+        <!--add drop down list variables from xml-->
+    </p>
+    <p>
+        <label>Email:    </label>
+        <input type = "email" name="email" placeholder = "name@domain.com" ng-model="regCtrl.user.email"/>
+        <span class="error" ng-show="registerForm.email.$error.required">This is a required field</span>
+        <span class="error" ng-show="registerForm.email.$error.required">This is a required field</span>
+    </p>
+    <p>
+        <label>Choose a question number 1: </label>
+        <input type="text" name="firstquestion" ng-model="regCtrl.user.firstquestion" />
+        <!--add drop down list with the questions-->
+    </p>
+    <p>
+        <label>Write your answer for the question {{regCtrl.firstquestion}}: </label>
+        <input type="text" ng-model="regCtrl.user.firstanswer"  />
+        <!--add drop down list with the questions-->
+    </p>
+    <p>
+        <label>Choose at least 2 categories you like: </label>
+        <label ng-repeat="category in regCtrl.categories">
+            <input type="checkbox" checklist-model="regCtrl.categories" checklist-value="category"> {{category}}
+        </label>
+        <!--https://vitalets.github.io/checklist-model/-->
+    </p>
+    <p>
+        <input type = "submit" value = "Submit" ng-disabled="registerForm.$invalid" />
+        <input type = "reset" value = "Clear" />
+    </p>
+</form>

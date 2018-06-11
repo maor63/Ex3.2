@@ -1,6 +1,27 @@
-<p ng-repeat="(id , city) in homeCtrl.cities">
-    City name:  <span ng-bind="city.name"></span> <br>
-    City state: <span ng-bind="city.state"></span>
-    <br> <img ng-style="{'height': '100px'}"" ng-src="{{city.image}}">
+<!--<p ng-repeat="(id , city) in homeCtrl.cities">-->
+    <!--City name:  <span ng-bind="city.name"></span> <br>-->
+    <!--City state: <span ng-bind="city.state"></span>-->
+    <!--<br> <img ng-style="{'height': '100px'}"" ng-src="{{city.image}}">-->
 
-</p>
+<!--</p>-->
+
+<table border="0">
+    <tr >
+        <td ng-repeat="(id , city) in homeCtrl.cities">
+            <table border="0">
+                <tr><td><img ng-style="{'height': '100px'}"" ng-src="{{city.image}}"></td></td></tr>
+                <tr></tr>
+                <tr >
+                    <td>
+                        <p>
+                            City name:  <span ng-bind="city.name"></span> <br>
+                            City state: <span ng-bind="city.state"></span>
+                            <br>
+                        </p>
+                    </td>
+                </tr>
+
+            </table>
+        </td>
+    </tr>
+</table>

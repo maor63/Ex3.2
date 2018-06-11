@@ -13,8 +13,8 @@ angular.module('citiesApp')
                             self.cities[i] =
                                 {
                                     name: site["siteName"],
-                                    state: getRandomSubarray(answer.data, 1)[0],
-                                    image: "https://media-cdn.tripadvisor.com/media/photo-s/0d/f5/7c/f2/eiffel-tower-priority.jpg"
+                                    state: "France",
+                                    image: getRandomSubarray(answer.data, 1)[0].url
                                 }
                         });
                 }

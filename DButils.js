@@ -207,6 +207,18 @@ exports.getAllSites = function () {
     //dbRequest.addParameter('siteName', TYPES.NVarChar, siteName);
     return exports.execQuery(dbRequest);
 };
+exports.getAllCategories = function () {
+    let query = "SELECT * FROM Categories;";
+    let dbRequest = createRequest(query);
+    return exports.execQuery(dbRequest);
+};
+
+exports.getAllQuestions = function () {
+    let query = "SELECT * FROM Questions;";
+    let dbRequest = createRequest(query);
+    return exports.execQuery(dbRequest);
+};
+
 
 exports.getAllSitesByCategory = function (categoryID) {
     let query = "SELECT * FROM Sites WHERE categoryID = @categoryID ;";
@@ -214,6 +226,7 @@ exports.getAllSitesByCategory = function (categoryID) {
     dbRequest.addParameter('categoryID', TYPES.Int, categoryID);
     return exports.execQuery(dbRequest);
 };
+
 
 exports.getPopularSites = function () {
     let query = "SELECT * FROM Sites WHERE rank >= 3;";

@@ -56,6 +56,26 @@ router.get('/verification_questions/:userName', function (req, res) {
         res.send(questions);
     });
 });
+router.get('/categories', function (req, res) {
+    let dbAnswer = db.getAllCategories();
+    dbAnswer.then(function (categories) {
+        res.send(categories);
+    }).catch(function (err) {
+        console.log(err);
+        res.end();
+    });
+
+});
+router.get('/questions', function (req, res) {
+    let dbAnswer = db.getAllQuestions();
+    dbAnswer.then(function (questions) {
+        res.send(questions);
+    }).catch(function (err) {
+        console.log(err);
+        res.end();
+    });
+
+});
 
 function getUser(userName) {
     let answer = db.getUser(userName);

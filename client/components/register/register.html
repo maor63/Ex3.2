@@ -8,28 +8,28 @@
     </p>
     <p>
         <label>Last Name: </label>
-        <input type="text" name="lname" ng-model="regCtrl.user.lastname" />
+        <input type="text" name="lname" ng-model="regCtrl.user.lastname" required/>
         <span class="error" ng-show="registerForm.lname.$error.required">This is a required field</span>
     </p>
     <p>
         <label>City: </label>
-        <input type="text" name="city" ng-model="regCtrl.user.city" />
+        <input type="text" name="city" ng-model="regCtrl.user.city" required/>
         <span class="error" ng-show="registerForm.city.$error.required">This is a required field</span>
     </p>
     <p>
         <label>Country: </label>
-        <select ng-model="regCtrl.user.country" ng-options="country for country in regCtrl.countries"> </select>
+        <select ng-model="regCtrl.user.country" ng-options="country for country in regCtrl.countries" required> </select>
         <!--add drop down list variables from xml-->
     </p>
     <p>
         <label>Email:    </label>
-        <input type = "email" name="email" placeholder = "name@domain.com" ng-model="regCtrl.user.email"/>
+        <input type = "email" name="email" placeholder = "name@domain.com" ng-model="regCtrl.user.email" required/>
         <span class="error" ng-show="registerForm.email.$error.required">This is a required field</span>
-        <span class="error" ng-show="registerForm.email.$error.required">This is a required field</span>
+        <span class="error" ng-show="registerForm.email.$error.invalid">This email is not valid </span>
     </p>
     <p>
         <label>Choose a question number 1: </label>
-        <input type="text" name="firstquestion" ng-model="regCtrl.user.firstquestion" />
+        <select ng-model="regCtrl.user.question" ng-options="question.name for question in regCtrl.questions" required> </select>
         <!--add drop down list with the questions-->
     </p>
     <p>
@@ -38,14 +38,14 @@
         <!--add drop down list with the questions-->
     </p>
     <p>
-        <label>Choose at least 2 categories you like: </label>
+        <label>Choose at least 2 categories you like: </label><br>
         <label ng-repeat="category in regCtrl.categories">
-            <input type="checkbox" checklist-model="regCtrl.categories" checklist-value="category"> {{category}}
+            <input type="checkbox" checklist-model="regCtrl.categories" checklist-value="category.id"  value="{{category.id}}" ng-required="value.length<2"> {{category.name}}<br>
         </label>
         <!--https://vitalets.github.io/checklist-model/-->
     </p>
     <p>
-        <input type = "submit" value = "Submit" ng-disabled="registerForm.$invalid" />
+        <input type = "submit" value = "Submit" ng-disabled="registerForm.$invalid"/>
         <input type = "reset" value = "Clear" />
     </p>
 </form>

@@ -4,18 +4,26 @@
     <!--<br> <img ng-style="{'height': '100px'}"" ng-src="{{city.image}}">-->
 
 <!--</p>-->
-
-<table border="0">
+<h1> Welcome to our site about :</h1>
+<h3>New York City - NYU</h3>
+<p> To see more details we adviced you register or login to our site.</p>
+<p>
+    <a href="#/register">Register here</a>
+</p>
+<p>
+    <a href="#/login">Login here</a>
+</p>
+<bottom>
+<table border="0" width="100%" align="center">
     <tr >
         <td ng-repeat="(id , city) in homeCtrl.cities">
             <table border="0">
-                <tr><td><img ng-style="{'height': '100px'}" ng-src="{{city.image}}" alt="No image"></td></td></tr>
+                <tr><td><img ng-style="{'height': '100px'}" ng-src="{{city.image}}" alt="No image"></td></tr>
                 <tr></tr>
                 <tr >
                     <td>
                         <p>
-                            City name:  <span ng-bind="city.name"></span> <br>
-                            City state: <span ng-bind="city.state"></span>
+                            <span ng-bind="city.name"></span> <br>
                             <br>
                         </p>
                     </td>
@@ -25,3 +33,4 @@
         </td>
     </tr>
 </table>
+</bottom>

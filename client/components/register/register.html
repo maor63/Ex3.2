@@ -2,8 +2,8 @@
 <form name="registerForm" ng-submit="regCtrl.register(registerForm.$valid)" novalidate>
     <p>
         <label>First Name: </label>
-        <input type="text" name="fname" ng-model="regCtrl.user.firstname" required ng-minlength="4"/>
-        <span class="error" ng-show="registerForm.fname.$error.minlength">more then 4</span>
+        <input type="text" name="fname" ng-model="regCtrl.user.firstname" required/>
+        <!--<span class="error" ng-show="registerForm.fname.$error.minlength">more then 4</span>-->
         <span class="error" ng-show="registerForm.fname.$error.required">This is a required field</span>
     </p>
     <p>
@@ -18,7 +18,7 @@
     </p>
     <p>
         <label>Country: </label>
-        <select ng-model="regCtrl.user.country" ng-options="country for country in regCtrl.countries" required> </select>
+        <select ng-model="regCtrl.user.country" ng-options="country for country in regCtrl.countries" > </select>
         <!--add drop down list variables from xml-->
     </p>
     <p>
@@ -29,13 +29,15 @@
     </p>
     <p>
         <label>Choose a question number 1: </label>
-        <select ng-model="regCtrl.user.question" ng-options="question.name for question in regCtrl.questions" required> </select>
+        <select name="question" ng-model="regCtrl.user.question" ng-options="question.name for question in regCtrl.questions" required> </select>
+        <span class="error" ng-show="registerForm.question.$error.required">This is a required field</span>
         <!--add drop down list with the questions-->
     </p>
     <p>
-        <label>Write your answer for the question {{regCtrl.firstquestion}}: </label>
-        <input type="text" ng-model="regCtrl.user.firstanswer"  />
-        <!--add drop down list with the questions-->
+        <label>Write your answer for the question {{regCtrl.question}}: </label>
+        <input type="text" name="answer" ng-model="regCtrl.user.answer" required />
+        <span class="error" ng-show="registerForm.answer.$error.required">This is a required field</span>
+
     </p>
     <p>
         <label>Choose at least 2 categories you like: </label><br>

@@ -13,8 +13,6 @@ angular.module('citiesApp')
 
         $http.get("http://localhost:8080/users/categories").then(function (answers) {
             let categories = answers.data;
-            // let indexes = getRandomSubarray(sites, 3);
-
             for (let i = 0; i < categories.length; i++) {
                 let category = categories[i];
                         self.categories[i] =
@@ -31,8 +29,6 @@ angular.module('citiesApp')
 
         $http.get("http://localhost:8080/users/questions").then(function (answers) {
             let questions = answers.data;
-            // let indexes = getRandomSubarray(sites, 3);
-
             for (let i = 0; i < questions.length; i++) {
                 let question = questions[i];
                 self.questions[i] =

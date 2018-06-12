@@ -4,12 +4,7 @@ angular.module('citiesApp')
         self.countries=[];
         self.categories = {};
         self.questions ={};
-        self.register = function () {
-            // check to make sure the form is completely valid
-            alert('our form is amazing');
-            console.log('we ahave new user',self.user)
-        };
-
+        self.registeredsuccess=false;
         let checked_categories = {};
         self.selected_categories=[];
         self.selected_questionid=[];
@@ -96,6 +91,8 @@ function loadCountriesFromApi($http, self) {
 
                 self.user.userName=self.register.content.userName;
                 self.user.password=self.register.content.password;
+                alert('Congratulations you have registered successfully!!!');
+                self.registeredsuccess=true;
 
 
             }, function (response) {

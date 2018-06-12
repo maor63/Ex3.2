@@ -51,3 +51,19 @@
         <input type = "reset" value = "Clear" />
     </p>
 </form>
+
+<modal id="user_details" ng-show="regCtrl.registeredsuccess">
+    <div class="modal">
+        <div class="modal-body">
+            <h1>Your details for login:</h1>
+            <p>
+                User name: <input type="text" ng-model="regCtrl.userName" />
+            </p>
+            <p>
+                Password: <input type="text" ng-model="regCtrl.password" />
+            </p>
+            <button ng-click="user_details.close">Close</button>
+        </div>
+    </div>
+    <div class="modal-background"></div>
+</modal>

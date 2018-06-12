@@ -29,13 +29,13 @@
     </p>
     <p>
         <label>Choose a question number 1: </label>
-        <select name="question" ng-model="regCtrl.user.question" ng-options="question.name for question in regCtrl.questions" required> </select>
+        <select name="question" ng-model="regCtrl.user.verificationQuestions" ng-options="question.name for question in regCtrl.questions" required> </select>
         <span class="error" ng-show="registerForm.question.$error.required">This is a required field</span>
         <!--add drop down list with the questions-->
     </p>
     <p>
         <label>Write your answer for the question {{regCtrl.question}}: </label>
-        <input type="text" name="answer" ng-model="regCtrl.user.answer" required />
+        <input type="text" name="answer" ng-model="regCtrl.user.verificationAnswers" required />
         <span class="error" ng-show="registerForm.answer.$error.required">This is a required field</span>
 
     </p>

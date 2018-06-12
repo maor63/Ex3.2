@@ -1,7 +1,7 @@
 angular.module('citiesApp')
     .controller('registerController', ['$scope','$http', function ($scope,$http) {
         let self = this;
-        self.countries=['israel','usa','uk'];
+        self.countries=[];
         self.categories = {};
         self.questions ={};
         self.register = function () {
@@ -78,5 +78,26 @@ function loadCountriesFromApi($http, self) {
         }
 
     });
+
+    self.register = function () {
+        // register user
+        $http.post( "http://localhost:8080/users/signup", user)
+            .then(function (response) {
+                console.log("something went good 1")
+                //First function handles success
+                self.register.content = response.data;
+
+                user.username=content.userName;
+                user.password=content.password;
+                console.log("something went good 2")
+
+            }, function (response) {
+                console.log("something went wrong 1")
+                self.reg.content = response.data
+                //Second function handles error
+                console.log("something went wrong 2")
+                // self.reg.content = "Something went wrong";
+            });
+    }
 
 }

@@ -4,17 +4,17 @@
         <label>First Name: </label>
         <input type="text" name="fname" ng-model="regCtrl.user.firstname" required/>
         <!--<span class="error" ng-show="registerForm.fname.$error.minlength">more then 4</span>-->
-        <span class="error" ng-show="registerForm.fname.$error.required">This is a required field</span>
+        <span class="error" ng-show="registerForm.fname.$dirty && registerForm.fname.$error.required">This is a required field</span>
     </p>
     <p>
         <label>Last Name: </label>
         <input type="text" name="lname" ng-model="regCtrl.user.lastname" required/>
-        <span class="error" ng-show="registerForm.lname.$error.required">This is a required field</span>
+        <span class="error" ng-show="registerForm.lname.$dirty && registerForm.lname.$error.required">This is a required field</span>
     </p>
     <p>
         <label>City: </label>
         <input type="text" name="city" ng-model="regCtrl.user.city" required/>
-        <span class="error" ng-show="registerForm.city.$error.required">This is a required field</span>
+        <span class="error" ng-show="registerForm.city.$dirty && registerForm.city.$error.required">This is a required field</span>
     </p>
     <p>
         <label>Country: </label>
@@ -24,19 +24,19 @@
     <p>
         <label>Email:    </label>
         <input type = "email" name="email" placeholder = "name@domain.com" ng-model="regCtrl.user.email" required/>
-        <span class="error" ng-show="registerForm.email.$error.required">This is a required field</span>
+        <span class="error" ng-show=" registerForm.email.$dirty && registerForm.email.$error.required">This is a required field</span>
         <span class="error" ng-show="registerForm.email.$error.invalid">This email is not valid </span>
     </p>
     <p>
         <label>Choose a question number 1: </label>
-        <select name="question" ng-model="regCtrl.user.question" ng-options="question.name for question in regCtrl.questions" required> </select>
-        <span class="error" ng-show="registerForm.question.$error.required">This is a required field</span>
+        <select name="question" ng-model="regCtrl.user.verificationQuestions" ng-options="question.name for question in regCtrl.questions" required> </select>
+        <span class="error" ng-show="registerForm.question.$dirty && registerForm.question.$error.required">This is a required field</span>
         <!--add drop down list with the questions-->
     </p>
     <p>
         <label>Write your answer for the question {{regCtrl.question}}: </label>
-        <input type="text" name="answer" ng-model="regCtrl.user.answer" required />
-        <span class="error" ng-show="registerForm.answer.$error.required">This is a required field</span>
+        <input type="text" name="answer" ng-model="regCtrl.user.verificationAnswers" required />
+        <span class="error" ng-show="registerForm.answer.$dirty &&registerForm.answer.$error.required">This is a required field</span>
 
     </p>
     <p>

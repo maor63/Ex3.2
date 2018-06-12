@@ -47,7 +47,7 @@
         <!--https://vitalets.github.io/checklist-model/-->
     </p>
     <p>
-        <input type = "submit" value = "Submit" ng-disabled="registerForm.$invalid"/>
+        <input type = "submit" value = "Submit" ng-disabled="registerForm.$invalid || regCtrl.checked_categories_count < 2"/>
         <input type = "reset" value = "Clear" />
     </p>
 </form>

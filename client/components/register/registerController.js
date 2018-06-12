@@ -1,8 +1,7 @@
-
 angular.module('citiesApp')
     .controller('registerController', ['$scope','$http', function ($scope,$http) {
         let self = this;
-        self.countries=[];
+        self.countries=['israel','usa','uk'];
         self.categories = {};
         self.questions ={};
         self.register = function () {
@@ -11,9 +10,16 @@ angular.module('citiesApp')
             console.log('we ahave new user',self.user)
         };
 
-        self.checked_categories = {};
+        let checked_categories = {};
+        self.checked_categories_count = 0;
         self.updateChoise = function(category_id){
-            console.log('click');
+            if(category_id in checked_categories)
+                delete checked_categories[category_id];
+            else {
+                checked_categories[category_id] = 1;
+            }
+            self.checked_categories_count = Object.keys(checked_categories).length;
+            console.log(self.checked_categories_count);
         };
 
 

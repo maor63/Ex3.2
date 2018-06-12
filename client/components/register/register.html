@@ -40,7 +40,7 @@
     <p>
         <label>Choose at least 2 categories you like: </label><br>
         <label ng-repeat="category in regCtrl.categories">
-            <input type="checkbox" checklist-model="regCtrl.categories" checklist-value="category.id"  value="{{category.id}}" ng-required="value.length<2"> {{category.name}}<br>
+            <input type="checkbox" checklist-model="regCtrl.categories" checklist-value="category.id"  value="{{category.id}}" ng-required="value.length!=0" ng-click="regCtrl.updateChoise(category.id)"> {{category.name}}<br>
         </label>
         <!--https://vitalets.github.io/checklist-model/-->
     </p>

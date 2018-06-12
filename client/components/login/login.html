@@ -1,8 +1,8 @@
 <h2> Login here:</h2>
-<form name="loginForm" ng-submit="loginCtrl.login(loginForm.$valid)" novalidate>
+<form name="loginForm" ng-submit="loginCtrl.login()" novalidate>
     <p>
         <label>User Name: </label>
-        <input type="text" name="uname" ng-model="loginCtrl.user.username" required ng-minlength="3"/>
+        <input type="text" name="username" ng-model="loginCtrl.user.username" required ng-minlength="3"/>
         <span class="error" ng-show="registerForm.uname.$error.minlength">Enter a valid user name over 3 characters</span>
         <span class="error" ng-show="registerForm.uname.$error.required">This is a required field</span>
     </p>

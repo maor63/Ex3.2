@@ -11,6 +11,9 @@ angular.module('citiesApp')
         };
 
         let checked_categories = {};
+        self.selected_categories=[];
+        self.selected_questionid=[];
+        self.selected_answer=[];
         self.checked_categories_count = 0;
         self.updateChoise = function(category_id){
             if(category_id in checked_categories)
@@ -19,6 +22,7 @@ angular.module('citiesApp')
                 checked_categories[category_id] = 1;
             }
             self.checked_categories_count = Object.keys(checked_categories).length;
+            self.selected_categories=Object.keys(checked_categories);
             console.log(self.checked_categories_count);
         };
 
@@ -81,23 +85,27 @@ function loadCountriesFromApi($http, self) {
 
     self.register = function () {
         // register user
-        $http.post( "http://localhost:8080/users/signup", user)
+        self.user.categories= self.selected_categories;
+        self.user.verificationQuestions= [self.user.verificationQuestions.id];
+        self.user.verificationAnswers= [self.user.verificationAnswers]
+        $http.post( "http://localhost:8080/users/signup", self.user)
             .then(function (response) {
-                console.log("something went good 1")
+                console.log("something went good 1");
                 //First function handles success
                 self.register.content = response.data;
 
-                user.username=content.userName;
-                user.password=content.password;
-                console.log("something went good 2")
+                self.user.userName=self.register.content.userName;
+                self.user.password=self.register.content.password;
+
 
             }, function (response) {
-                console.log("something went wrong 1")
-                self.reg.content = response.data
+                console.log("something went wrong 1");
+                self.reg.content = response.data;
                 //Second function handles error
-                console.log("something went wrong 2")
+                console.log("something went wrong 2");
                 // self.reg.content = "Something went wrong";
             });
     }
+
 
 }

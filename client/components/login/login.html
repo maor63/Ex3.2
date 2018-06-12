@@ -1,44 +1,22 @@
-<div >
-    <div class="container">
-        <div class="row">
-
-            <div class="col-sm-6">
-                <!-- FORM ============ -->
-
-                <form name="userForm" ng-submit="loginCtrl.submitForm()" novalidate>
-
-                    <!-- NAME -->
-                    <div class="form-group"
-                         ng-class="{ 'has-error' : userForm.name.$invalid && !userForm.name.$pristine }">
-                        <label>Name</label>
-                        <input type="text" name="name" class="form-control" ng-model="user.name" required>
-                        <p ng-show="userForm.name.$invalid && !userForm.name.$pristine" class="help-block">You name is
-                            required.</p>
-                    </div>
-
-                    <!-- USERNAME -->
-                    <div class="form-group"
-                         ng-class="{ 'has-error' : userForm.username.$invalid && !userForm.username.$pristine }">
-                        <label>Username</label>
-                        <input type="text" name="username" class="form-control" ng-model="user.username"
-                               ng-minlength="3" ng-maxlength="8">
-                        <p ng-show="userForm.username.$error.minlength" class="help-block">Username is too short.</p>
-                        <p ng-show="userForm.username.$error.maxlength" class="help-block">Username is too long.</p>
-                    </div>
-
-                    <!-- EMAIL -->
-                    <div class="form-group"
-                         ng-class="{ 'has-error' : userForm.email.$invalid && !userForm.email.$pristine }">
-                        <label>Email</label>
-                        <input type="email" name="email" class="form-control" ng-model="user.email">
-                        <p ng-show="userForm.email.$invalid && !userForm.email.$pristine" class="help-block">Enter a
-                            valid email.</p>
-                    </div>
-
-                    <button type="submit" class="btn btn-primary" ng-disabled="userForm.$invalid">Submit</button>
-
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
+<h2> Login here:</h2>
+<form name="loginForm" ng-submit="loginCtrl.login(loginForm.$valid)" novalidate>
+    <p>
+        <label>User Name: </label>
+        <input type="text" name="uname" ng-model="loginCtrl.user.username" required ng-minlength="3"/>
+        <span class="error" ng-show="registerForm.uname.$error.minlength">Enter a valid user name over 3 characters</span>
+        <span class="error" ng-show="registerForm.uname.$error.required">This is a required field</span>
+    </p>
+    <p>
+        <label>Password: </label>
+        <input type="password" name="password" ng-model="loginCtrl.user.password" required ng-minlength="5"/>
+        <span class="error" ng-show="registerForm.password.$error.required">This is a required field</span>
+        <span class="error" ng-show="registerForm.uname.$error.minlength">Enter a valid password over 5 characters</span>
+    </p>
+    <p>
+        <input type = "submit" value = "Login" ng-disabled="registerForm.$invalid"/>
+        <input type = "reset" value = "Clear" />
+    </p>
+    <p>
+        <a href="#/forgotpassword">Forgot my password</a>
+    </p>
+</form>

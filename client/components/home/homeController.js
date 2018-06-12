@@ -2,7 +2,6 @@ angular.module('citiesApp')
     .controller('homeController', ['$http', function ($http) {
         self = this;
         self.cities = {};
-        //todo : need to load img from DB url
         $http.get("http://localhost:8080/sites/popular").then(function (answers) {
                 let sites = answers.data;
                 let indexes = getRandomSubarray(sites, 3);
@@ -13,7 +12,6 @@ angular.module('citiesApp')
                             self.cities[i] =
                                 {
                                     name: site["siteName"],
-                                    state: "France",
                                     image: getRandomSubarray(answer.data, 1)[0].url
                                 }
                         });

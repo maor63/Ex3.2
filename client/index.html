@@ -8,12 +8,12 @@
 
 </head>
 <body ng-app="citiesApp">
-<ul>
+<ul ng-controller="indexController as indexCtrl">
     <li><a class="active" href="#/">Home</a></li>
     <li><a href="#/about">About</a></li>
     <li><a href="#/poi">POI</a></li>
-    <li ng-show="true"><a href="#/register">Register</a></li>
-    <li><a href="#/login">login</a></li>
+    <li ng-show="indexCtrl.show_register"><a href="#/register">Register</a></li>
+    <li ng-show="indexCtrl.show_login"><a href="#/login">login</a></li>
     <span ng-model="indxCtrl.userName">Hello Guest</span>
 </ul>
 <div ng-view>
@@ -25,6 +25,7 @@
 <script src="components/home/homeController.js" ></script>
 <script src="components/login/loginController.js" ></script>
 <script src="components/register/registerController.js" ></script>
+<script src="indexController.js" ></script>
 <script src="xml2json.js"></script>
 </body>
 </html>

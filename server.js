@@ -33,6 +33,11 @@ app.get('/', function (req, res) {
     res.send('Hello! The API is at http://localhost:' + port + '/api');
 });
 
+app.use('/', function (req, res, next) {
+    res.setHeader('Access-Control-Allow-Headers', 'x-access-token');
+    next();
+});
+
 
 // route middleware to verify a token
 app.use('/reg', function (req, res, next) {

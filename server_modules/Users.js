@@ -49,6 +49,20 @@ router.post('/login', function (req, res) {
         });
     }
 });
+router.post('/restore', function (req, res) {
+    let userName = req.body.userName;
+    let question_id = req.body.question_id;
+    let answer = req.body.answer;
+    db.verifyAnswer(userName, question_id, answer).then(function (answers) {
+        if (answers.length === 1)
+            res.send({success: true, message: 'Authentication succeeded', "password": answers[0]});//add password
+        else
+            res.send({success: false, message: 'Authentication failed'});//add password
+
+    }).catch(function (err) {
+        console.log(err);
+    });
+});
 
 router.get('/verification_questions/:userName', function (req, res) {
     let userName = req.params.userName;

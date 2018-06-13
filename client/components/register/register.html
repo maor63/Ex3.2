@@ -1,4 +1,4 @@
-<h2> Register here:</h2>
+<h2 id="enjoy2"> Register here:</h2>
 <form name="registerForm" ng-submit="regCtrl.register(registerForm.$valid)" novalidate>
     <p>
         <label>First Name: </label>
@@ -25,7 +25,7 @@
         <label>Email:    </label>
         <input type = "email" name="email" placeholder = "name@domain.com" ng-model="regCtrl.user.email" required/>
         <span class="error" ng-show="registerForm.email.$dirty && registerForm.email.$error.required">This is a required field</span>
-        <span class="error" ng-show="registerForm.email.$dirty &&!(registerForm.input.$error.email)">Not valid email!</span>
+        <span class="error" ng-show="registerForm.email.$dirty && registerForm.input.$error.email">Not valid email!</span>
     </p>
     <p>
         <label>Choose a question: </label>
@@ -52,18 +52,20 @@
     </p>
 </form>
 
-<modal id="user_details" ng-show="regCtrl.registeredsuccess">
+<dialog id="user_details">
     <div class="modal">
         <div class="modal-body">
             <h1>Your details for login:</h1>
             <p>
-                User name: <input type="text" ng-model="regCtrl.userName" />
+                User name {{regCtrl.user.userName}}
             </p>
             <p>
-                Password: <input type="text" ng-model="regCtrl.password" />
+                Password: {{regCtrl.user.password}}
             </p>
-            <button ng-click="user_details.close">Close</button>
+            <p> Please save these in a safe place and remember them</p>
+            <p id="enjoy"> Enjoy your stay !</p>
+            <button ng-click="regCtrl.close()">Close</button>
         </div>
     </div>
     <div class="modal-background"></div>
-</modal>
+</dialog>

@@ -28,6 +28,36 @@ angular.module('citiesApp')
 
         loadCountriesFromApi($http, self);
 
+        self.register = function () {
+            // register user
+            self.user.categories= self.selected_categories;
+            self.user.verificationQuestions= [self.user.verificationQuestions.id];
+            self.user.verificationAnswers= [self.user.verificationAnswers];
+            $http.post( "http://localhost:8080/users/signup", self.user)
+                .then(function (response) {
+                    console.log("something went good 1");
+                    //First function handles success
+                    self.register.content = response.data;
+
+                    self.user.userName=self.register.content.userName;
+                    self.user.password=self.register.content.password;
+                    alert('Congratulations you have registered successfully!!!');
+                    alert('Here are your credentials\n User name: '+self.user.userName+'\n Password: ' +self.user.password)
+                    self.registeredsuccess=true;
+                    document.getElementById("user_details").showModal();
+
+                }, function (response) {
+
+                    self.reg.content = response.data;
+                    //Second function handles error
+                    alert('Something went wrong please try again to register');
+
+                });
+        }
+        self.close=function(){
+            document.getElementById("user_details").close();
+        }
+
     }]);
 
 function loadCategoriesFromApi($http, self) {
@@ -77,32 +107,5 @@ function loadCountriesFromApi($http, self) {
         }
 
     });
-
-    self.register = function () {
-        // register user
-        self.user.categories= self.selected_categories;
-        self.user.verificationQuestions= [self.user.verificationQuestions.id];
-        self.user.verificationAnswers= [self.user.verificationAnswers]
-        $http.post( "http://localhost:8080/users/signup", self.user)
-            .then(function (response) {
-                console.log("something went good 1");
-                //First function handles success
-                self.register.content = response.data;
-
-                self.user.userName=self.register.content.userName;
-                self.user.password=self.register.content.password;
-                alert('Congratulations you have registered successfully!!!');
-                self.registeredsuccess=true;
-
-
-            }, function (response) {
-                console.log("something went wrong 1");
-                self.reg.content = response.data;
-                //Second function handles error
-                console.log("something went wrong 2");
-                // self.reg.content = "Something went wrong";
-            });
-    }
-
-
 }
+

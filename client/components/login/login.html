@@ -1,22 +1,56 @@
+
+<div ng-hide="loginCtrl.recovery">
 <h2> Login here:</h2>
-<form name="loginForm" ng-submit="loginCtrl.login()" novalidate>
+<form name="loginForm"  ng-submit="loginCtrl.login()" novalidate>
     <p>
         <label>User Name: </label>
         <input type="text" name="username" ng-model="loginCtrl.user.userName" required ng-minlength="3"/>
-        <span class="error" ng-show="registerForm.uname.$error.minlength">Enter a valid user name over 3 characters</span>
-        <span class="error" ng-show="registerForm.uname.$error.required">This is a required field</span>
+        <span class="error" ng-show="loginForm.username.$dirty && loginForm.username.$error.minlength">Enter a valid user name over 3 characters</span>
+        <span class="error" ng-show="loginForm.username.$dirty && loginForm.username.$error.required">This is a required field</span>
     </p>
     <p>
         <label>Password: </label>
         <input type="password" name="password" ng-model="loginCtrl.user.password" required ng-minlength="5"/>
-        <span class="error" ng-show="registerForm.password.$error.required">This is a required field</span>
-        <span class="error" ng-show="registerForm.uname.$error.minlength">Enter a valid password over 5 characters</span>
+        <span class="error" ng-show="loginForm.password.$dirty && loginForm.password.$error.required">This is a required field</span>
+        <span class="error" ng-show="loginForm.password.$error.minlength">Enter a valid password over 5 characters</span>
     </p>
     <p>
-        <input type = "submit" value = "Login" ng-disabled="registerForm.$invalid"/>
+        <input type = "submit" value = "Login" ng-disabled="loginForm.$invalid"/>
         <input type = "reset" value = "Clear" />
     </p>
     <p>
-        <a href="#/forgotpassword">Forgot my password</a>
+        <label ng-click="loginCtrl.showrecoveryquestion()">Forgot my password </label>
     </p>
 </form>
+</div>
+
+<div ng-show="loginCtrl.recovery">
+    <h2> Get your password by answering the following question:</h2>
+    <form name="recoveryForm"  ng-submit="loginCtrl.recovrpassword()" novalidate>
+        <p>
+            <label>User Name: </label>
+            <input type="text" name="username" ng-model="loginCtrl.user.userName" required ng-minlength="3"/>
+            <span class="error" ng-show="recoveryForm.username.$error.required">This is a required field</span>
+            <span class="error" ng-show="recoveryForm.username.$dirty && recoveryForm.username.$error.minlength">Enter a valid user name over 3 characters</span>
+        </p>
+        <p>
+            <label>Question:{{loginCtrl.user.question}} </label><br>
+            <label>Recovery answer: </label>
+            <input type="text" name="answer" ng-model="loginCtrl.user.answer" required/>
+            <span class="error" ng-show="recoveryForm.answer.$dirty && recoveryForm.answer.$error.required">This is a required field</span>
+        </p>
+        <p>
+            <input type = "submit" value = "Get password" ng-disabled="recoveryForm.$invalid"/>
+            <input type = "reset" value = "Clear" />
+        </p>
+        <p>
+            <label ng-click="loginCtrl.showrecoveryquestion()">Try again to log in </label>
+        </p>
+    </form>
+</div>
+
+<dialog id="user_alert">
+            <h1>Please enter a valid user name or <a href=#/register"> register !</a></h1>
+    //todo doesn't work the king to register//////////////////////////////////////////////////////
+        <button ng-click="loginCtrl.close()">Close</button>
+</dialog>

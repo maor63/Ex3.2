@@ -24,8 +24,8 @@
     <p>
         <label>Email:    </label>
         <input type = "email" name="email" placeholder = "name@domain.com" ng-model="regCtrl.user.email" required/>
-        <span class="error" ng-show=" registerForm.email.$dirty && registerForm.email.$error.required">This is a required field</span>
-        <span class="error" ng-show="registerForm.email.$error.invalid">This email is not valid </span>
+        <span class="error" ng-show="registerForm.email.$dirty && registerForm.email.$error.required">This is a required field</span>
+        <span class="error" ng-show="registerForm.email.$dirty &&!(registerForm.input.$error.email)">Not valid email!</span>
     </p>
     <p>
         <label>Choose a question: </label>

@@ -44,13 +44,13 @@
             <input type = "reset" value = "Clear" />
         </p>
         <p>
-            <label ng-click="loginCtrl.showrecoveryquestion()">Try again to log in </label>
+            <label ng-click="loginCtrl.showrecoveryquestion()"><a href="">Go back to log in </a></label>
         </p>
     </form>
 </div>
 
 <dialog id="user_alert">
-            <h1>Please enter a valid user name or <a href=#/register"> register !</a></h1>
+            <h1>Please enter a valid user name or <a href="#/register"> register !</a></h1>
     //todo doesn't work the king to register//////////////////////////////////////////////////////
         <button ng-click="loginCtrl.close()">Close</button>
 </dialog>

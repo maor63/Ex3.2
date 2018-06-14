@@ -1,0 +1,17 @@
+footer
+{
+    font-weight: bold;
+    position: fixed;
+    height: 40px;
+    font-family: sans-serif;
+    text-color : #78779e;
+    /*top: 950px;*/
+    left: 0px;
+    bottom: 0;
+    text-align: center;
+    width: 100%;
+}
+
+h1{
+    color: #ffb32d;
+}

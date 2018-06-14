@@ -13,15 +13,16 @@
 <p>
     <a href="#/login">Login here</a>
 </p>
-<bottom>
-<table border="0" width="100%" align="center">
+<footer class="explore">
+    <h2 class="line"><span>Explore these popular sites:</span></h2>
+<table border="0" width="80%" align="center">
     <tr >
-        <td ng-repeat="(id , city) in homeCtrl.cities">
+        <td ng-repeat="(id , city) in homeCtrl.cities" align="center">
             <table border="0">
-                <tr><td><img ng-style="{'height': '100px'}" ng-src="{{city.image}}" alt="No image"></td></tr>
+                <tr><td align="center"><img ng-style="{'height': '100px'}" ng-src="{{city.image}}" alt="No image"></td></tr>
                 <tr></tr>
                 <tr >
-                    <td>
+                    <td align="center">
                         <p>
                             <span ng-bind="city.name"></span> <br>
                             <br>
@@ -33,4 +34,4 @@
         </td>
     </tr>
 </table>
-</bottom>
+</footer>

@@ -5,7 +5,7 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 var morgan = require('morgan');
-
+var cors = require('cors');
 var jwt = require('jsonwebtoken'); // used to create, sign, and verify tokens
 var Users = require('./server_modules/Users'); // get our users model
 var Sites = require('./server_modules/Sites'); // get our sites model
@@ -33,10 +33,7 @@ app.get('/', function (req, res) {
     res.send('Hello! The API is at http://localhost:' + port + '/api');
 });
 
-app.use('/', function (req, res, next) {
-    res.setHeader('Access-Control-Allow-Headers', 'x-access-token');
-    next();
-});
+app.use(cors());
 
 
 // route middleware to verify a token

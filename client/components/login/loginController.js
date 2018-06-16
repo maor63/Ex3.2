@@ -1,23 +1,5 @@
 angular.module('citiesApp')
-    .service('setHeadersToken', ['$http', function ($http) {
-
-        let token = "";
-        self.recovery=false;
-
-        this.set = function (t) {
-            token = t;
-            $http.defaults.headers.common['x-access-token'] = t;
-            // $httpProvider.defaults.headers.post[ 'x-access-token' ] = token
-            console.log("set")
-
-        };
-
-        this.isUserConnected = function () {
-            return token !== "";
-        }
-    }])
-
-    .controller('LoginController', ['$scope', '$http', 'setHeadersToken', function ($scope, $http, setHeadersToken) {
+    .controller('LoginController', ['$scope', '$http', 'setHeadersToken','userManager', function ($scope, $http, setHeadersToken,userManager) {
         let self = this;
         let serverUrl = 'http://localhost:8080/';
         self.login = function () {
@@ -26,9 +8,10 @@ angular.module('citiesApp')
             $http.post(serverUrl + "users/login", self.user)
                 .then(function (response) {
                     //First function handles success
-                    if(response.data.success === true) {
+                    if (response.data.success === true) {
                         self.login.content = response.data.token;
                         setHeadersToken.set(self.login.content);
+                        userManager.setUser(self.user);
                         alert('login succ')
                     }
                     else {
@@ -41,7 +24,7 @@ angular.module('citiesApp')
                     alert('login failed')
                 });
         }
-        self.recovrpassword=function(){
+        self.recoverPassword = function () {
             // this function reciev the answer of the user and checks if it is equal to answer in the database
             //first we check if the user name exist
             //after we check the answer
@@ -49,11 +32,11 @@ angular.module('citiesApp')
             $http.post(serverUrl + "users/restore", self.user)
                 .then(function (response) {
                     //First function handles success
-                    if(response.data.success === true) {
-                        alert('your answer has benn confirmed'+response.data.password.password);
+                    if (response.data.success === true) {
+                        alert('your answer has benn confirmed' + response.data.password.password);
 
                     }
-                    else{
+                    else {
                         alert('password recovery failed please try again or register');
                     }
                     //    need to show him his password !!!!!!!!
@@ -63,20 +46,20 @@ angular.module('citiesApp')
                     alert('login failed');
                 });
         };
-        self.close=function(){
+        self.close = function () {
             document.getElementById("user_alert").close();
         };
-        self.getquestion=function(){
+        self.getQuestion = function () {
             // this function get the verification question for the user name that entered to the form
-            $http.get(serverUrl + "users/verification_questions/"+self.user.userName)
+            $http.get(serverUrl + "users/verification_questions/" + self.user.userName)
                 .then(function (response) {
                     //First function handles success
-                    if(true) {
+                    if (true) {
                         self.login.content = response.data;
-                        console.log(self.login.content[0].question+'11111111111111111111111111111111111111');
-                        console.log(self.login.content[0].questionID+'  11111111111111111111111111111111111111');
-                        self.user.question=self.login.content[0].question;
-                        self.user.question_id=self.login.content[0].questionID;
+                        console.log(self.login.content[0].question + '11111111111111111111111111111111111111');
+                        console.log(self.login.content[0].questionID + '  11111111111111111111111111111111111111');
+                        self.user.question = self.login.content[0].question;
+                        self.user.question_id = self.login.content[0].questionID;
 
                     }
                     else {
@@ -90,19 +73,17 @@ angular.module('citiesApp')
                     alert('verification failed');
                 });
         };
-        self.showrecoveryquestion = function () {
+        self.showRecoveryQuestion = function () {
             //this function control the screen between recovery and login forms
             //checks weather a user name is added
-            if(!self.user || !self.user.userName)
+            if (!self.user || !self.user.userName)
                 document.getElementById("user_alert").showModal();
-            else
-            {
-                self.recovery=!(self.recovery);
-                if (self.recovery)
-                {
+            else {
+                self.recovery = !(self.recovery);
+                if (self.recovery) {
                     alert('im im recovery');
                     alert(self.user.userName)
-                    self.getquestion();
+                    self.getQuestion();
                 }
             }
 

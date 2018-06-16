@@ -1,8 +1,6 @@
 let app = angular.module('citiesApp', ["ngRoute"]);
 
 app.config(['$locationProvider', '$routeProvider', function ($locationProvider, $routeProvider) {
-
-
     $locationProvider.hashPrefix('');
 
 

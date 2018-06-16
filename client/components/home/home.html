@@ -1,37 +1,47 @@
 <!--<p ng-repeat="(id , city) in homeCtrl.cities">-->
-    <!--City name:  <span ng-bind="city.name"></span> <br>-->
-    <!--City state: <span ng-bind="city.state"></span>-->
-    <!--<br> <img ng-style="{'height': '100px'}"" ng-src="{{city.image}}">-->
+<!--City name:  <span ng-bind="city.name"></span> <br>-->
+<!--City state: <span ng-bind="city.state"></span>-->
+<!--<br> <img ng-style="{'height': '100px'}"" ng-src="{{city.image}}">-->
 
 <!--</p>-->
 <h1> Welcome to our site about :</h1>
 <h3>New York City - NYU</h3>
-<p> To see more details we adviced you register or login to our site.</p>
-<p>
-    <a href="#/register">Register here</a>
-</p>
-<p>
-    <a href="#/login">Login here</a>
-</p>
+<div>
+    <p> To see more details we adviced you register or login to our site.</p>
+    <p>
+        <a href="#/register">Register here</a>
+    </p>
+    <p>
+        <a href="#/login">Login here</a>
+    </p>
+</div>
 <footer class="explore">
     <h2 class="line"><span>Explore these popular sites:</span></h2>
-<table border="0" width="80%" align="center">
-    <tr >
-        <td ng-repeat="(id , city) in homeCtrl.cities" align="center">
-            <table border="0">
-                <tr><td align="center"><img ng-style="{'height': '100px'}" ng-src="{{city.image}}" alt="No image"></td></tr>
-                <tr></tr>
-                <tr >
-                    <td align="center">
-                        <p>
-                            <span ng-bind="city.name"></span> <br>
-                            <br>
-                        </p>
-                    </td>
-                </tr>
-
-            </table>
-        </td>
-    </tr>
-</table>
+    <table border="0" width="80%" align="center">
+        <tr>
+            <td ng-repeat="(id , city) in homeCtrl.cities" align="center">
+                <table border="0">
+                    <tr ng-switch="homeCtrl.loggedIn">
+                        <td align="center" ng-switch-when="true">
+                            <img ng-style="{'height': '100px'}" ng-src="{{city.image}}" alt="No image">
+                            <img ng-src="{{homeCtrl.isLoggedIn() && 'pictures/star.png' || 'pictures/empty_star.png'}}"
+                                 class="star" alt="star">
+                        </td>
+                        <td align="center" ng-switch-default>
+                            <img ng-style="{'height': '100px'}" ng-src="{{city.image}}" alt="No image">
+                        </td>
+                    </tr>
+                    <tr></tr>
+                    <tr>
+                        <td align="center">
+                            <p>
+                                <span ng-bind="city.name"></span> <br>
+                                <br>
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
 </footer>

@@ -11,7 +11,7 @@ angular.module('citiesApp')
                 $http.get("http://localhost:8080/sites/photo_url/" + site.siteID)
                     .then(function (answer) {
                         let pic_url;
-                        if(userManager.isFavorite(site.siteID))
+                        if (userManager.isFavorite(site.siteID))
                             pic_url = "pictures/star.png";
                         else
                             pic_url = "pictures/empty_star.png";
@@ -29,8 +29,7 @@ angular.module('citiesApp')
             console.log(err);
         });
 
-        self.loggedIn = isLoggedIn();
-        if (isLoggedIn()) {
+        if (userManager.getUser() !== undefined) {
             $http.get("http://localhost:8080/reg/last_saved/" + userManager.getUser().userName)
                 .then(function (answer) {
                     let favorits = answer.data;
@@ -46,7 +45,7 @@ angular.module('citiesApp')
                                         favoritImgUrl: "pictures/star.png"
                                     };
 
-                                if(site.siteID in self.cities){
+                                if (site.siteID in self.cities) {
                                     self.cities[site.siteID].favoritImgUrl = "pictures/star.png";
                                 }
                             });
@@ -59,7 +58,7 @@ angular.module('citiesApp')
         }
 
         self.toggleImage = function (site) {
-            if(site.favoritImgUrl === "pictures/star.png") {
+            if (site.favoritImgUrl === "pictures/star.png") {
                 site.favoritImgUrl = "pictures/empty_star.png";
                 userManager.deleteFavorite(site.id);
             }
@@ -82,9 +81,9 @@ angular.module('citiesApp')
             delete  self.favorits[site_id];
         };
 
-        function isLoggedIn() {
+        self.isLoggedIn = function () {
             return userManager.getUser() !== undefined;
-        }
+        };
 
         function getRandomSubarray(arr, size) {
             let shuffled = arr.slice(0), i = arr.length, min = i - size, temp, index;

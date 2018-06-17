@@ -27,9 +27,11 @@ angular.module('citiesApp')
     .service('userManager', [function () {
         let self = this;
         self.user = undefined;
+        self.favorites = [];
 
         self.setUser = function (userName) {
             self.user = userName;
+            self.favorites = [];
         };
 
         self.getUser = function () {
@@ -40,7 +42,6 @@ angular.module('citiesApp')
             self.user = undefined;
         };
 
-        self.favorites = [];
         self.addFavorite = function (site_id) {
             self.favorites.push(site_id);
         };

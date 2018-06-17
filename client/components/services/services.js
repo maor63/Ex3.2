@@ -61,35 +61,4 @@ angular.module('citiesApp')
             }
         }
     }])
-    .service('localStorageModel', ['$localStorage', function($localStorage) {
-
-        var self=this;
-
-        self.addLocalStorage = function (key, value) {
-            var dataVal = $localStorage.get(key);
-            console.log(dataVal)
-            if (!dataVal)
-                if ($localStorage.set(key, value)) {
-                    console.log("data added")
-                }
-                else
-                    console.log('failed to add the data');
-        }
-
-
-
-        self.getLocalStorage= function (key)
-        {
-            return  $localStorage.get(key)
-        }
-
-        self.updateLocalStorage = function (key,value)
-        {
-            $localStorage.remove(key);
-            $localStorage.set(key,value);
-        }
-
-
-
-    }])
 ;

@@ -68,19 +68,6 @@ angular.module('citiesApp')
             }
         };
 
-        self.isContainFavorit = function (site_id) {
-            return site_id in self.favorits;
-        };
-
-        self.addToFavorit = function (site) {
-            // self.favorits[site.id] = site;
-            console.log("add");
-        };
-
-        self.removeFromFavorite = function (site_id) {
-            delete  self.favorits[site_id];
-        };
-
         self.isLoggedIn = function () {
             return userManager.getUser() !== undefined;
         };

@@ -24,8 +24,8 @@
                     <tr ng-switch="homeCtrl.loggedIn">
                         <td align="center" ng-switch-when="true">
                             <img ng-style="{'height': '100px'}" ng-src="{{city.image}}" alt="No image">
-                            <img ng-src="{{homeCtrl.isLoggedIn() && 'pictures/star.png' || 'pictures/empty_star.png'}}"
-                                 class="star" alt="star">
+                            <img ng-src="{{city.favoritImgUrl}}"
+                                 ng-click="homeCtrl.toggleImage(city)" class="star" alt="star">
                         </td>
                         <td align="center" ng-switch-default>
                             <img ng-style="{'height': '100px'}" ng-src="{{city.image}}" alt="No image">

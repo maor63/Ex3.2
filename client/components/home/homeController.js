@@ -1,5 +1,5 @@
 angular.module('citiesApp')
-    .controller('homeController', ['$http', 'userManager', 'setHeadersToken', function ($http, userManager, setHeadersToken) {
+    .controller('homeController', ['$http', 'userManager', function ($http, userManager) {
         self = this;
         self.cities = {};
         self.favorits = {};
@@ -10,11 +10,17 @@ angular.module('citiesApp')
                 let site = indexes[i];
                 $http.get("http://localhost:8080/sites/photo_url/" + site.siteID)
                     .then(function (answer) {
-                        self.cities[i] =
+                        let pic_url;
+                        if(userManager.isFavorite(site.siteID))
+                            pic_url = "pictures/star.png";
+                        else
+                            pic_url = "pictures/empty_star.png";
+                        self.cities[site.siteID] =
                             {
                                 id: site.siteID,
                                 name: site["siteName"],
-                                image: getRandomSubarray(answer.data, 1)[0].url
+                                image: getRandomSubarray(answer.data, 1)[0].url,
+                                favoritImgUrl: pic_url
                             }
                     });
             }
@@ -25,20 +31,24 @@ angular.module('citiesApp')
 
         self.loggedIn = isLoggedIn();
         if (isLoggedIn()) {
-            let token = setHeadersToken.getTokent();
-            $http.get("http://localhost:8080/reg/last_saved/" + userManager.getUser().userName,{ headers: {'x-access-token': token} })
+            $http.get("http://localhost:8080/reg/last_saved/" + userManager.getUser().userName)
                 .then(function (answer) {
                     let favorits = answer.data;
                     for (let i = 0; i < favorits.length; i++) {
                         let site = favorits[i];
                         $http.get("http://localhost:8080/sites/photo_url/" + site.siteID)
                             .then(function (answer) {
-                                self.favorits[i] =
+                                self.favorits[site.siteID] =
                                     {
                                         id: site.siteID,
                                         name: site["siteName"],
-                                        image: getRandomSubarray(answer.data, 1)[0].url
-                                    }
+                                        image: getRandomSubarray(answer.data, 1)[0].url,
+                                        favoritImgUrl: "pictures/star.png"
+                                    };
+
+                                if(site.siteID in self.cities){
+                                    self.cities[site.siteID].favoritImgUrl = "pictures/star.png";
+                                }
                             });
                     }
                 })
@@ -48,8 +58,28 @@ angular.module('citiesApp')
                 })
         }
 
+        self.toggleImage = function (site) {
+            if(site.favoritImgUrl === "pictures/star.png") {
+                site.favoritImgUrl = "pictures/empty_star.png";
+                userManager.deleteFavorite(site.id);
+            }
+            else {
+                site.favoritImgUrl = "pictures/star.png";
+                userManager.addFavorite(site.id);
+            }
+        };
+
         self.isContainFavorit = function (site_id) {
-            return site_id in userManager.favorits;
+            return site_id in self.favorits;
+        };
+
+        self.addToFavorit = function (site) {
+            // self.favorits[site.id] = site;
+            console.log("add");
+        };
+
+        self.removeFromFavorite = function (site_id) {
+            delete  self.favorits[site_id];
         };
 
         function isLoggedIn() {

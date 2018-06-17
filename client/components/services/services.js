@@ -27,7 +27,6 @@ angular.module('citiesApp')
     .service('userManager', [function () {
         let self = this;
         self.user = undefined;
-        self.favorits = {};
 
         self.setUser = function (userName) {
             self.user = userName;
@@ -41,12 +40,55 @@ angular.module('citiesApp')
             self.user = undefined;
         };
 
-        self.addFavorit = function (site) {
-            self.favorits[site.id] = site;
+        self.favorites = [];
+        self.addFavorite = function (site_id) {
+            self.favorites.push(site_id);
         };
 
         self.deleteFavorite = function (site_id) {
-            delete self.favorits[site.id];
-        };
+            deleteFromArray(self.favorites, site_id);
+        }
+
+        self.isFavorite = function (site_id) {
+            return self.favorites.indexOf(site_id) > -1;
+        }
+
+        function deleteFromArray(array, element) {
+            var index = array.indexOf(element);
+            if (index > -1) {
+                array.splice(index, 1);
+            }
+        }
+    }])
+    .service('localStorageModel', ['$localStorage', function($localStorage) {
+
+        var self=this;
+
+        self.addLocalStorage = function (key, value) {
+            var dataVal = $localStorage.get(key);
+            console.log(dataVal)
+            if (!dataVal)
+                if ($localStorage.set(key, value)) {
+                    console.log("data added")
+                }
+                else
+                    console.log('failed to add the data');
+        }
+
+
+
+        self.getLocalStorage= function (key)
+        {
+            return  $localStorage.get(key)
+        }
+
+        self.updateLocalStorage = function (key,value)
+        {
+            $localStorage.remove(key);
+            $localStorage.set(key,value);
+        }
+
+
+
     }])
 ;

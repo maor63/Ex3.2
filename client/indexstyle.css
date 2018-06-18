@@ -1,5 +1,7 @@
 body{
-    font-family: sans-serif;
+    /*font-family: sans-serif;*/
+    font-family: "Arial",Helvetica;
+    font-weight: bold;
     text-align:center;
     /*background-color: #a1b3ae;*/
     min-width: 1200px;
@@ -53,24 +55,27 @@ footer
     text-color : #78779e;
     /*top: 950px;*/
     left: 0px;
-    bottom: 200px;
+    bottom: 250px;
     text-align: center;
     width: 100%;
 }
 h2
 {
-    font-family: sans-serif;
+    font-family: "Arial";
     position: relative;
     text-align: center;
-    text-shadow: 1px 1px #e6e6e6;
-    font-size: 25px;
-
+    /*font-weight: bold;*/
+    text-shadow: 3px 2px #000000;
+    font-size: 35px;
+    -webkit-text-stroke-color: #b3d2fd;
+    -webkit-text-stroke-width: 1px;
+    color: #ffffff;
 
 }
 
 h2 span
 {
-    background: #88b39b;
+    /*background: #88b39b;*/
     padding: 0 15px;
     position: relative;
     z-index: 1;
@@ -78,18 +83,18 @@ h2 span
 
 h2:before
 {
-    background: #ffe6ee;
+    background: #c5e3ff;
     content: "";
     display: block;
     height: 3px;
     position: absolute;
     top: 50%;
-    width: 100%;
+    width: 60%;
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
 }
 h2:before
 {
-    left: 0;
+    left: 20%;
 }
 * {
     box-sizing: border-box;
@@ -124,5 +129,7 @@ div.gallery img {
 div.desc {
     padding: 10px;
     text-align: center;
+    color: rgba(0, 0, 0, 1);
     background: #f7ecff;
+    opacity: 0.6;
 }

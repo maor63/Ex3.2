@@ -1,7 +1,7 @@
 angular.module('citiesApp')
     .controller('homeController', ['$http', 'userManager', function ($http, userManager) {
         self = this;
-        self.cities = {};
+        self.sites = {};
         self.favorits = {};
         $http.get("http://localhost:8080/sites/popular").then(function (answers) {
             let sites = answers.data;
@@ -15,7 +15,7 @@ angular.module('citiesApp')
                             pic_url = "pictures/star.png";
                         else
                             pic_url = "pictures/empty_star.png";
-                        self.cities[site.siteID] =
+                        self.sites[site.siteID] =
                             {
                                 id: site.siteID,
                                 name: site["siteName"],
@@ -45,8 +45,8 @@ angular.module('citiesApp')
                                         favoritImgUrl: "pictures/star.png"
                                     };
 
-                                if (site.siteID in self.cities) {
-                                    self.cities[site.siteID].favoritImgUrl = "pictures/star.png";
+                                if (site.siteID in self.sites) {
+                                    self.sites[site.siteID].favoritImgUrl = "pictures/star.png";
                                 }
                             });
                     }

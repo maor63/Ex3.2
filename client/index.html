@@ -14,9 +14,9 @@
     <li><a href="#/about">About</a></li>
     <li><a href="#/poi">POI</a></li>
     <li ng-show="!indexCtrl.isLoggedIn()"><a href="#/register">Register</a></li>
-    <li ng-show="!indexCtrl.isLoggedIn()"><a href="#/login">login</a></li>
-    <li ng-show="indexCtrl.isLoggedIn()" ng-click="indexCtrl.logout()"><a href="#/">logout</a></li>
-    <span>Hello {{indexCtrl.isLoggedIn() &&  indexCtrl.getUser().userName || 'Gest' }}</span>
+    <li ng-show="!indexCtrl.isLoggedIn()"><a href="#/login">Login</a></li>
+    <li ng-show="indexCtrl.isLoggedIn()" ng-click="indexCtrl.logout()"><a href="#/">Logout</a></li>
+    <span>Hello {{indexCtrl.isLoggedIn() &&  indexCtrl.getUser().userName || 'Guest' }}</span>
 </ul>
 <div ng-view>
     <!--Contains random popular sites above-->

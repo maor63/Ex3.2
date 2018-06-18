@@ -58,23 +58,21 @@
                 <table border="0">
                     <tr ng-switch="homeCtrl.isLoggedIn()">
                         <td align="center" ng-switch-when="true">
-                            <div class="gallery">
-                                <a target="_blank" href="img_5terre.jpg">
-                                    <img ng-style="{'height': '100px'}" ng-src="{{site.image}}" alt="{{site.name}}" width="300" height="200">
-                                </a>
-                                <div class="desc"><span ng-bind="site.name"></span>
-                                    <img ng-src="{{site.favoritImgUrl}}" ng-click="homeCtrl.toggleImage(site)" class="star" alt="star">
-                                </div>
-                            </div>
+                            <img ng-style="{'height': '100px'}" ng-src="{{site.image}}" alt="No image">
+                            <img ng-src="{{site.favoritImgUrl}}"
+                                 ng-click="homeCtrl.toggleImage(site)" class="star" alt="star">
                         </td>
                         <td align="center" ng-switch-default>
-                            <div class="gallery">
-                                <a target="_blank" href="img_5terre.jpg">
-                                    <img ng-style="{'height': '100px'}" ng-src="{{site.image}}" alt="{{site.name}}" width="300" height="200">
-                                </a>
-                                <div class="desc"><span ng-bind="site.name"></span>
-                                </div>
-                            </div>
+                            <img ng-style="{'height': '100px'}" ng-src="{{site.image}}" alt="No image">
+                        </td>
+                    </tr>
+                    <tr></tr>
+                    <tr>
+                        <td align="center">
+                            <p>
+                                <span ng-bind="site.name"></span> <br>
+                                <br>
+                            </p>
                         </td>
                     </tr>
                 </table>

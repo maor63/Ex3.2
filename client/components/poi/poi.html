@@ -1,10 +1,12 @@
 <h2><span> The points of interest in NEW YORK:</span></h2>
 <form action="">
-    <select ng-options="category for (category, id) in poiCtrl.categories" ng-model="selected">
+    <input ng-model="searchInput">
+    <select ng-options="category for (category, id) in poiCtrl.categories" ng-model="selectedCategory">
     </select>
+    </form>
 <div>
     <div id="pois" class="container" style="padding-left: 100px;">
-        <div class="col-lg-12" ng-repeat="site in poiCtrl.sites | filter:{category: selected}">
+        <div class="col-lg-12" ng-repeat="site in poiCtrl.sites | filter:{category: selectedCategory }| filter:{name: searchInput}">
             <div class="gallery" ng-show="poiCtrl.isLoggedIn()">
                 <a target="_blank" href="img_5terre.jpg">
                     <img ng-src="{{site.image}}" alt="{{site.name}}">
@@ -22,5 +24,8 @@
                 </div>
             </div>
         </div>
+        <p ng-show="(poiCtrl.sites | filter:{category: selectedCategory }| filter:{name: searchInput}).length === 0">
+            Nothing here!
+        </p>
     </div>
 </div>

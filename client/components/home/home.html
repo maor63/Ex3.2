@@ -87,7 +87,7 @@
         </div>
         <div class="modal-body">
             <h3>A little bit about the site...</h3>
-            <p>Category: {{homeCtrl.poi[0].categoryName}}</p>
+            <p>Category: {{homeCtrl.poiCategoryName}}</p>
             <p>{{homeCtrl.poi[0].detail}}</p>
             <div class="row">
             <div class="column">
@@ -116,7 +116,6 @@
 
             <div id="loggedInUserModal">
                 <input type="button" value="Rank or review this site" onclick="homeCtrl.openRankModal()">
-                <p>Please insert your review:</p>
             </div>
         </div>
         <div class="modal-footer">

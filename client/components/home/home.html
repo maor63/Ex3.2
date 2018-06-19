@@ -26,8 +26,7 @@
                         <tr>
                             <td align="center">
                                 <img ng-style="{'height': '100px'}" ng-src="{{site.image}}" alt="No image">
-                                <img ng-src="{{site.favoritImgUrl}}"
-                                     ng-click="homeCtrl.toggleImage(site)" class="star" alt="star">
+                                <img ng-src="{{site.favoritImgUrl}}" ng-click="homeCtrl.toggleImage(site)" class="star" alt="star">
                             </td>
                         </tr>
                         <tr></tr>
@@ -49,28 +48,26 @@
 
 
 <footer class="explore">
-    <h2 class="line"><span>Explore these popular sites:</span></h2>
+    <p class="subtitle fancy"><span>Explore these popular sites:</span></p>
     <table border="0" width="80%" align="center">
         <tr>
             <td ng-repeat="(id , site) in homeCtrl.sites" align="center">
                 <table border="0">
                     <tr ng-switch="homeCtrl.isLoggedIn()">
                         <td align="center" ng-switch-when="true">
-                            <div class="gallery" ng-click="homeCtrl.showPoiModalFunc(site.name)">
-                                    <img ng-src="{{site.image}}" alt="{{site.name}}">
+                            <div class="gallery" >
+                                    <img ng-src="{{site.image}}" alt="{{site.name}}" ng-click="homeCtrl.showPoiModalFunc(site.name)">
                                 <div class="desc"><p>
                                     <img ng-src="{{site.favoritImgUrl}}" ng-click="homeCtrl.toggleImage(site)" class="star" alt="star">
-                                    <span id="descName" ng-bind="site.name"></span>
-
+                                    <span id="descName" ng-bind="site.name" ng-click="homeCtrl.showPoiModalFunc(site.name)"></span>
                                 </p>
                                 </div>
                             </div>
                         </td>
                         <td align="center" ng-switch-default>
-                            <div class="gallery" ng-click="homeCtrl.showPoiModalFunc(site.name)">
-
-                                    <img  ng-src="{{site.image}}" alt="{{site.name}}" width="300" height="200">
-                                <div class="desc"><span ng-bind="site.name"></span>
+                            <div class="gallery" >
+                                    <img  ng-src="{{site.image}}" alt="{{site.name}}" ng-click="homeCtrl.showPoiModalFunc(site.name)">
+                                <div class="desc"><span ng-bind="site.name" ng-click="homeCtrl.showPoiModalFunc(site.name)"></span>
                                 </div>
                             </div>
                         </td>
@@ -82,7 +79,6 @@
 </footer>
 
 <div id="myModal" class="modal">
-
     <!-- Modal content -->
     <div class="modal-content">
         <div class="modal-header">
@@ -102,6 +98,26 @@
             </div>
                 </div>
             <p>This site's rank is: {{homeCtrl.poi[0].rank}}</p>
+            <h4> Reviews:</h4>
+            <table class="table_review">
+                <tr class="tr_review">
+                    <td class="td_review">ID</td>
+                    <td class="td_review">User name</td>
+                    <td class="td_review">Review</td>
+                    <td class="td_review">Date added</td>
+                </tr>
+                <tr class="tr_review" ng-repeat="x in homeCtrl.reviews">
+                    <td class="td_review"> {{x.id}}</td>
+                    <td class="td_review">{{x.userName}}</td>
+                    <td class="td_review">{{x.review}}</td>
+                    <td class="td_review">{{x.date}}</td>
+                </tr>
+            </table>
+
+            <div id="loggedInUserModal">
+                <input type="button" value="Rank or review this site" onclick="homeCtrl.openRankModal()">
+                <p>Please insert your review:</p>
+            </div>
         </div>
         <div class="modal-footer">
             <h3>footer</h3>

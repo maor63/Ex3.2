@@ -242,7 +242,7 @@ exports.getAllPhotoUrlBySite = function (siteID) {
 };
 
 exports.getAllReviewsBySite = function (siteID) {
-    let query = "SELECT review FROM Reviews WHERE siteID = @siteID ;";// Should we return also date??
+    let query = "SELECT * FROM Reviews WHERE siteID = @siteID ;";// Should we return also date??
     let dbRequest = createRequest(query);
     dbRequest.addParameter('siteID', TYPES.Int, siteID);
     return exports.execQuery(dbRequest);

@@ -103,15 +103,6 @@ h1 #m{
     color: #ffb32d;
 }
 
-.star {
-    height: 10px;
-    width: 10px;
-    float: left;
-    padding-right: 5px;
-    display: flex;
-    justify-content: center; /* align horizontal */
-    align-items: center; /* align vertical */
-}
 #descName{
     display: table-cell;
     vertical-align: middle;
@@ -139,14 +130,17 @@ div.gallery img {
     width: 100%;
     height: 100%;
 }
+div.desc img {
+    width: 50px;
+    height: 50px;
+}
 
 div.desc {
 
     padding: 5px;
     text-align: center;
     color: rgba(0, 0, 0, 1);
-    background: #ffffff;
-    opacity: 0.6;
+    background: rgba(255, 255, 255, 0.52);
     width: 250px;
     height: 80px;
     display: flex;
@@ -263,7 +257,13 @@ div.desc {
     color: white;
 }
 
-.modal-body {padding: 2px 16px;}
+.modal-body {
+    position: relative;
+    height: 500px;
+    padding: 2px 16px;
+    overflow-y: auto;
+    text-align: left;
+}
 
 .modal-footer {
     padding: 2px 16px;
@@ -272,7 +272,7 @@ div.desc {
 }
 .column {
     float: left;
-    width: 50%;
+    /*width: 50%;*/
     padding: 5px;
 }
 
@@ -281,4 +281,39 @@ div.desc {
     content: "";
     clear: both;
     display: table;
+    padding-left: 200px;
+}
+.row{
+    width:70%;
+    margin-left:15%;
+    margin-right:15%;
+}
+.img1Modal,.img2Modal{
+    width: auto;
+    height: 200px;
+}
+
+.table_review {
+    border-collapse: collapse;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    width:70%;
+    margin-left:15%;
+    margin-right:15%;
+}
+
+.tr_review, .td_review {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.star {
+    height: 50px;
+    width: 50px;
+    float: left;
+    padding-right: 5px;
+    display: flex;
+    justify-content: center; /* align horizontal */
+    align-items: center; /* align vertical */
 }

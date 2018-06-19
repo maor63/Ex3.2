@@ -56,10 +56,8 @@
                 <table border="0">
                     <tr ng-switch="homeCtrl.isLoggedIn()">
                         <td align="center" ng-switch-when="true">
-                            <div class="gallery" ng-click="homeCtrl.showPoiModalFunc()">
-                                <a target="_blank" href="img_5terre.jpg">
+                            <div class="gallery" ng-click="homeCtrl.showPoiModalFunc(site.name)">
                                     <img ng-src="{{site.image}}" alt="{{site.name}}">
-                                </a>
                                 <div class="desc"><p>
                                     <img ng-src="{{site.favoritImgUrl}}" ng-click="homeCtrl.toggleImage(site)" id="star" alt="star">
                                     <span id="descName" ng-bind="site.name"></span>
@@ -69,10 +67,9 @@
                             </div>
                         </td>
                         <td align="center" ng-switch-default>
-                            <div class="gallery">
-                                <a target="_blank" href="img_5terre.jpg">
+                            <div class="gallery" ng-click="homeCtrl.showPoiModalFunc(site.name)">
+
                                     <img  ng-src="{{site.image}}" alt="{{site.name}}" width="300" height="200">
-                                </a>
                                 <div class="desc"><span ng-bind="site.name"></span>
                                 </div>
                             </div>
@@ -83,3 +80,32 @@
             <!--ng-style="{'height': '100px'}"-->
     </table>
 </footer>
+
+<div id="myModal" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+        <div class="modal-header">
+            <span class="close">&times;</span>
+            <p class="subtitle fancy"><span>{{homeCtrl.poi[0].siteName}}</span></p>
+        </div>
+        <div class="modal-body">
+            <h3>A little bit about the site...</h3>
+            <p>Category: {{homeCtrl.poi[0].categoryName}}</p>
+            <p>{{homeCtrl.poi[0].detail}}</p>
+            <div class="row">
+            <div class="column">
+            <img class="img1Modal" ng-src="{{homeCtrl.poiUrls[0].url}}" alt="{{poi[0].siteName}}+1">
+            </div>
+            <div class="column">
+            <img class="img2Modal" ng-src="{{homeCtrl.poiUrls[1].url}}" alt="{{poi[0].siteName}}+2">
+            </div>
+                </div>
+            <p>This site's rank is: {{homeCtrl.poi[0].rank}}</p>
+        </div>
+        <div class="modal-footer">
+            <h3>footer</h3>
+        </div>
+    </div>
+
+</div>

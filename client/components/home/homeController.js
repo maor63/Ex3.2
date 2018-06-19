@@ -1,8 +1,17 @@
 angular.module('citiesApp')
-    .controller('homeController', ['$http', 'userManager', function ($http, userManager) {
+    .controller('homeController', ['$http', 'userManager','$routeParams', function ($http, userManager,routeParams) {
         self = this;
+
+        var modal = document.getElementById('myModal');
+        var btn = document.getElementById("myBtn");
+        var span = document.getElementsByClassName("close")[0];
+
+
+        let serverUrl = 'http://localhost:8080/';
         self.sites = {};
         self.favorits = {};
+        self.poi={};
+        self.poiUrls={};
         $http.get("http://localhost:8080/sites/popular").then(function (answers) {
             let sites = answers.data;
             let indexes = getRandomSubarray(sites, 3);
@@ -65,9 +74,21 @@ angular.module('citiesApp')
             return userManager.getUser() !== undefined;
         };
         
-        self.showPoiModalFunc = function () {
-            
-        }
+        self.showPoiModalFunc = function (name) {
+            $http.get(serverUrl + "sites/search/" + name)
+                .then(function (response) {
+                    //First function handles success
+                         self.poi = response.data;
+                    //     self.poi.id = self.login.content[0].siteID;
+                    self.getImagesModal(self.poi[0].siteID);
+                }, function (response) {
+                    console.log(response);
+                    self.login.content = "Something went wrong";
+                    alert('No details on this site')
+                });
+
+            modal.style.display = "block";
+        };
         function getRandomSubarray(arr, size) {
             let shuffled = arr.slice(0), i = arr.length, min = i - size, temp, index;
             while (i-- > min) {
@@ -78,8 +99,31 @@ angular.module('citiesApp')
             }
             return shuffled.slice(min);
         }
-        
-        
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+         };
+
+       span.onclick = function() {
+            modal.style.display = "none";
+        };
+
+       self.getImagesModal= function (siteID) {
+           $http.get(serverUrl + "sites/photo_url/" + siteID)
+               .then(function (response) {
+                   //First function handles success
+                   self.poiUrls = response.data;
+               }, function (response) {
+                   console.log(response);
+                   self.login.content = "Something went wrong";
+                   alert('No details on this site')
+               });
+       };
+
+
+
     }
     ])
 ;

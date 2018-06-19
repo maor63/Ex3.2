@@ -36,7 +36,7 @@ angular.module('citiesApp')
             return shuffled.slice(min);
         }
     }])
-    .service('userManager','$http', [function ($http) {
+    .service('userManager', ['$http', function ($http) {
         let self = this;
         self.user = undefined;
         self.nextPosition = 1;

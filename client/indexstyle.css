@@ -49,13 +49,13 @@ p #enjoy2{
 footer
 {
     font-weight: bold;
-    position: fixed;
+    position: relative;
     height: 60px;
     font-family: sans-serif;
     text-color : #78779e;
     /*top: 950px;*/
     left: 0px;
-    bottom: 250px;
+    bottom: 50%;
     text-align: center;
     width: 100%;
 }
@@ -103,10 +103,18 @@ h1 #m{
     color: #ffb32d;
 }
 
-.star {
-    height: 40px;
-    width: 40px;
+#star {
+    height: 50px;
+    width: 50px;
     float: left;
+    padding-right: 5px;
+    display: flex;
+    justify-content: center; /* align horizontal */
+    align-items: center; /* align vertical */
+}
+#descName{
+    display: table-cell;
+    vertical-align: middle;
 }
 
 /*photo gallery*/
@@ -114,7 +122,8 @@ div.gallery {
     margin: 5px;
     border: 1px solid #cccccc;
     float: left;
-    width: 180px;
+    width: 250px;
+    height: 200px;
 }
 
 div.gallery:hover {
@@ -123,13 +132,19 @@ div.gallery:hover {
 
 div.gallery img {
     width: 100%;
-    height: auto;
+    height: 100%;
 }
 
 div.desc {
-    padding: 10px;
+
+    padding: 5px;
     text-align: center;
     color: rgba(0, 0, 0, 1);
-    background: #f7ecff;
+    background: #ffffff;
     opacity: 0.6;
+    width: 250px;
+    height: 80px;
+    display: flex;
+    justify-content: center; /* align horizontal */
+    align-items: center; /* align vertical */
 }

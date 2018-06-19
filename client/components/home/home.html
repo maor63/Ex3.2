@@ -112,7 +112,7 @@
                 </tr>
             </table>
 
-            <div id="loggedInUserModal">
+            <div id="loggedInUserModal" ng-show="homeCtrl.isLoggedIn()">
                 <input type="button" value="Rank or review this site" ng-click="homeCtrl.openRankModal()">
             </div>
         </div>

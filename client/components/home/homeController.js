@@ -190,7 +190,7 @@ angular.module('citiesApp')
             }
             self.reviewObject=
                 {
-                    userName: "DNOT KNOW",
+                    userName: userManager.getUser().userName,
                     siteID: self.poi[0].siteID,
                     review: review,
                     date: today,

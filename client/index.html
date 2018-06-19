@@ -16,7 +16,7 @@
     <li><a href="#/poi">POI</a></li>
     <li ng-show="!indexCtrl.isLoggedIn()"><a href="#/register">Register</a></li>
     <li ng-show="!indexCtrl.isLoggedIn()"><a href="#/login">Login</a></li>
-    <li ng-show="indexCtrl.isLoggedIn()"><a href="#/favorites">favorites</a></li>
+    <li ng-show="indexCtrl.isLoggedIn()"><a href="#/favorites">favorites({{indexCtrl.getFavoritesCount()}})</a></li>
     <li ng-show="indexCtrl.isLoggedIn()" ng-click="indexCtrl.logout()"><a href="#/">Logout</a></li>
     <span>Hello {{indexCtrl.isLoggedIn() &&  indexCtrl.getUser().userName || 'Guest' }}</span>
 </ul>

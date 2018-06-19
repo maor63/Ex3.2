@@ -8,9 +8,13 @@ angular.module('citiesApp')
 
         self.isLoggedIn = function () {
             return userManager.getUser() !== undefined;
-        }
+        };
 
         self.logout = function () {
             userManager.clearUser();
+        };
+
+        self.getFavoritesCount = function () {
+            return Object.keys(userManager.favorites).length;
         }
     }]);

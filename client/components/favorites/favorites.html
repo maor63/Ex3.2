@@ -1,15 +1,34 @@
 
 
-<h2 class="line"><span>Your last saved sites</span></h2>
-<div ng-repeat="site in favoritesCtrl.favorits |orderBy : position ">
-    <div class="gallery">
-        <a target="_blank" href="img_5terre.jpg">
-            <img ng-src="{{site.image}}" alt="{{site.name}}">
-        </a>
-        <div class="desc">
-            <span ng-bind="site.name">  </span>
-            <img ng-src="{{site.favoritImgUrl}}" ng-click="favoritesCtrl.removeSite(site)" class="star"
-                 alt="star">
-        </div>
-    </div>
-</div>
+<h2 class="line"><span>Your favorites sites</span></h2>
+<form action="">
+    <select ng-options="category for (category, id) in favoritesCtrl.categories" ng-model="selectedCategory">
+    </select>
+    <select ng-model="selectedOrder">
+        <option value="undefined">position</option>
+        <option value="rank">rank</option>
+        <option value="category">category</option>
+        <option value="views">views</option>
+    </select>
+</form>
+<button type="button" ng-click="favoritesCtrl.saveFavorites()">Save favorites</button>
+<table>
+    <tr ng-repeat="site in favoritesCtrl.favorites |orderBy : selectedOrder | filter:{category: selectedCategory }">
+        <td>
+            <div class="gallery">
+                <a target="_blank" href="img_5terre.jpg">
+                    <img ng-src="{{site.image}}" alt="{{site.name}}">
+                </a>
+                <div class="desc">
+                    <span ng-bind="site.name">  </span>
+                    <img ng-src="{{site.favoritImgUrl}}" ng-click="favoritesCtrl.removeSite(site, $index)" class="star"
+                         alt="star">
+                </div>
+            </div>
+        </td>
+       <td>
+           <button type="button" ng-click="favoritesCtrl.swapUp($index)">up</button>
+           <button type="button" ng-click="favoritesCtrl.swapDown($index)">down</button>
+       </td>
+    </tr>
+</table>

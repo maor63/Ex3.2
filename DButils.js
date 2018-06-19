@@ -183,10 +183,9 @@ exports.getSearchResult = function (siteName) {
     return exports.execQuery(dbRequest);
 };
 
-exports.deleteFavorite = function (siteID, userName) {//oved maybe change
-    let query = "DELETE FROM FavoritePerUser WHERE siteID = @siteID AND userName = @userName;";
+exports.deleteFavorites = function (userName) {//oved maybe change
+    let query = "DELETE FROM FavoritePerUser WHERE userName = @userName;";
     let dbRequest = createRequest(query);
-    dbRequest.addParameter('siteID', TYPES.Int, siteID);
     dbRequest.addParameter('userName', TYPES.NVarChar, userName);
     exports.execQuery(dbRequest);
 

@@ -31,7 +31,7 @@ angular.module('citiesApp')
         });
 
         self.categories = {};
-        self.categoryIdToCategory = {}
+        self.categoryIdToCategory = {};
         self.categories[""] = undefined;
         $http.get("http://localhost:8080/users/categories").then(function (answer) {
             let categories = answer.data;
@@ -43,6 +43,10 @@ angular.module('citiesApp')
             console.log(err);
 
         });
+
+        self.getCategoryById = function(id){
+            return self.categoryIdToCategory[id];
+        };
 
         self.isLoggedIn = function () {
             return userManager.getUser() !== undefined;

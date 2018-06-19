@@ -3,7 +3,6 @@ angular.module('citiesApp')
         self = this;
 
         var modal = document.getElementById('myModal');
-        var btn = document.getElementById("myBtn");
         var span = document.getElementsByClassName("close")[0];
 
 
@@ -13,6 +12,8 @@ angular.module('citiesApp')
         self.poi={};
         self.poiUrls={};
         self.reviews={};
+        self.categories= {};
+        loadCategoriesFromApi();
         $http.get("http://localhost:8080/sites/popular").then(function (answers) {
             let sites = answers.data;
             let indexes = getRandomSubarray(sites, 3);
@@ -81,15 +82,19 @@ angular.module('citiesApp')
                     //First function handles success
                          self.poi = response.data;
                     //     self.poi.id = self.login.content[0].siteID;
-                    self.getSiteReviews(self.poi[0].siteID)
+                    self.getSiteReviews(self.poi[0].siteID);
                     self.getImagesModal(self.poi[0].siteID);
+                    self.poiCategory= self.categories[self.poi[0].categoryID-1];
+                self.poiCategoryName= self.poiCategory.categoryName
                 }, function (response) {
                     console.log(response);
-                    self.login.content = "Something went wrong";
                     alert('No details on this site')
                 });
 
             modal.style.display = "block";
+        };
+        self.openRankModal= function () {
+
         };
         function getRandomSubarray(arr, size) {
             let shuffled = arr.slice(0), i = arr.length, min = i - size, temp, index;
@@ -123,6 +128,17 @@ angular.module('citiesApp')
                    alert('No details on this site')
                });
        };
+        self.getSiteCategory= function (siteID) {
+            $http.get(serverUrl + "sites/photo_url/" + siteID)
+                .then(function (response) {
+                    //First function handles success
+                    self.poiUrls = response.data;
+                }, function (response) {
+                    console.log(response);
+                    self.login.content = "Something went wrong";
+                    alert('No details on this site')
+                });
+        };
         self.getSiteReviews= function (siteID) {
             $http.get(serverUrl + "sites/site_reviews/" + siteID)
                 .then(function (response) {
@@ -139,11 +155,20 @@ angular.module('citiesApp')
                     }
                 }, function (response) {
                     console.log(response);
-                    self.login.content = "Something went wrong";
                     alert('No Reviews on this site')
                 });
         };
 
+        function loadCategoriesFromApi() {
+            $http.get("http://localhost:8080/users/categories")
+                .then(function (response) {
+                    //First function handles success
+                    self.categories = response.data;
+                }, function (response) {
+                    console.log(response);
+                    alert('No details on this site')
+                });
+        }
 
 
     }

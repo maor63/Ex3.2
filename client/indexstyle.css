@@ -103,7 +103,7 @@ h1 #m{
     color: #ffb32d;
 }
 
-#star {
+.star {
     height: 50px;
     width: 50px;
     float: left;

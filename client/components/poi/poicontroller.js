@@ -19,7 +19,9 @@ angular.module('citiesApp')
                                 name: site["siteName"],
                                 image: getRandomSubarray(answer.data, 1)[0].url,
                                 favoritImgUrl: pic_url,
-                                category: site.categoryID
+                                category: site.categoryID,
+                                rank: site.rank,
+                                views: site.views
                             });
                     });
             }

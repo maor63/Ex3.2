@@ -3,24 +3,65 @@
     <input ng-model="searchInput">
     <select ng-options="category for (category, id) in poiCtrl.categories" ng-model="selectedCategory">
     </select>
-    </form>
+    <select ng-model="selectedOrder">
+        <option value="undefined"></option>
+        <option value="rank">rank</option>
+        <option value="category">category</option>
+        <option value="views">views</option>
+    </select>
+</form>
 <div>
     <div id="pois" class="container" style="padding-left: 100px;">
-        <div class="col-lg-12" ng-repeat="site in poiCtrl.sites | filter:{category: selectedCategory }| filter:{name: searchInput}">
-            <div class="gallery" ng-show="poiCtrl.isLoggedIn()">
-                <a target="_blank" href="img_5terre.jpg">
-                    <img ng-src="{{site.image}}" alt="{{site.name}}">
-                </a>
-                <div class="desc">
-                    <span ng-bind="site.name">  </span>
-                    <img ng-src="{{site.favoritImgUrl}}" ng-click="poiCtrl.toggleImage(site)" id="star" alt="star">
+        <div ng-show="selectedCategory === undefined" class="col-lg-12"
+             ng-repeat="(categoryName, id) in poiCtrl.categories " ng-if="id !== undefined">
+            <h2 ng-hide="(poiCtrl.sites | filter:{category: id }| filter:{name: searchInput}).length === 0"
+                class="col-lg-12"><span ng-bind="categoryName"></span></h2>
+            <br>
+            <div class="col-lg-3"
+                 ng-repeat="site in poiCtrl.sites | orderBy : selectedOrder| filter:{category: id } | filter:{name: searchInput}">
+                <div class="gallery" ng-show="poiCtrl.isLoggedIn()">
+                    <a target="_blank" href="img_5terre.jpg">
+                        <img ng-src="{{site.image}}" alt="{{site.name}}">
+                    </a>
+                    <div class="desc">
+                        <span ng-bind="site.name">  </span>
+                        <img ng-src="{{site.favoritImgUrl}}" ng-click="poiCtrl.toggleImage(site)" class="star"
+                             alt="star">
+                    </div>
+                </div>
+                <div class="gallery" ng-show="!poiCtrl.isLoggedIn()">
+                    <a target="_blank" href="img_5terre.jpg">
+                        <img ng-src="{{site.image}}" alt="{{site.name}}">
+                    </a>
+                    <div class="desc"><span ng-bind="site.name"></span>
+                    </div>
                 </div>
             </div>
-            <div class="gallery" ng-show="!poiCtrl.isLoggedIn()">
-                <a target="_blank" href="img_5terre.jpg">
-                    <img ng-src="{{site.image}}" alt="{{site.name}}">
-                </a>
-                <div class="desc"><span ng-bind="site.name"></span>
+
+        </div>
+
+        <div>
+            <h2 ng-hide="(poiCtrl.sites | filter:{category: id }| filter:{name: searchInput}).length === 0"
+                class="col-lg-12"><span ng-bind="selectedCategory"></span></h2>
+            <div class="col-lg-3" ng-show="selectedCategory !== undefined" class="col-lg-12"
+                 ng-repeat="site in poiCtrl.sites |orderBy : selectedOrder | filter:{category: selectedCategory }| filter:{name: searchInput}">
+
+                <div class="gallery" ng-show="poiCtrl.isLoggedIn()">
+                    <a target="_blank" href="img_5terre.jpg">
+                        <img ng-src="{{site.image}}" alt="{{site.name}}">
+                    </a>
+                    <div class="desc">
+                        <span ng-bind="site.name">  </span>
+                        <img ng-src="{{site.favoritImgUrl}}" ng-click="poiCtrl.toggleImage(site)" class="star"
+                             alt="star">
+                    </div>
+                </div>
+                <div class="gallery" ng-show="!poiCtrl.isLoggedIn()">
+                    <a target="_blank" href="img_5terre.jpg">
+                        <img ng-src="{{site.image}}" alt="{{site.name}}">
+                    </a>
+                    <div class="desc"><span ng-bind="site.name"></span>
+                    </div>
                 </div>
             </div>
         </div>

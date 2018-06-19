@@ -7,8 +7,6 @@
 <h1> Welcome to our site about</h1>
 <h3>New York City - NYU</h3>
 
-
-
 <div ng-switch="homeCtrl.isLoggedIn()">
     <div ng-switch-when="false">
         <p> To see more details we advice you register or login to our site.</p>
@@ -58,7 +56,7 @@
                 <table border="0">
                     <tr ng-switch="homeCtrl.isLoggedIn()">
                         <td align="center" ng-switch-when="true">
-                            <div class="gallery">
+                            <div class="gallery" ng-click="homeCtrl.showPoiModalFunc()">
                                 <a target="_blank" href="img_5terre.jpg">
                                     <img ng-src="{{site.image}}" alt="{{site.name}}">
                                 </a>

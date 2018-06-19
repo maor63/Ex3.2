@@ -1,6 +1,8 @@
 
 <div ng-hide="loginCtrl.recovery">
-<h2> Login here:</h2>
+    <p class="subtitle fancy"><span>Login here:</span></p>
+    <div class="formContainer">
+
 <form name="loginForm"  ng-submit="loginCtrl.login()" novalidate>
     <p>
         <label>User Name: </label>
@@ -23,9 +25,11 @@
     </p>
 </form>
 </div>
+</div>
 
 <div ng-show="loginCtrl.recovery">
-    <h2> Get your password by answering the following question:</h2>
+    <p class="subtitle fancy"><span> Get your password by answering the following question:</span></p>
+    <div class="formContainer">
     <form name="recoveryForm"  ng-submit="loginCtrl.recovrpassword()" novalidate>
         <p>
             <label>User Name: </label>
@@ -47,6 +51,7 @@
             <label ng-click="loginCtrl.showrecoveryquestion()"><a href="">Go back to log in </a></label>
         </p>
     </form>
+</div>
 </div>
 
 <dialog id="user_alert">

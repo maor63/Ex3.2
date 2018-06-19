@@ -71,7 +71,10 @@ angular.module('citiesApp')
         self.isLoggedIn = function () {
             return userManager.getUser() !== undefined;
         };
-
+        
+        self.showPoiModalFunc = function () {
+            
+        }
         function getRandomSubarray(arr, size) {
             let shuffled = arr.slice(0), i = arr.length, min = i - size, temp, index;
             while (i-- > min) {
@@ -82,6 +85,8 @@ angular.module('citiesApp')
             }
             return shuffled.slice(min);
         }
+        
+        
     }
     ])
 ;

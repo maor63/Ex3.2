@@ -102,7 +102,7 @@
                     <td class="td_review">Review</td>
                     <td class="td_review">Date added</td>
                 </tr>
-                <tr class="tr_review" ng-repeat="x in homeCtrl.reviews">
+                <tr class="tr_review" ng-repeat="x in homeCtrl.reviews | limitTo:2">
                     <td class="td_review">{{x.userName}}</td>
                     <td class="td_review">{{x.review}}</td>
                     <td class="td_review">{{x.date}}</td>
@@ -111,6 +111,7 @@
 
             <div id="loggedInUserModal" ng-show="homeCtrl.isLoggedIn()">
                 <input type="button" value="Rank or review this site" ng-click="homeCtrl.openRankModal()">
+                <img ng-src="{{homeCtrl.poi[0].favoritImgUrl}}" ng-click="homeCtrl.toggleImage(homeCtrl.poi[0])" class="star" alt="star">
             </div>
         </div>
         <div class="modal-footer">

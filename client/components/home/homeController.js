@@ -90,6 +90,10 @@ angular.module('citiesApp')
                     //First function handles success
                          self.poi = response.data;
                     //     self.poi.id = self.login.content[0].siteID;
+                    if(userManager.isFavorite(self.poi[0].siteID))
+                        self.poi[0].favoritImgUrl="pictures/star.png";
+                    else
+                        self.poi[0].favoritImgUrl="pictures/empty_star.png";
                     self.getSiteReviews(self.poi[0].siteID);
                     self.getImagesModal(self.poi[0].siteID);
                     self.poiCategory= self.categories[self.poi[0].categoryID-1];

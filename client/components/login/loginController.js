@@ -2,6 +2,7 @@ angular.module('citiesApp')
     .controller('LoginController', ['$window', '$http', 'setHeadersToken','userManager', function ($window, $http, setHeadersToken,userManager) {
         let self = this;
         let serverUrl = 'http://localhost:8080/';
+
         self.login = function () {
             $http.post(serverUrl + "users/login", self.user)
                 .then(function (response) {
@@ -34,7 +35,7 @@ angular.module('citiesApp')
                 .then(function (response) {
                     //First function handles success
                     if (response.data.success === true) {
-                        alert('your answer has benn confirmed' + response.data.password.password);
+                        alert('your answer has been confirmed' + response.data.password.password);
 
                     }
                     else {

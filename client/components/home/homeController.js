@@ -12,7 +12,7 @@ angular.module('citiesApp')
 
         let serverUrl = 'http://localhost:8080/';
         self.sites = {};
-        self.favorits = {};
+        self.favorits = [];
         self.poi={};
         self.poiUrls={};
         self.reviews={};
@@ -55,14 +55,14 @@ angular.module('citiesApp')
                         let site = favorits[i];
                         $http.get("http://localhost:8080/sites/photo_url/" + site.siteID)
                             .then(function (answer) {
-                                self.favorits[site.siteID] =
+                                self.favorits.push(
                                     {
                                         id: site.siteID,
                                         name: site["siteName"],
                                         image: tools.getRandomSubarray(answer.data, 1)[0].url,
                                         category: site.categoryID,
                                         favoritImgUrl: "pictures/star.png"
-                                    };
+                                    });
 
                                 if (site.siteID in self.sites) {
                                     self.sites[site.siteID].favoritImgUrl = "pictures/star.png";

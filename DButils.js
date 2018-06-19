@@ -293,7 +293,7 @@ exports.getFavorites = function (userName) {
 };
 
 exports.getLastSaved = function (userName) {
-    let query = "SELECT s.siteID, number, categoryID, dateAdded FROM FavoritePerUser AS f, Sites AS s WHERE f.userName = @userName AND s.siteID = f.siteID" +
+    let query = "SELECT s.siteID,s.siteName as siteName, number, categoryID, dateAdded FROM FavoritePerUser AS f, Sites AS s WHERE f.userName = @userName AND s.siteID = f.siteID" +
         " ORDER BY dateAdded;";
     let dbRequest = createRequest(query);
     dbRequest.addParameter('userName', TYPES.NVarChar, userName);

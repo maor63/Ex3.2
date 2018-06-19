@@ -19,10 +19,9 @@ router.post('/review', function (req, res) {//
     }
 });
 
-router.delete('/delFavorite', function (req, res) {// delete favorite site for user
-    let siteID = req.body.siteID;
+router.post('/del_favorites', function (req, res) {// delete favorite site for user
     let userName = req.body.userName;
-    db.deleteFavorite(siteID, userName);
+    db.deleteFavorites(userName);
     res.end();
 });
 

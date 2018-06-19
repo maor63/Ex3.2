@@ -11,6 +11,7 @@
         <option value="views">views</option>
     </select>
 </form>
+<button type="button" ng-click="favoritesCtrl.saveFavorites()">Save favorites</button>
 <table>
     <tr ng-repeat="site in favoritesCtrl.favorites |orderBy : selectedOrder | filter:{category: selectedCategory }">
         <td>
@@ -20,7 +21,7 @@
                 </a>
                 <div class="desc">
                     <span ng-bind="site.name">  </span>
-                    <img ng-src="{{site.favoritImgUrl}}" ng-click="favoritesCtrl.removeSite(site)" class="star"
+                    <img ng-src="{{site.favoritImgUrl}}" ng-click="favoritesCtrl.removeSite(site, $index)" class="star"
                          alt="star">
                 </div>
             </div>

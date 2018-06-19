@@ -1,5 +1,5 @@
 angular.module('citiesApp')
-    .controller('favoritesController', ['$http', 'userManager', function ($http, userManager) {
+    .controller('favoritesController', ['$http', 'userManager','tools', function ($http, userManager, tools) {
         self = this;
         self.favorites = [];
         if (userManager.getUser() !== undefined) {
@@ -12,24 +12,24 @@ angular.module('citiesApp')
                         continue;
                     $http.get("http://localhost:8080/sites/site/" + favorite.siteID)
                         .then(function (answer) {
-                            let site = answer.data;
-                            self.favorites.push(
-                                {
-                                    id: site.siteID,
-                                    name: site["siteName"],
-                                    image: getRandomSubarray(answer.data, 1)[0].url,
-                                    favoritImgUrl: "pictures/star.png",
-                                    category: site.categoryID,
-                                    position: userManager.getNextPosition()
-                                });
+                            let site = answer.data[0];
+                            $http.get("http://localhost:8080/sites/photo_url/" + favorite.siteID).then(function (answer) {
+                                self.favorites.push(
+                                    {
+                                        id: site.siteID,
+                                        name: site["siteName"],
+                                        image: tools.getRandomSubarray(answer.data, 1)[0].url,
+                                        favoritImgUrl: "pictures/star.png",
+                                        category: site.categoryID,
+                                        position: userManager.getNextPosition()
+                                    });
+                            });
                         });
                 }
 
             }).catch(function (err) {
                 console.log(err);
             });
-
-
         }
 
         self.categories = {};
@@ -44,8 +44,9 @@ angular.module('citiesApp')
 
         });
 
-        self.removeSite = function (site) {
+        self.removeSite = function (site, index) {
             userManager.updateFavorite(site);
+            self.favorites.splice(index, 1);
         };
 
         function swap(index, index2) {
@@ -64,6 +65,15 @@ angular.module('citiesApp')
             if(index < self.favorites.length - 1){
                 swap(index, index + 1);
             }
+        };
+        self.saveFavorites = function () {
+            let favorites = [];
+            for(let i = 0; i <  self.favorites.length; i++){
+                favorites.push(self.favorites[i].id);
+            }
+            let data = {userName: userManager.getUser().userName, favorites: favorites};
+            $http.post('http://localhost:8080/reg/del_favorites', data);
+            $http.post("http://localhost:8080/reg/add_favorite_sites", data)
         }
 
     }]);

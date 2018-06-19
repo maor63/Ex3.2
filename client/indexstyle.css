@@ -116,6 +116,10 @@ h1 #m{
     display: table-cell;
     vertical-align: middle;
 }
+.col-centered{
+    float: none;
+    margin: 0 auto;
+}
 
 /*photo gallery*/
 div.gallery {
@@ -123,7 +127,8 @@ div.gallery {
     border: 1px solid #cccccc;
     float: left;
     width: 250px;
-    height: 200px;
+    height: 285px;
+    padding-bottom: 85px;
 }
 
 div.gallery:hover {

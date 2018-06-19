@@ -1,1 +1,1 @@
-npm install express body-parser morgan jsonwebtoken tedious-connection-pool tedious cors
+npm install express body-parser morgan jsonwebtoken tedious-connection-pool tedious cors angular-local-storage

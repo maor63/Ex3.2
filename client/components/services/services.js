@@ -8,21 +8,9 @@ angular.module('citiesApp')
             token = t;
             $http.defaults.headers.common['x-access-token'] = t;
             // $httpProvider.defaults.headers.post[ 'x-access-token' ] = token
-            console.log("set")
-
+            console.log("set");
         };
 
-        this.setCurrToken = function () {
-            $http.defaults.headers.common['x-access-token'] = token;
-        };
-
-        this.getTokent = function () {
-            return token;
-        };
-
-        this.isUserConnected = function () {
-            return token !== "";
-        }
     }])
     .service('tools', [function () {
         this.getRandomSubarray = function (arr, size) {
@@ -47,8 +35,8 @@ angular.module('citiesApp')
             return self.nextPosition++;
         };
 
-        self.setUser = function (userName) {
-            self.user = userName;
+        self.setUser = function (user) {
+            self.user = user;
             self.favorites = {};
             loadFavoriets();
         };

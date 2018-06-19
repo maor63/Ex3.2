@@ -42,7 +42,7 @@
 
         <div>
             <h2 ng-hide="(poiCtrl.sites | filter:{category: id }| filter:{name: searchInput}).length === 0"
-                class="col-lg-12"><span ng-bind="selectedCategory"></span></h2>
+                class="col-lg-12"><span ng-bind="self.categoryIdToCategory[selectedCategory]"></span></h2>
             <div class="col-lg-3" ng-show="selectedCategory !== undefined" class="col-lg-12"
                  ng-repeat="site in poiCtrl.sites |orderBy : selectedOrder | filter:{category: selectedCategory }| filter:{name: searchInput}">
 

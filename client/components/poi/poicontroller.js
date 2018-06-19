@@ -27,6 +27,14 @@ angular.module('citiesApp')
 
         });
 
+        self.isLoggedIn = function () {
+            return userManager.getUser() !== undefined;
+        };
+
+        self.toggleImage = function (site) {
+            userManager.updateFavorite(site);
+        };
+
         function getRandomSubarray(arr, size) {
             let shuffled = arr.slice(0), i = arr.length, min = i - size, temp, index;
             while (i-- > min) {

@@ -54,6 +54,17 @@ angular.module('citiesApp')
             return self.favorites.indexOf(site_id) > -1;
         };
 
+        self.updateFavorite = function (site) {
+            if (site.favoritImgUrl === "pictures/star.png") {
+                site.favoritImgUrl = "pictures/empty_star.png";
+                self.deleteFavorite(site.id);
+            }
+            else {
+                site.favoritImgUrl = "pictures/star.png";
+                self.addFavorite(site.id);
+            }
+        };
+
         function deleteFromArray(array, element) {
             var index = array.indexOf(element);
             if (index > -1) {

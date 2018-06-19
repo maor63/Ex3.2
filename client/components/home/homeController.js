@@ -58,14 +58,7 @@ angular.module('citiesApp')
         }
 
         self.toggleImage = function (site) {
-            if (site.favoritImgUrl === "pictures/star.png") {
-                site.favoritImgUrl = "pictures/empty_star.png";
-                userManager.deleteFavorite(site.id);
-            }
-            else {
-                site.favoritImgUrl = "pictures/star.png";
-                userManager.addFavorite(site.id);
-            }
+            userManager.updateFavorite(site);
         };
 
         self.isLoggedIn = function () {

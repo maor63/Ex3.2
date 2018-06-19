@@ -59,7 +59,7 @@
                             <div class="gallery" ng-click="homeCtrl.showPoiModalFunc(site.name)">
                                     <img ng-src="{{site.image}}" alt="{{site.name}}">
                                 <div class="desc"><p>
-                                    <img ng-src="{{site.favoritImgUrl}}" ng-click="homeCtrl.toggleImage(site)" id="star" alt="star">
+                                    <img ng-src="{{site.favoritImgUrl}}" ng-click="homeCtrl.toggleImage(site)" class="star" alt="star">
                                     <span id="descName" ng-bind="site.name"></span>
 
                                 </p>

@@ -19,7 +19,9 @@ angular.module('citiesApp')
                                 name: site["siteName"],
                                 image: getRandomSubarray(answer.data, 1)[0].url,
                                 favoritImgUrl: pic_url,
-                                category: site.categoryID
+                                category: site.categoryID,
+                                rank: site.rank,
+                                views: site.views
                             });
                     });
             }
@@ -29,11 +31,13 @@ angular.module('citiesApp')
         });
 
         self.categories = {};
+        self.categoryIdToCategory = {}
         self.categories[""] = undefined;
         $http.get("http://localhost:8080/users/categories").then(function (answer) {
             let categories = answer.data;
             for (let i = 0; i < categories.length; i++) {
                 self.categories[categories[i].categoryName] = categories[i].categoryID;
+                self.categoryIdToCategory[categories[i].categoryID] = categories[i].categoryName;
             }
         }).catch(function (err) {
             console.log(err);

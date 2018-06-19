@@ -1,17 +1,16 @@
 angular.module('citiesApp')
-    .controller('LoginController', ['$scope', '$http', 'setHeadersToken','userManager', function ($scope, $http, setHeadersToken,userManager) {
+    .controller('LoginController', ['$window', '$http', 'setHeadersToken','userManager', function ($window, $http, setHeadersToken,userManager) {
         let self = this;
         let serverUrl = 'http://localhost:8080/';
         self.login = function () {
-            // console.log(self.user.username);
-            // console.log(self.user.password);
             $http.post(serverUrl + "users/login", self.user)
                 .then(function (response) {
                     //First function handles success
                     if (response.data.success === true) {
                         self.login.content = response.data.token;
                         setHeadersToken.set(self.login.content);
-                        userManager.setUser(self.user);
+                        userManager.setUser(self.user)
+                        $window.location.href = '#/';
                         alert('login succ')
                     }
                     else {
@@ -23,8 +22,10 @@ angular.module('citiesApp')
                     self.login.content = "Something went wrong";
                     alert('login failed')
                 });
-        }
-        self.recoverPassword = function () {
+        };
+
+
+        self.recoverpassword = function () {
             // this function reciev the answer of the user and checks if it is equal to answer in the database
             //first we check if the user name exist
             //after we check the answer
@@ -73,7 +74,7 @@ angular.module('citiesApp')
                     alert('verification failed');
                 });
         };
-        self.showRecoveryQuestion = function () {
+        self.showrecoveryquestion = function () {
             //this function control the screen between recovery and login forms
             //checks weather a user name is added
             if (!self.user || !self.user.userName)

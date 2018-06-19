@@ -1,2 +1,13 @@
 <h2><span> The point of interest in NEW YORK:</span></h2>
 
+<div class="container" ng-repeat="(id , site) in poiCtrl.sites">
+    <div class="col-lg-3" >
+        <div class="gallery">
+            <a target="_blank" href="img_5terre.jpg">
+                <img ng-style="{'height': '100px'}" ng-src="{{site.image}}" alt="{{site.name}}" width="300" height="200">
+            </a>
+            <div class="desc"><span ng-bind="site.name"></span>
+            </div>
+        </div>
+    </div>
+</div>

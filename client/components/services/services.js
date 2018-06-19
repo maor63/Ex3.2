@@ -48,11 +48,11 @@ angular.module('citiesApp')
 
         self.deleteFavorite = function (site_id) {
             deleteFromArray(self.favorites, site_id);
-        }
+        };
 
         self.isFavorite = function (site_id) {
             return self.favorites.indexOf(site_id) > -1;
-        }
+        };
 
         function deleteFromArray(array, element) {
             var index = array.indexOf(element);

@@ -1,3 +1,4 @@
+
 //this is only an example, handling everything is yours responsibilty !
 //this is an example - open and close the connection in each request
 
@@ -207,6 +208,13 @@ exports.getAllSites = function () {
     //dbRequest.addParameter('siteName', TYPES.NVarChar, siteName);
     return exports.execQuery(dbRequest);
 };
+exports.getSiteById = function (siteID) {
+    let query = "SELECT * FROM Sites WHERE siteID = @siteId;";
+    let dbRequest = createRequest(query);
+    dbRequest.addParameter('siteID', TYPES.Int, siteID);
+    return exports.execQuery(dbRequest);
+};
+
 exports.getAllCategories = function () {
     let query = "SELECT * FROM Categories;";
     let dbRequest = createRequest(query);

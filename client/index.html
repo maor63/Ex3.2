@@ -16,6 +16,7 @@
     <li><a href="#/poi">POI</a></li>
     <li ng-show="!indexCtrl.isLoggedIn()"><a href="#/register">Register</a></li>
     <li ng-show="!indexCtrl.isLoggedIn()"><a href="#/login">Login</a></li>
+    <li ng-show="indexCtrl.isLoggedIn()"><a href="#/favorites">favorites</a></li>
     <li ng-show="indexCtrl.isLoggedIn()" ng-click="indexCtrl.logout()"><a href="#/">Logout</a></li>
     <span>Hello {{indexCtrl.isLoggedIn() &&  indexCtrl.getUser().userName || 'Guest' }}</span>
 </ul>
@@ -32,6 +33,7 @@
 <script src="components/register/registerController.js" ></script>
 <script src="components/services/services.js"></script>
 <script src="components/poi/poicontroller.js"></script>
+<script src="components/favorites/favoritesController.js"></script>
 <script src="indexController.js" ></script>
 <script src="xml2json.js"></script>
 </body>

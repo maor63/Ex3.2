@@ -153,3 +153,51 @@ div.desc {
     justify-content: center; /* align horizontal */
     align-items: center; /* align vertical */
 }
+
+.formContainer{
+    background: #a5a1d67a;
+    border-radius: 5px;
+    margin: 0 auto;
+    width: 60%;
+    padding: 10px;
+}
+
+.subtitle {
+    margin: 0 0 2em 0;
+}
+.fancy {
+    line-height: 0.5;
+    text-align: center;
+}
+.fancy span {
+    display: inline-block;
+    position: relative;
+    font-size: 35px;
+    font-family: "Arial";
+    position: relative;
+    text-align: center;
+    /*font-weight: bold;*/
+    text-shadow: 3px 2px #000000;
+    -webkit-text-stroke-color: #b3d2fd;
+    -webkit-text-stroke-width: 1px;
+    color: #ffffff;
+    padding-top: 25px;
+}
+.fancy span:before,
+.fancy span:after {
+    content: "";
+    position: absolute;
+    height: 5px;
+    border-bottom: 1px solid white;
+    border-top: 1px solid white;
+    top: 30px;
+    width: 600px;
+}
+.fancy span:before {
+    right: 120%;
+    margin-right:40px;
+}
+.fancy span:after {
+    left: 120%;
+    margin-left: 40px;
+}

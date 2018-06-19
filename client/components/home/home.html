@@ -101,13 +101,11 @@
             <h4> Reviews:</h4>
             <table class="table_review">
                 <tr class="tr_review">
-                    <td class="td_review">ID</td>
                     <td class="td_review">User name</td>
                     <td class="td_review">Review</td>
                     <td class="td_review">Date added</td>
                 </tr>
                 <tr class="tr_review" ng-repeat="x in homeCtrl.reviews">
-                    <td class="td_review"> {{x.id}}</td>
                     <td class="td_review">{{x.userName}}</td>
                     <td class="td_review">{{x.review}}</td>
                     <td class="td_review">{{x.date}}</td>
@@ -115,11 +113,61 @@
             </table>
 
             <div id="loggedInUserModal">
-                <input type="button" value="Rank or review this site" onclick="homeCtrl.openRankModal()">
+                <input type="button" value="Rank or review this site" ng-click="homeCtrl.openRankModal()">
             </div>
         </div>
         <div class="modal-footer">
             <h3>footer</h3>
+        </div>
+    </div>
+
+</div>
+<div id="rankModal" class="modal">
+    <!-- Modal content -->
+    <div class="modal-content">
+        <div class="modal-header">
+            <span class="close">&times;</span>
+            <p class="subtitle fancy"><span>Review the site:</span></p>
+        </div>
+        <div class="modal-body">
+            <h3>Add a review here:</h3>
+            <textarea type="text"  name="reviewText" id="reviewText" placeholder="Enter your review here..." rows="10" cols="70" ng-model="homeCtrl.reviewText"></textarea>
+            <h3>Rank:</h3>
+            <form class="rating">
+                <label>
+                    <input type="radio" name="stars" value="1" ng-click="homeCtrl.rankedStar=1"/>
+                    <span class="icon">★</span>
+                </label>
+                <label>
+                    <input type="radio" name="stars" value="2" ng-click="homeCtrl.rankedStar=2"/>
+                    <span class="icon">★</span>
+                    <span class="icon">★</span>
+                </label>
+                <label>
+                    <input type="radio" name="stars" value="3" ng-click="homeCtrl.rankedStar=3"/>
+                    <span class="icon">★</span>
+                    <span class="icon">★</span>
+                    <span class="icon">★</span>
+                </label>
+                <label>
+                    <input type="radio" name="stars" value="4" ng-click="homeCtrl.rankedStar=4"/>
+                    <span class="icon">★</span>
+                    <span class="icon">★</span>
+                    <span class="icon">★</span>
+                    <span class="icon">★</span>
+                </label>
+                <label>
+                    <input type="radio" name="stars" value="5" ng-click="homeCtrl.rankedStar=5"/>
+                    <span class="icon">★</span>
+                    <span class="icon">★</span>
+                    <span class="icon">★</span>
+                    <span class="icon">★</span>
+                    <span class="icon">★</span>
+                </label>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <input type="button" value="Submit" ng-click="homeCtrl.submitRanking(homeCtrl.reviewText)">
         </div>
     </div>
 

@@ -4,32 +4,32 @@ angular.module('citiesApp')
         self.favorites = [];
         if (userManager.getUser() !== undefined) {
             self.favorites = Object.values(userManager.favorites);
-            $http.get("http://localhost:8080/reg/favorites/" + userManager.getUser().userName).then(function (answer) {
-                let favorits = answer.data;
-                for (let i = 0; i < favorits.length; i++) {
-                    let favorite = favorits[i];
-                    if(userManager.isFavorite(favorite.siteID))
-                        continue;
-                    $http.get("http://localhost:8080/sites/site/" + favorite.siteID)
-                        .then(function (answer) {
-                            let site = answer.data[0];
-                            $http.get("http://localhost:8080/sites/photo_url/" + favorite.siteID).then(function (answer) {
-                                self.favorites.push(
-                                    {
-                                        id: site.siteID,
-                                        name: site["siteName"],
-                                        image: tools.getRandomSubarray(answer.data, 1)[0].url,
-                                        favoritImgUrl: "pictures/star.png",
-                                        category: site.categoryID,
-                                        position: userManager.getNextPosition()
-                                    });
-                            });
-                        });
-                }
-
-            }).catch(function (err) {
-                console.log(err);
-            });
+            // $http.get("http://localhost:8080/reg/favorites/" + userManager.getUser().userName).then(function (answer) {
+            //     let favorits = answer.data;
+            //     for (let i = 0; i < favorits.length; i++) {
+            //         let favorite = favorits[i];
+            //         if(userManager.isFavorite(favorite.siteID))
+            //             continue;
+            //         $http.get("http://localhost:8080/sites/site/" + favorite.siteID)
+            //             .then(function (answer) {
+            //                 let site = answer.data[0];
+            //                 $http.get("http://localhost:8080/sites/photo_url/" + favorite.siteID).then(function (answer) {
+            //                     self.favorites.push(
+            //                         {
+            //                             id: site.siteID,
+            //                             name: site["siteName"],
+            //                             image: tools.getRandomSubarray(answer.data, 1)[0].url,
+            //                             favoritImgUrl: "pictures/star.png",
+            //                             category: site.categoryID,
+            //                             position: userManager.getNextPosition()
+            //                         });
+            //                 });
+            //             });
+            //     }
+            //
+            // }).catch(function (err) {
+            //     console.log(err);
+            // });
         }
 
         self.categories = {};

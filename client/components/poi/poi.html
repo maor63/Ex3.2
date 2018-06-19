@@ -1,4 +1,6 @@
-<h2><span> The points of interest in NEW YORK:</span></h2>
+
+<p class="subtitle fancy"><span>Points of interest in NEW YORK:</span></p>
+
 <form action="">
     <input ng-model="searchInput">
     <select ng-options="category for (category, id) in poiCtrl.categories" ng-model="selectedCategory">
@@ -26,7 +28,7 @@
                     <div class="desc">
                         <span ng-bind="site.name">  </span>
                         <img ng-src="{{site.favoritImgUrl}}" ng-click="poiCtrl.toggleImage(site)" class="star"
-                             alt="star">
+                             alt="star" width="50" height="50">
                     </div>
                 </div>
                 <div class="gallery" ng-show="!poiCtrl.isLoggedIn()">
@@ -53,7 +55,7 @@
                     <div class="desc">
                         <span ng-bind="site.name">  </span>
                         <img ng-src="{{site.favoritImgUrl}}" ng-click="poiCtrl.toggleImage(site)" class="star"
-                             alt="star">
+                             alt="star" width="50px" height="50px">
                     </div>
                 </div>
                 <div class="gallery" ng-show="!poiCtrl.isLoggedIn()">

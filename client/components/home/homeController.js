@@ -12,6 +12,7 @@ angular.module('citiesApp')
         self.favorits = {};
         self.poi={};
         self.poiUrls={};
+        self.reviews={};
         $http.get("http://localhost:8080/sites/popular").then(function (answers) {
             let sites = answers.data;
             let indexes = getRandomSubarray(sites, 3);
@@ -80,6 +81,7 @@ angular.module('citiesApp')
                     //First function handles success
                          self.poi = response.data;
                     //     self.poi.id = self.login.content[0].siteID;
+                    self.getSiteReviews(self.poi[0].siteID)
                     self.getImagesModal(self.poi[0].siteID);
                 }, function (response) {
                     console.log(response);
@@ -121,6 +123,26 @@ angular.module('citiesApp')
                    alert('No details on this site')
                });
        };
+        self.getSiteReviews= function (siteID) {
+            $http.get(serverUrl + "sites/site_reviews/" + siteID)
+                .then(function (response) {
+                    //First function handles success
+                    self.reviews = response.data;
+                    if (self.reviews.length===0){
+                        self.reviews[0]=
+                        {
+                            id: "",
+                            userID: "",
+                            review: "No reviews added yet",
+                            date: "",
+                        }
+                    }
+                }, function (response) {
+                    console.log(response);
+                    self.login.content = "Something went wrong";
+                    alert('No Reviews on this site')
+                });
+        };
 
 
 

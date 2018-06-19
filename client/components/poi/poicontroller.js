@@ -1,7 +1,7 @@
 angular.module('citiesApp')
     .controller('poiCtrl', ['$http', 'userManager', function ($http, userManager) {
         let self = this;
-        self.sites = {};
+        self.sites = [];
         $http.get("http://localhost:8080/sites/all").then(function (answers) {
             let sites = answers.data;
             for (let i = 0; i < sites.length; i++) {
@@ -13,14 +13,26 @@ angular.module('citiesApp')
                             pic_url = "pictures/star.png";
                         else
                             pic_url = "pictures/empty_star.png";
-                        self.sites[site.siteID] =
+                        self.sites.push(
                             {
                                 id: site.siteID,
                                 name: site["siteName"],
                                 image: getRandomSubarray(answer.data, 1)[0].url,
-                                favoritImgUrl: pic_url
-                            }
+                                favoritImgUrl: pic_url,
+                                category: site.categoryID
+                            });
                     });
+            }
+        }).catch(function (err) {
+            console.log(err);
+
+        });
+
+        self.categories = {};
+        $http.get("http://localhost:8080/users/categories").then(function (answer) {
+            let categories = answer.data;
+            for (let i = 0; i < categories.length; i++) {
+                self.categories[categories[i].categoryName] = categories[i].categoryID;
             }
         }).catch(function (err) {
             console.log(err);

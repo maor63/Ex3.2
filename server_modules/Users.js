@@ -70,6 +70,7 @@ router.get('/verification_questions/:userName', function (req, res) {
         res.send(questions);
     });
 });
+
 router.get('/categories', function (req, res) {
     let dbAnswer = db.getAllCategories();
     dbAnswer.then(function (categories) {

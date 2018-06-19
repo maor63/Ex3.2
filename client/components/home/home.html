@@ -60,17 +60,20 @@
                         <td align="center" ng-switch-when="true">
                             <div class="gallery">
                                 <a target="_blank" href="img_5terre.jpg">
-                                    <img ng-style="{'height': '100px'}" ng-src="{{site.image}}" alt="{{site.name}}" width="300" height="200">
+                                    <img ng-src="{{site.image}}" alt="{{site.name}}">
                                 </a>
-                                <div class="desc"><span ng-bind="site.name"></span>
-                                    <img ng-src="{{site.favoritImgUrl}}" ng-click="homeCtrl.toggleImage(site)" class="star" alt="star">
+                                <div class="desc"><p>
+                                    <img ng-src="{{site.favoritImgUrl}}" ng-click="homeCtrl.toggleImage(site)" id="star" alt="star">
+                                    <span id="descName" ng-bind="site.name"></span>
+
+                                </p>
                                 </div>
                             </div>
                         </td>
                         <td align="center" ng-switch-default>
                             <div class="gallery">
                                 <a target="_blank" href="img_5terre.jpg">
-                                    <img ng-style="{'height': '100px'}" ng-src="{{site.image}}" alt="{{site.name}}" width="300" height="200">
+                                    <img  ng-src="{{site.image}}" alt="{{site.name}}" width="300" height="200">
                                 </a>
                                 <div class="desc"><span ng-bind="site.name"></span>
                                 </div>
@@ -79,6 +82,6 @@
                     </tr>
                 </table>
             </td>
-        </tr>
+            <!--ng-style="{'height': '100px'}"-->
     </table>
 </footer>

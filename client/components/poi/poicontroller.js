@@ -29,6 +29,7 @@ angular.module('citiesApp')
         });
 
         self.categories = {};
+        self.categories[""] = undefined;
         $http.get("http://localhost:8080/users/categories").then(function (answer) {
             let categories = answer.data;
             for (let i = 0; i < categories.length; i++) {

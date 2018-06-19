@@ -1,5 +1,5 @@
 angular.module('citiesApp')
-    .controller('poiCtrl', ['$http', 'userManager', function ($http, userManager) {
+    .controller('poiCtrl', ['$http', 'userManager', 'tools', function ($http, userManager, tools) {
         let self = this;
         self.sites = [];
         $http.get("http://localhost:8080/sites/all").then(function (answers) {
@@ -17,7 +17,7 @@ angular.module('citiesApp')
                             {
                                 id: site.siteID,
                                 name: site["siteName"],
-                                image: getRandomSubarray(answer.data, 1)[0].url,
+                                image: tools.getRandomSubarray(answer.data, 1)[0].url,
                                 favoritImgUrl: pic_url,
                                 category: site.categoryID,
                                 rank: site.rank,
@@ -44,7 +44,7 @@ angular.module('citiesApp')
 
         });
 
-        self.getCategoryById = function(id){
+        self.getCategoryById = function (id) {
             return self.categoryIdToCategory[id];
         };
 
@@ -56,14 +56,4 @@ angular.module('citiesApp')
             userManager.updateFavorite(site);
         };
 
-        function getRandomSubarray(arr, size) {
-            let shuffled = arr.slice(0), i = arr.length, min = i - size, temp, index;
-            while (i-- > min) {
-                index = Math.floor((i + 1) * Math.random());
-                temp = shuffled[index];
-                shuffled[index] = shuffled[i];
-                shuffled[i] = temp;
-            }
-            return shuffled.slice(min);
-        }
     }]);

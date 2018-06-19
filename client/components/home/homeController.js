@@ -1,5 +1,5 @@
 angular.module('citiesApp')
-    .controller('homeController', ['$http', 'userManager','$routeParams', function ($http, userManager,routeParams) {
+    .controller('homeController', ['$http', 'userManager','tools' ,function ($http, userManager,tools) {
         self = this;
 
         var modal = document.getElementById('myModal');
@@ -21,7 +21,7 @@ angular.module('citiesApp')
         loadCategoriesFromApi();
         $http.get("http://localhost:8080/sites/popular").then(function (answers) {
             let sites = answers.data;
-            let indexes = getRandomSubarray(sites, 3);
+            let indexes = tools.getRandomSubarray(sites, 3);
             for (let i = 0; i < indexes.length; i++) {
                 let site = indexes[i];
                 $http.get("http://localhost:8080/sites/photo_url/" + site.siteID)
@@ -35,7 +35,7 @@ angular.module('citiesApp')
                             {
                                 id: site.siteID,
                                 name: site["siteName"],
-                                image: getRandomSubarray(answer.data, 1)[0].url,
+                                image: tools.getRandomSubarray(answer.data, 1)[0].url,
                                 category: site.categoryID,
                                 favoritImgUrl: pic_url
 
@@ -59,7 +59,7 @@ angular.module('citiesApp')
                                     {
                                         id: site.siteID,
                                         name: site["siteName"],
-                                        image: getRandomSubarray(answer.data, 1)[0].url,
+                                        image: tools.getRandomSubarray(answer.data, 1)[0].url,
                                         category: site.categoryID,
                                         favoritImgUrl: "pictures/star.png"
                                     };
@@ -104,16 +104,6 @@ angular.module('citiesApp')
         self.openRankModal= function () {
             modalRank.style.display = "block";
         };
-        function getRandomSubarray(arr, size) {
-            let shuffled = arr.slice(0), i = arr.length, min = i - size, temp, index;
-            while (i-- > min) {
-                index = Math.floor((i + 1) * Math.random());
-                temp = shuffled[index];
-                shuffled[index] = shuffled[i];
-                shuffled[i] = temp;
-            }
-            return shuffled.slice(min);
-        }
 
         window.onclick = function(event) {
             if (event.target == modal) {

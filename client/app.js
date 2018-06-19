@@ -23,5 +23,9 @@ app.config(['$locationProvider', '$routeProvider', function ($locationProvider, 
             templateUrl: 'components/register/register.html',
             controller: 'registerController as regCtrl'
         })
+        .when('/favorites', {
+            templateUrl: 'components/favorites/favorites.html',
+            controller: 'favoritesController as favoritesCtrl'
+        })
         .otherwise({redirectTo: '/'});
 }]);

@@ -16,6 +16,19 @@ router.get('/search/:sitename', function (req, res) {//this function return a si
 
 });
 
+router.get('/site/:site_id', function (req, res) {//this function return a site by site_id.
+
+    let site_id = req.params.site_id;
+    let dbAnswer = db.getSiteById(site_id);
+    dbAnswer.then(function (sites) {
+        res.send(sites);
+    }).catch(function (err) {
+        console.log(err);
+        res.send({message: "bad values"})
+    });
+
+});
+
 router.get('/all', function (req, res) {// this function return all of the sites
     let dbAnswer = db.getAllSites();
     dbAnswer.then(function (sites) {

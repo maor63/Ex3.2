@@ -1,0 +1,15 @@
+
+
+<h2 class="line"><span>Your last saved sites</span></h2>
+<div ng-repeat="site in favoritesCtrl.favorits |orderBy : position ">
+    <div class="gallery">
+        <a target="_blank" href="img_5terre.jpg">
+            <img ng-src="{{site.image}}" alt="{{site.name}}">
+        </a>
+        <div class="desc">
+            <span ng-bind="site.name">  </span>
+            <img ng-src="{{site.favoritImgUrl}}" ng-click="favoritesCtrl.removeSite(site)" class="star"
+                 alt="star">
+        </div>
+    </div>
+</div>

@@ -27,11 +27,16 @@ angular.module('citiesApp')
     .service('userManager', [function () {
         let self = this;
         self.user = undefined;
-        self.favorites = [];
+        self.nextPosition = 1;
+        self.favorites = {};
+
+        self.getNextPosition = function(){
+          return self.nextPosition++;
+        };
 
         self.setUser = function (userName) {
             self.user = userName;
-            self.favorites = [];
+            self.favorites = {};
         };
 
         self.getUser = function () {
@@ -42,16 +47,19 @@ angular.module('citiesApp')
             self.user = undefined;
         };
 
-        self.addFavorite = function (site_id) {
-            self.favorites.push(site_id);
+        self.addFavorite = function (site_id, site) {
+            site["position"] = self.getNextPosition();
+            self.favorites[site_id] = site;
         };
 
         self.deleteFavorite = function (site_id) {
-            deleteFromArray(self.favorites, site_id);
+            delete self.favorites[site_id];
+            // deleteFromArray(self.favorites, site_id);
         };
 
         self.isFavorite = function (site_id) {
-            return self.favorites.indexOf(site_id) > -1;
+            return site_id in self.favorites;
+            // return self.favorites.indexOf(site_id) > -1;
         };
 
         self.updateFavorite = function (site) {
@@ -61,7 +69,7 @@ angular.module('citiesApp')
             }
             else {
                 site.favoritImgUrl = "pictures/star.png";
-                self.addFavorite(site.id);
+                self.addFavorite(site.id, site);
             }
         };
 

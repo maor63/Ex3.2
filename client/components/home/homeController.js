@@ -30,7 +30,9 @@ angular.module('citiesApp')
                                 id: site.siteID,
                                 name: site["siteName"],
                                 image: getRandomSubarray(answer.data, 1)[0].url,
+                                category: site.categoryID,
                                 favoritImgUrl: pic_url
+
                             }
                     });
             }
@@ -52,6 +54,7 @@ angular.module('citiesApp')
                                         id: site.siteID,
                                         name: site["siteName"],
                                         image: getRandomSubarray(answer.data, 1)[0].url,
+                                        category: site.categoryID,
                                         favoritImgUrl: "pictures/star.png"
                                     };
 

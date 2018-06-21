@@ -22,26 +22,24 @@
             <div class="col-lg-3"
                  ng-repeat="site in poiCtrl.sites | orderBy : selectedOrder| filter:{category: id } | filter:{name: searchInput}">
                 <div class="gallery" ng-show="poiCtrl.isLoggedIn()">
-                    <a target="_blank" href="img_5terre.jpg">
-                        <img ng-src="{{site.image}}" alt="{{site.name}}">
-                    </a>
-                    <div class="desc">
-                        <span ng-bind="site.name">  </span>
+                        <img ng-src="{{site.image}}" alt="{{site.name}}" ng-click="poiCtrl.showPoiModalFunc(site.name)" >
+                    <div class="desc"><p>
                         <img ng-src="{{site.favoritImgUrl}}" ng-click="poiCtrl.toggleImage(site)" class="star"
                              alt="star" width="50" height="50">
+                        <span id="descName" ng-bind="site.name" ng-click="poiCtrl.showPoiModalFunc(site.name)"></span>
+                    </p>
                     </div>
                 </div>
                 <div class="gallery" ng-show="!poiCtrl.isLoggedIn()">
-                    <a target="_blank" href="img_5terre.jpg">
-                        <img ng-src="{{site.image}}" alt="{{site.name}}">
-                    </a>
-                    <div class="desc"><span ng-bind="site.name"></span>
+                        <img ng-src="{{site.image}}" alt="{{site.name}}" ng-click="poiCtrl.showPoiModalFunc(site.name)">
+                    <div class="desc"><span ng-bind="site.name"  ng-click="poiCtrl.showPoiModalFunc(site.name)"></span>
                     </div>
                 </div>
             </div>
 
         </div>
-
+//------------------------------------------------
+  //------------------------------------------------------------
         <div>
             <h2 ng-hide="(poiCtrl.sites | filter:{category: selectedCategory }| filter:{name: searchInput}).length === 0"
                 class="col-lg-12"><span ng-bind="poiCtrl.getCategoryById(selectedCategory)"></span></h2>
@@ -49,20 +47,16 @@
                  ng-repeat="site in poiCtrl.sites |orderBy : selectedOrder | filter:{category: selectedCategory }| filter:{name: searchInput}">
 
                 <div class="gallery" ng-show="poiCtrl.isLoggedIn()">
-                    <a target="_blank" href="img_5terre.jpg">
-                        <img ng-src="{{site.image}}" alt="{{site.name}}">
-                    </a>
-                    <div class="desc">
-                        <span ng-bind="site.name">  </span>
+                        <img ng-src="{{site.image}}" alt="{{site.name}}" ng-click="poiCtrl.showPoiModalFunc(site.name)">
+                    <div class="desc"><p>
                         <img ng-src="{{site.favoritImgUrl}}" ng-click="poiCtrl.toggleImage(site)" class="star"
                              alt="star" width="50px" height="50px">
-                    </div>
+                        <span ng-bind="site.name"  ng-click="poiCtrl.showPoiModalFunc(site.name)"></span>
+                    </p></div>
                 </div>
                 <div class="gallery" ng-show="!poiCtrl.isLoggedIn()">
-                    <a target="_blank" href="img_5terre.jpg">
-                        <img ng-src="{{site.image}}" alt="{{site.name}}">
-                    </a>
-                    <div class="desc"><span ng-bind="site.name"></span>
+                        <img ng-src="{{site.image}}" alt="{{site.name}}" ng-click="poiCtrl.toggleImage(site)" >
+                    <div class="desc"><span ng-bind="site.name" ng-click="poiCtrl.toggleImage(site)" ></span>
                     </div>
                 </div>
             </div>

@@ -1,7 +1,10 @@
 angular.module('citiesApp')
-    .controller('poiCtrl', ['$http', 'userManager', 'tools', function ($http, userManager, tools) {
+    .controller('poiCtrl', ['$rootScope','$http', 'userManager', 'tools', function ($rootScope,$http, userManager, tools) {
         let self = this;
         self.sites = [];
+        self.showPoiModalFunc = function(name){
+            $rootScope.$broadcast('show-modal', {name: name});
+        }
         $http.get("http://localhost:8080/sites/all").then(function (answers) {
             let sites = answers.data;
             for (let i = 0; i < sites.length; i++) {

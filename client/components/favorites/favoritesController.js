@@ -1,11 +1,16 @@
 angular.module('citiesApp')
-    .controller('favoritesController', ['$http', 'userManager','tools', function ($http, userManager, tools) {
+    .controller('favoritesController', ['$rootScope','$http', 'userManager','tools', function ($rootScope,$http, userManager, tools) {
         self = this;
         self.favorites = [];
         if (userManager.getUser() !== undefined) {
             self.favorites = Object.values(userManager.favorites);
         }
-
+        self.showPoiModalFunc = function(name){
+            $rootScope.$broadcast('show-modal', {name: name});
+        }
+        self.showPoiModalFunc = function(name){
+            $rootScope.$broadcast('show-modal', {name: name});
+        }
         self.categories = {};
         self.categories[""] = undefined;
         $http.get("http://localhost:8080/users/categories").then(function (answer) {

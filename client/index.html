@@ -11,7 +11,8 @@
 
 </head>
 <body ng-app="citiesApp">
-<ul ng-controller="indexController as indexCtrl">
+<div ng-controller="indexController as indexCtrl">
+<ul >
     <li><a class="active" href="#/">Home</a></li>
     <li><a href="#/about">About</a></li>
     <li><a href="#/poi">POI</a></li>
@@ -24,6 +25,104 @@
 <div ng-view>
     <!--Contains random popular sites above-->
 </div>
+
+<div id="myModal" class="modal">
+    <!-- Modal content -->
+    <div class="modal-content">
+        <div class="modal-header">
+            <span class="close">&times;</span>
+            <p class="subtitle fancy"><span>{{indexCtrl.poi[0].siteName}}</span></p>
+        </div>
+        <div class="modal-body">
+            <h3>A little bit about the site...</h3>
+            <p>Category: {{indexCtrl.poiCategoryName}}</p>
+            <p>{{indexCtrl.poi[0].detail}}</p>
+            <div class="row">
+                <div class="column">
+                    <img class="img1Modal" ng-src="{{indexCtrl.poiUrls[0].url}}" alt="{{poi[0].siteName}}+1">
+                </div>
+                <div class="column">
+                    <img class="img2Modal" ng-src="{{indexCtrl.poiUrls[1].url}}" alt="{{poi[0].siteName}}+2">
+                </div>
+            </div>
+            <p>This site's rank is: {{indexCtrl.poi[0].rank}}</p>
+            <h4> Reviews:</h4>
+            <table class="table_review">
+                <tr class="tr_review">
+                    <td class="td_review">User name</td>
+                    <td class="td_review">Review</td>
+                    <td class="td_review">Date added</td>
+                </tr>
+                <tr class="tr_review" ng-repeat="x in indexCtrl.reviews | limitTo:2">
+                    <td class="td_review">{{x.userName}}</td>
+                    <td class="td_review">{{x.review}}</td>
+                    <td class="td_review">{{x.date}}</td>
+                </tr>
+            </table>
+
+            <div id="loggedInUserModal" ng-show="indexCtrl.isLoggedIn()">
+                <input type="button" value="Rank or review this site" ng-click="indexCtrl.openRankModal()">
+                <img ng-src="{{indexCtrl.poi[0].favoritImgUrl}}" ng-click="indexCtrl.toggleImage(indexCtrl.poi[0])" class="star" alt="star">
+            </div>
+        </div>
+        <div class="modal-footer">
+            <h3>footer</h3>
+        </div>
+    </div>
+
+</div>
+<div id="rankModal" class="modal">
+    <!-- Modal content -->
+    <div class="modal-content">
+        <div class="modal-header">
+            <span class="close">&times;</span>
+            <p class="subtitle fancy"><span>Review the site:</span></p>
+        </div>
+        <div class="modal-body">
+            <h3>Add a review here:</h3>
+            <textarea type="text"  name="reviewText" id="reviewText" placeholder="Enter your review here..." rows="10" cols="70" ng-model="indexCtrl.reviewText"></textarea>
+            <h3>Rank:</h3>
+            <form class="rating">
+                <label>
+                    <input type="radio" name="stars" value="1" ng-click="indexCtrl.rankedStar=1"/>
+                    <span class="icon">★</span>
+                </label>
+                <label>
+                    <input type="radio" name="stars" value="2" ng-click="indexCtrl.rankedStar=2"/>
+                    <span class="icon">★</span>
+                    <span class="icon">★</span>
+                </label>
+                <label>
+                    <input type="radio" name="stars" value="3" ng-click="indexCtrl.rankedStar=3"/>
+                    <span class="icon">★</span>
+                    <span class="icon">★</span>
+                    <span class="icon">★</span>
+                </label>
+                <label>
+                    <input type="radio" name="stars" value="4" ng-click="indexCtrl.rankedStar=4"/>
+                    <span class="icon">★</span>
+                    <span class="icon">★</span>
+                    <span class="icon">★</span>
+                    <span class="icon">★</span>
+                </label>
+                <label>
+                    <input type="radio" name="stars" value="5" ng-click="indexCtrl.rankedStar=5"/>
+                    <span class="icon">★</span>
+                    <span class="icon">★</span>
+                    <span class="icon">★</span>
+                    <span class="icon">★</span>
+                    <span class="icon">★</span>
+                </label>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <input type="button" value="Submit" ng-click="indexCtrl.submitRanking(indexCtrl.reviewText)">
+        </div>
+    </div>
+
+</div>
+</div>
+
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

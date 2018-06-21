@@ -16,14 +16,11 @@
     <tr ng-repeat="site in favoritesCtrl.favorites |orderBy : selectedOrder | filter:{category: selectedCategory }">
         <td>
             <div class="gallery">
-                <a target="_blank" href="img_5terre.jpg">
-                    <img ng-src="{{site.image}}" alt="{{site.name}}">
-                </a>
-                <div class="desc">
-                    <span ng-bind="site.name">  </span>
-                    <img ng-src="{{site.favoritImgUrl}}" ng-click="favoritesCtrl.removeSite(site, $index)" class="star"
-                         alt="star">
-                </div>
+                    <img ng-src="{{site.image}}" alt="{{site.name}}" ng-click="favoritesCtrl.showPoiModalFunc(site.name)">
+                <div class="desc"><p>
+                    <img ng-src="{{site.favoritImgUrl}}" ng-click="favoritesCtrl.removeSite(site, $index)" class="star" alt="star">
+                    <span ng-bind="site.name" ng-click="favoritesCtrl.showPoiModalFunc(site.name)">  </span>
+                </p></div>
             </div>
         </td>
        <td>

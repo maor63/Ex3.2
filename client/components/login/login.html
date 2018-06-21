@@ -21,7 +21,7 @@
         <input type = "reset" value = "Clear" />
     </p>
     <p>
-        <button ng-click="loginCtrl.showrecoveryquestion()">Forgot my password </button>
+        <button type ="button" ng-click="loginCtrl.showrecoveryquestion()">Forgot my password </button>
     </p>
 </form>
 </div>
@@ -30,7 +30,7 @@
 <div ng-show="loginCtrl.recovery">
     <p class="subtitle fancy"><span> Get your password by answering the following question:</span></p>
     <div class="formContainer">
-    <form name="recoveryForm"  ng-submit="loginCtrl.recovrpassword()" novalidate>
+    <form name="recoveryForm"  ng-submit="loginCtrl.recoverpassword()" novalidate>
         <p>
             <label>User Name: </label>
             <input type="text" name="username" ng-model="loginCtrl.user.userName" required ng-minlength="3"/>

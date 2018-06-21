@@ -30,6 +30,6 @@
        </td>
     </tr>
 </table>
-<p ng-show="(favoritesCtrl.favorites.length === 0">
+<p ng-show="(favoritesCtrl.favorites | filter:{category: selectedCategory }| filter:{name: searchInput}).length === 0">
     You didn't save any favorites sites :(
 </p>

@@ -52,6 +52,7 @@ angular.module('citiesApp')
 
 
         self.showPoiModalFunc = function (name) {
+
             $http.get(serverUrl + "sites/search/" + name)
                 .then(function (response) {
                     //First function handles success
@@ -131,40 +132,56 @@ angular.module('citiesApp')
                 });
         };
         self.submitRanking= function (review) {
-            if(!review|| !self.rankedStar)
+            if(!review && !self.rankedStar)
             {
-                alert('You must enter a literal review and rank the stars to submit');
+                alert('You must enter at least a numerical review');
                 return;
             }
-            modalRank.style.display = "none";// close the ranking and review modal
-            var today = new Date();
-            var dd = today.getDate();
-            var mm = today.getMonth()+1; //January is 0!
-            var yyyy = today.getFullYear();
-
-            if(dd<10) {
-                dd = '0'+dd
+            if(review && !self.rankedStar)
+            {
+                alert('You must enter a numerical review');
+                return;
             }
+            if(review && self.rankedStar) {
+                modalRank.style.display = "none";// close the ranking and review modal
+                var today = new Date();
+                var dd = today.getDate();
+                var mm = today.getMonth() + 1; //January is 0!
+                var yyyy = today.getFullYear();
 
-            if(mm<10) {
-                mm = '0'+mm
+                if (dd < 10) {
+                    dd = '0' + dd
+                }
+
+                if (mm < 10) {
+                    mm = '0' + mm
+                }
+                self.reviewObject =
+                    {
+                        userName: userManager.getUser().userName,
+                        siteID: self.poi[0].siteID,
+                        review: review,
+                        date: today,
+                    }
+                self.rankObject =
+                    {
+                        siteID: self.poi[0].siteID,
+                        rank: self.rankedStar,
+
+                    }
+                self.submitTextReview();
+                self.submitRankReview();
+
             }
-            self.reviewObject=
-                {
-                    userName: userManager.getUser().userName,
-                    siteID: self.poi[0].siteID,
-                    review: review,
-                    date: today,
-                }
-            self.rankObject=
-                {
-                    siteID: self.poi[0].siteID,
-                    rank: self.rankedStar,
+            else if (!review && self.rankedStar){
+                self.rankObject =
+                    {
+                        siteID: self.poi[0].siteID,
+                        rank: self.rankedStar,
 
-                }
-            self.submitTextReview();
-            self.submitRankReview();
-
+                    }
+                self.submitRankReview();
+            }
         };
         self.submitTextReview= function () {
             $http.post(serverUrl + "reg/review/", self.reviewObject)
@@ -183,7 +200,12 @@ angular.module('citiesApp')
                 .then(function (response) {
                     //First function handles success
                     self.content = response.data;
-                    alert('Review and Rank posted successfully');
+                    alert('Your Rank posted successfully');
+                    document.getElementById("reviewText").value="";
+                    document.getElementById("myForm").reset();
+                    self.review=undefined;
+                    self.rankedStar=undefined;
+
                 }, function (response) {
                     console.log(response);
                     alert('no success posting rank')

@@ -8,9 +8,6 @@ angular.module('citiesApp')
         self.showPoiModalFunc = function(name){
             $rootScope.$broadcast('show-modal', {name: name});
         }
-        self.showPoiModalFunc = function(name){
-            $rootScope.$broadcast('show-modal', {name: name});
-        }
         self.categories = {};
         self.categories[""] = undefined;
         $http.get("http://localhost:8080/users/categories").then(function (answer) {

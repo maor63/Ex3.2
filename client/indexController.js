@@ -64,10 +64,14 @@ angular.module('citiesApp')
                         self.poi[0].favoritImgUrl="pictures/empty_star.png";
                     self.getSiteReviews(self.poi[0].siteID);
                     self.getImagesModal(self.poi[0].siteID);
+                    self.poiViews=self.poi[0].views;
                     self.poiCategory= self.categories[self.poi[0].categoryID-1];
                     self.poiCategoryName= self.poiCategory.categoryName;
-
-                    $http.post(serverUrl + "sites/views/" + self.poi[0].siteID)
+                    self.siteVIEWS =
+                        {
+                            siteID: self.poi[0].siteID,
+                        };
+                    $http.post(serverUrl + "sites/views/" ,self.siteVIEWS)
                         .then(function (response) {
                             //First function handles success
                             alert('view added');
@@ -85,7 +89,13 @@ angular.module('citiesApp')
 
 
         };
-        self.openRankModal= function () {
+        self.openRankModal= function (siteID,openRankModal) {
+            if(openRankModal)
+            {
+                self.poi=[];
+                self.poi[0] = {siteID: siteID};
+            }
+            //self.poi[0].siteID=siteID;
             modalRank.style.display = "block";
         };
 

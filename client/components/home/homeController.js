@@ -10,35 +10,40 @@ angular.module('citiesApp')
         self.poi={};
         self.poiUrls={};
         self.reviews={};
-        self.categories= {};
+        self.userCategories = {};
+        self.sitesForUserCategories = {};
 
         self.showPoiModalFunc = function(name){
             $rootScope.$broadcast('show-modal', {name: name});
+        };
+
+        function retriveSiteAndAddToSites(site) {
+            $http.get("http://localhost:8080/sites/photo_url/" + site.siteID)
+                .then(function (answer) {
+                    let pic_url;
+                    if (userManager.isFavorite(site.siteID))
+                        pic_url = "pictures/star.png";
+                    else
+                        pic_url = "pictures/empty_star.png";
+                    self.sites[site.siteID] =
+                        {
+                            id: site.siteID,
+                            name: site["siteName"],
+                            image: tools.getRandomSubarray(answer.data, 1)[0].url,
+                            category: site.categoryID,
+                            favoritImgUrl: pic_url
+
+                        }
+                });
         }
 
-        // loadCategoriesFromApi();
+// loadCategoriesFromApi();
         $http.get("http://localhost:8080/sites/popular").then(function (answers) {
             let sites = answers.data;
             let indexes = tools.getRandomSubarray(sites, 3);
             for (let i = 0; i < indexes.length; i++) {
-                let site = indexes[i];
-                $http.get("http://localhost:8080/sites/photo_url/" + site.siteID)
-                    .then(function (answer) {
-                        let pic_url;
-                        if (userManager.isFavorite(site.siteID))
-                            pic_url = "pictures/star.png";
-                        else
-                            pic_url = "pictures/empty_star.png";
-                        self.sites[site.siteID] =
-                            {
-                                id: site.siteID,
-                                name: site["siteName"],
-                                image: tools.getRandomSubarray(answer.data, 1)[0].url,
-                                category: site.categoryID,
-                                favoritImgUrl: pic_url
-
-                            }
-                    });
+                let rawSite = indexes[i];
+                retriveSiteAndAddToSites(rawSite);
             }
 
         }).catch(function (err) {
@@ -71,7 +76,41 @@ angular.module('citiesApp')
                 .catch(function (err) {
                     console.log(err);
 
+                });
+
+            $http.get("http://localhost:8080/reg/categories/" + userManager.getUser().userName)
+                .then(function (answer) {
+                    let categoriesData = answer.data;
+                    for (let i = 0; i < categoriesData.length; i++) {
+                        self.userCategories[categoriesData[i].id] = categoriesData[i].categoryName;
+                        $http.get("http://localhost:8080/sites/all_by_category_id/" + categoriesData[i].id)
+                            .then(function (answer) {
+                                let sites = answer.data;
+                                let site = tools.getRandomSubarray(sites, 1)[0];
+                                $http.get("http://localhost:8080/sites/photo_url/" + site.siteID)
+                                    .then(function (answer) {
+                                        let pic_url;
+                                        if (userManager.isFavorite(site.siteID))
+                                            pic_url = "pictures/star.png";
+                                        else
+                                            pic_url = "pictures/empty_star.png";
+                                        self.sitesForUserCategories[categoriesData[i].id] =
+                                            {
+                                                id: site.siteID,
+                                                name: site["siteName"],
+                                                image: tools.getRandomSubarray(answer.data, 1)[0].url,
+                                                category: site.categoryID,
+                                                favoritImgUrl: pic_url
+
+                                            }
+                                    });
+                            });
+                    }
                 })
+                .catch(function (err) {
+                    console.log(err);
+
+                });
         }
 
         self.toggleImage = function (site) {

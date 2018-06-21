@@ -25,11 +25,14 @@
                     <table border="0">
                         <tr>
                             <td align="center">
-                                <div class="gallery" >
-                                    <img ng-src="{{site.image}}" alt="{{site.name}}" ng-click="homeCtrl.showPoiModalFunc(site.name)">
+                                <div class="gallery">
+                                    <img ng-src="{{site.image}}" alt="{{site.name}}"
+                                         ng-click="homeCtrl.showPoiModalFunc(site.name)">
                                     <div class="desc"><p>
-                                        <img ng-src="{{site.favoritImgUrl}}" ng-click="homeCtrl.toggleImage(site)" class="star" alt="star">
-                                        <span ng-bind="site.name" ng-click="homeCtrl.showPoiModalFunc(site.name)"></span>
+                                        <img ng-src="{{site.favoritImgUrl}}" ng-click="homeCtrl.toggleImage(site)"
+                                             class="star" alt="star">
+                                        <span ng-bind="site.name"
+                                              ng-click="homeCtrl.showPoiModalFunc(site.name)"></span>
                                     </p>
                                     </div>
                                 </div>
@@ -43,35 +46,65 @@
 </div>
 
 
-
-<footer class="explore">
-    <p class="subtitle fancy"><span>Explore these popular sites:</span></p>
-    <table border="0" width="80%" align="center">
-        <tr>
-            <td ng-repeat="(id , site) in homeCtrl.sites" align="center">
-                <table border="0">
-                    <tr ng-switch="homeCtrl.isLoggedIn()">
-                        <td align="center" ng-switch-when="true">
-                            <div class="gallery" >
-                                    <img ng-src="{{site.image}}" alt="{{site.name}}" ng-click="homeCtrl.showPoiModalFunc(site.name)">
-                                <div class="desc"><p>
-                                    <img ng-src="{{site.favoritImgUrl}}" ng-click="homeCtrl.toggleImage(site)" class="star" alt="star">
-                                    <span id="descName" ng-bind="site.name" ng-click="homeCtrl.showPoiModalFunc(site.name)"></span>
-                                </p>
+<footer class="explore" ng-switch="homeCtrl.isLoggedIn()">
+    <div ng-switch-when="false">
+        <p class="subtitle fancy"><span>Explore these popular sites:</span></p>
+        <table border="0" width="80%" align="center">
+            <tr>
+                <td ng-repeat="(id , site) in homeCtrl.sites" align="center">
+                    <table border="0">
+                        <tr>
+                            <!--<td align="center" ng-switch-when="true">-->
+                            <!--<div class="gallery" >-->
+                            <!--<img ng-src="{{site.image}}" alt="{{site.name}}" ng-click="homeCtrl.showPoiModalFunc(site.name)">-->
+                            <!--<div class="desc"><p>-->
+                            <!--<img ng-src="{{site.favoritImgUrl}}" ng-click="homeCtrl.toggleImage(site)" class="star" alt="star">-->
+                            <!--<span id="descName" ng-bind="site.name" ng-click="homeCtrl.showPoiModalFunc(site.name)"></span>-->
+                            <!--</p>-->
+                            <!--</div>-->
+                            <!--</div>-->
+                            <!--</td>-->
+                            <td align="center">
+                                <div class="gallery">
+                                    <img ng-src="{{site.image}}" alt="{{site.name}}"
+                                         ng-click="homeCtrl.showPoiModalFunc(site.name)">
+                                    <div class="desc"><span ng-bind="site.name"
+                                                            ng-click="homeCtrl.showPoiModalFunc(site.name)"></span>
+                                    </div>
                                 </div>
-                            </div>
-                        </td>
-                        <td align="center" ng-switch-default>
-                            <div class="gallery" >
-                                    <img  ng-src="{{site.image}}" alt="{{site.name}}" ng-click="homeCtrl.showPoiModalFunc(site.name)">
-                                <div class="desc"><span ng-bind="site.name" ng-click="homeCtrl.showPoiModalFunc(site.name)"></span>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <!--ng-style="{'height': '100px'}"-->
+        </table>
+    </div>
+    <div ng-switch-default>
+        <p class="subtitle fancy"><span>Explore these popular sites:</span></p>
+        <table border="0" width="80%" align="center">
+            <tr>
+                <td ng-repeat="(id , site) in homeCtrl.sitesForUserCategories" align="center">
+                    <p class="subtitle fancy"><span>{{homeCtrl.userCategories[id]}}</span></p>
+                    <table border="0">
+                        <tr>
+                            <td align="center">
+                                <div class="gallery">
+                                    <img ng-src="{{site.image}}" alt="{{site.name}}"
+                                         ng-click="homeCtrl.showPoiModalFunc(site.name)">
+                                    <div class="desc"><p>
+                                        <img ng-src="{{site.favoritImgUrl}}" ng-click="homeCtrl.toggleImage(site)"
+                                             class="star" alt="star">
+                                        <span id="descName" ng-bind="site.name"
+                                              ng-click="homeCtrl.showPoiModalFunc(site.name)"></span>
+                                    </p>
+                                    </div>
                                 </div>
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-            </td>
-            <!--ng-style="{'height': '100px'}"-->
-    </table>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <!--ng-style="{'height': '100px'}"-->
+        </table>
+    </div>
 </footer>
 

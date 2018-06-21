@@ -256,7 +256,7 @@ exports.getAllReviewsBySite = function (siteID) {
 };
 
 exports.getAllCategoriesByUser = function (userID) {
-    let query = "SELECT C.categoryID, categoryName FROM Categories AS C, CategoryPerUser AS CP WHERE C.categoryID = CP.categoryID AND userID = @userID ;";
+    let query = "SELECT C.categoryID as id, categoryName FROM Categories AS C, CategoryPerUser AS CP WHERE C.categoryID = CP.categoryID AND userID = @userID ;";
     let dbRequest = createRequest(query);
     dbRequest.addParameter('userID', TYPES.NVarChar, userID);
     return exports.execQuery(dbRequest);

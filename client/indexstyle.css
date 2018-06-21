@@ -377,10 +377,50 @@ div.desc {
 
 .rating:not(:hover) label input:checked ~ .icon,
 .rating:hover label:hover input ~ .icon {
-    color: #09f;
+    color: #ffcf36;
 }
 
 .rating label input:focus:not(:checked) ~ .icon:last-child {
     color: #000;
-    text-shadow: 0 0 5px #09f;
+    text-shadow: 0 0 5px #ffcf36;
+}
+
+#aboutHeader{
+    color: #17c7ff;
+    text-shadow: 0 0 5px #fff1ff;
+    /*padding: 2px;*/
+    font-weight: bold;
+    padding-top: 10px;
+    padding-bottom: 5px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 50px;
+}
+#aboutP{
+    font-size: 25px;
+
+}
+
+.columnAbout {
+    float: left;
+    width: 33.33%;
+    padding: 5px;
+}
+
+/* Clear floats after image containers */
+.rowAbout::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+#h2About{
+    font-family: "Arial";
+    position: relative;
+    text-align: center;
+    /*font-weight: bold;*/
+    text-shadow: 3px 2px #000000;
+    font-size: 35px;
+    -webkit-text-stroke-color: #b3d2fd;
+    -webkit-text-stroke-width: 1px;
+    color: #ffffff;
 }

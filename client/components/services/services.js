@@ -1,5 +1,5 @@
 angular.module('citiesApp')
-    .service('setHeadersToken', ['$http', function ($http) {
+    .service('setHeadersToken', ['$http', 'localStorageModel', function ($http, localStorageModel) {
         let self = this;
         let token = "";
         self.recovery = false;
@@ -9,6 +9,7 @@ angular.module('citiesApp')
             $http.defaults.headers.common['x-access-token'] = t;
             // $httpProvider.defaults.headers.post[ 'x-access-token' ] = token
             console.log("set");
+            localStorageModel.updateLocalStorage("token", t);
         };
 
     }])
@@ -24,12 +25,24 @@ angular.module('citiesApp')
             return shuffled.slice(min);
         }
     }])
-    .service('userManager', ['$http', 'tools', function ($http, tools) {
+    .service('userManager', ['$http', 'tools', 'localStorageModel', function ($http, tools, localStorageModel) {
         let self = this;
         self.user = undefined;
         self.nextPosition = 1;
         self.favorites = {};
 
+        if (localStorageModel.getLocalStorage("user"))
+            self.user = localStorageModel.getLocalStorage("user");
+
+        if (localStorageModel.getLocalStorage("token")) {
+            token = localStorageModel.getLocalStorage("token");
+            $http.defaults.headers.common['x-access-token'] = token;
+        }
+
+        if (localStorageModel.getLocalStorage("favorites")) {
+            loadFavoriets();
+            self.favorites = localStorageModel.getLocalStorage("favorites");
+        }
 
         self.getNextPosition = function () {
             return self.nextPosition++;
@@ -39,6 +52,8 @@ angular.module('citiesApp')
             self.user = user;
             self.favorites = {};
             loadFavoriets();
+            localStorageModel.addLocalStorage("user", self.user);
+            localStorageModel.addLocalStorage("favorites", self.favorites)
         };
 
         self.getUser = function () {
@@ -47,6 +62,9 @@ angular.module('citiesApp')
 
         self.clearUser = function () {
             self.user = undefined;
+            localStorageModel.removeLocalStorage("user");
+            localStorageModel.removeLocalStorage("favorites");
+            localStorageModel.removeLocalStorage("token");
         };
 
         self.addFavorite = function (site_id, site) {
@@ -73,17 +91,12 @@ angular.module('citiesApp')
                 site.favoritImgUrl = "pictures/star.png";
                 self.addFavorite(site.id, site);
             }
+            localStorageModel.updateLocalStorage("favorites", self.favorites)
         };
 
-        function deleteFromArray(array, element) {
-            var index = array.indexOf(element);
-            if (index > -1) {
-                array.splice(index, 1);
-            }
-        }
 
         function loadFavoriets() {
-            $http.get("http://localhost:8080/reg/favorites/" + self.getUser().userName).then(function (answer) {
+            $http.get("http://localhost:8080/reg/favorites/" + self.user.userName).then(function (answer) {
                 let favorits = answer.data;
                 for (let i = 0; i < favorits.length; i++) {
                     let favorite = favorits[i];
@@ -111,4 +124,34 @@ angular.module('citiesApp')
         }
 
     }])
-;
+    .service('localStorageModel', ['localStorageService', function (localStorageService) {
+
+        var self = this;
+
+        self.addLocalStorage = function (key, value) {
+            var dataVal = localStorageService.get(key);
+            console.log(dataVal)
+            if (!dataVal)
+                if (localStorageService.set(key, value)) {
+                    console.log("data added")
+                }
+                else
+                    console.log('failed to add the data');
+        };
+
+
+        self.getLocalStorage = function (key) {
+            return localStorageService.get(key)
+        };
+
+        self.updateLocalStorage = function (key, value) {
+            localStorageService.remove(key);
+            localStorageService.set(key, value);
+        };
+
+        self.removeLocalStorage = function (key) {
+            localStorageService.remove(key);
+        }
+
+    }]);
+

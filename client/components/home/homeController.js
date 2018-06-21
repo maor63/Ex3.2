@@ -105,34 +105,52 @@ angular.module('citiesApp')
 
             modal.style.display = "block";
         };
+        self.getSiteReviews= function (siteID) {
+            $http.get(serverUrl + "sites/site_reviews/" + siteID)
+                .then(function (response) {
+                    //First function handles success
+                    self.reviews = response.data;
+                    if (self.reviews.length===0){
+                        self.reviews[0]=
+                            {
+                                id: "",
+                                userID: "",
+                                review: "No reviews added yet",
+                                date: "",
+                            }
+                    }
+                }, function (response) {
+                    console.log(response);
+                    alert('No Reviews on this site')
+                });
+        };
+
+        self.getImagesModal= function (siteID) {
+            $http.get(serverUrl + "sites/photo_url/" + siteID)
+                .then(function (response) {
+                    //First function handles success
+                    self.poiUrls = response.data;
+                }, function (response) {
+                    console.log(response);
+                    alert('No details on this site')
+                });
+        };
+
         self.openRankModal= function () {
             modalRank.style.display = "block";
         };
-
         window.onclick = function(event) {
             if (event.target == modal) {
                 modal.style.display = "none";
             }
          };
 
-       span.onclick = function() {
+        span.onclick = function() {
             modal.style.display = "none";
         };
         span2.onclick = function() {
             modalRank.style.display = "none";
         };
-
-       self.getImagesModal= function (siteID) {
-           $http.get(serverUrl + "sites/photo_url/" + siteID)
-               .then(function (response) {
-                   //First function handles success
-                   self.poiUrls = response.data;
-               }, function (response) {
-                   console.log(response);
-                   self.login.content = "Something went wrong";
-                   alert('No details on this site')
-               });
-       };
         self.getSiteCategory= function (siteID) {
             $http.get(serverUrl + "sites/photo_url/" + siteID)
                 .then(function (response) {
@@ -142,25 +160,6 @@ angular.module('citiesApp')
                     console.log(response);
                     self.login.content = "Something went wrong";
                     alert('No details on this site')
-                });
-        };
-        self.getSiteReviews= function (siteID) {
-            $http.get(serverUrl + "sites/site_reviews/" + siteID)
-                .then(function (response) {
-                    //First function handles success
-                    self.reviews = response.data;
-                    if (self.reviews.length===0){
-                        self.reviews[0]=
-                        {
-                            id: "",
-                            userID: "",
-                            review: "No reviews added yet",
-                            date: "",
-                        }
-                    }
-                }, function (response) {
-                    console.log(response);
-                    alert('No Reviews on this site')
                 });
         };
         self.submitRanking= function (review) {

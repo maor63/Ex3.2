@@ -1,4 +1,4 @@
-let app = angular.module('citiesApp', ["ngRoute"]);
+let app = angular.module('citiesApp', ["ngRoute", 'LocalStorageModule']);
 
 app.config(['$locationProvider', '$routeProvider', function ($locationProvider, $routeProvider) {
     $locationProvider.hashPrefix('');

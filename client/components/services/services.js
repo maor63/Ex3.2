@@ -74,7 +74,6 @@ angular.module('citiesApp')
 
         self.deleteFavorite = function (site_id) {
             delete self.favorites[site_id];
-            // deleteFromArray(self.favorites, site_id);
         };
 
         self.isFavorite = function (site_id) {
@@ -130,7 +129,7 @@ angular.module('citiesApp')
 
         self.addLocalStorage = function (key, value) {
             var dataVal = localStorageService.get(key);
-            console.log(dataVal)
+            console.log(dataVal);
             if (!dataVal)
                 if (localStorageService.set(key, value)) {
                     console.log("data added")

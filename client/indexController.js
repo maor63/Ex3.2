@@ -27,7 +27,7 @@ angular.module('citiesApp')
 
         $scope.$on('show-modal', function(ev, args){
             self.showPoiModalFunc(args.id);
-        })
+        });
 
         self.loadCategoriesFromApi();
 
@@ -60,7 +60,7 @@ angular.module('citiesApp')
                     self.poi = response.data;
 
                     //--------------------------------------------
-                    if (mymap) { mymap.remove(); };
+
                      mymap=L.map('mapid').setView(JSON.parse(self.poi[0].location), 13);
                         L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiYXNhZndsbyIsImEiOiJjamllZTRmMTMwbDltM3ZxbGhlM29kZDBpIn0.-0ZZJdMhqW_KMr0jixoh7A', {
                             attribution: '',
@@ -113,17 +113,21 @@ angular.module('citiesApp')
 
         window.onclick = function(event) {
             if (event.target == modal) {
-                mymap=undefined;
                 modal.style.display = "none";
+                mymap.off();
+                mymap.remove();
             }
         };
 
         span.onclick = function() {
-            mymap=undefined;
             modal.style.display = "none";
+            mymap.off();
+            mymap.remove();
         };
         span2.onclick = function() {
             modalRank.style.display = "none";
+            mymap.off();
+            mymap.remove();
         };
 
         self.getImagesModal= function (siteID) {

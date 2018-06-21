@@ -1,5 +1,5 @@
 angular.module('citiesApp')
-    .controller('registerController', ['$scope','$http', function ($scope,$http) {
+    .controller('registerController', ['$window','$scope','$http', function ($window,$scope,$http) {
         let self = this;
         self.countries=[];
         self.categories = {};
@@ -44,7 +44,8 @@ angular.module('citiesApp')
                     alert('Congratulations you have registered successfully!!!');
                     alert('Here are your credentials\n User name: '+self.user.userName+'\n Password: ' +self.user.password)
                     self.registeredsuccess=true;
-                    document.getElementById("user_details").showModal();
+                    //document.getElementById("user_details").showModal();
+                    $window.location.href = '#/login';
 
                 }, function (response) {
 

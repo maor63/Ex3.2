@@ -16,10 +16,10 @@
     <tr ng-repeat="site in favoritesCtrl.favorites |orderBy : selectedOrder | filter:{category: selectedCategory }">
         <td>
             <div class="gallery">
-                    <img ng-src="{{site.image}}" alt="{{site.name}}" ng-click="favoritesCtrl.showPoiModalFunc(site.name)">
+                    <img ng-src="{{site.image}}" alt="{{site.name}}" ng-click="favoritesCtrl.showPoiModalFunc(site.id)">
                 <div class="desc"><p>
                     <img ng-src="{{site.favoritImgUrl}}" ng-click="favoritesCtrl.removeSite(site, $index)" class="star" alt="star">
-                    <span ng-bind="site.name" ng-click="favoritesCtrl.showPoiModalFunc(site.name)">  </span>
+                    <span ng-bind="site.name" ng-click="favoritesCtrl.showPoiModalFunc(site.id)">  </span>
                     <input type="button" value="Rank or review this site" ng-click="indexCtrl.openRankModal(site.id,true)">
                 </p></div>
             </div>

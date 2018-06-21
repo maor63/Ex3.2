@@ -27,12 +27,12 @@
                             <td align="center">
                                 <div class="gallery">
                                     <img ng-src="{{site.image}}" alt="{{site.name}}"
-                                         ng-click="homeCtrl.showPoiModalFunc(site.name)">
+                                         ng-click="homeCtrl.showPoiModalFunc(site.id)">
                                     <div class="desc"><p>
                                         <img ng-src="{{site.favoritImgUrl}}" ng-click="homeCtrl.toggleImage(site)"
                                              class="star" alt="star">
                                         <span ng-bind="site.name"
-                                              ng-click="homeCtrl.showPoiModalFunc(site.name)"></span>
+                                              ng-click="homeCtrl.showPoiModalFunc(site.id)"></span>
                                     </p>
                                     </div>
                                 </div>
@@ -54,29 +54,18 @@
                 <td ng-repeat="(id , site) in homeCtrl.sites" align="center">
                     <table border="0">
                         <tr>
-                            <!--<td align="center" ng-switch-when="true">-->
-                            <!--<div class="gallery" >-->
-                            <!--<img ng-src="{{site.image}}" alt="{{site.name}}" ng-click="homeCtrl.showPoiModalFunc(site.name)">-->
-                            <!--<div class="desc"><p>-->
-                            <!--<img ng-src="{{site.favoritImgUrl}}" ng-click="homeCtrl.toggleImage(site)" class="star" alt="star">-->
-                            <!--<span id="descName" ng-bind="site.name" ng-click="homeCtrl.showPoiModalFunc(site.name)"></span>-->
-                            <!--</p>-->
-                            <!--</div>-->
-                            <!--</div>-->
-                            <!--</td>-->
                             <td align="center">
                                 <div class="gallery">
                                     <img ng-src="{{site.image}}" alt="{{site.name}}"
-                                         ng-click="homeCtrl.showPoiModalFunc(site.name)">
+                                         ng-click="homeCtrl.showPoiModalFunc(site.id)">
                                     <div class="desc"><span ng-bind="site.name"
-                                                            ng-click="homeCtrl.showPoiModalFunc(site.name)"></span>
+                                                            ng-click="homeCtrl.showPoiModalFunc(site.id)"></span>
                                     </div>
                                 </div>
                             </td>
                         </tr>
                     </table>
                 </td>
-                <!--ng-style="{'height': '100px'}"-->
         </table>
     </div>
     <div ng-switch-default>
@@ -90,12 +79,12 @@
                             <td align="center">
                                 <div class="gallery">
                                     <img ng-src="{{site.image}}" alt="{{site.name}}"
-                                         ng-click="homeCtrl.showPoiModalFunc(site.name)">
+                                         ng-click="homeCtrl.showPoiModalFunc(site.id)">
                                     <div class="desc"><p>
                                         <img ng-src="{{site.favoritImgUrl}}" ng-click="homeCtrl.toggleImage(site)"
                                              class="star" alt="star">
                                         <span id="descName" ng-bind="site.name"
-                                              ng-click="homeCtrl.showPoiModalFunc(site.name)"></span>
+                                              ng-click="homeCtrl.showPoiModalFunc(site.id)"></span>
                                     </p>
                                     </div>
                                 </div>

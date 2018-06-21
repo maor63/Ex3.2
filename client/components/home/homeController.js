@@ -13,8 +13,8 @@ angular.module('citiesApp')
         self.userCategories = {};
         self.sitesForUserCategories = {};
 
-        self.showPoiModalFunc = function(name){
-            $rootScope.$broadcast('show-modal', {name: name});
+        self.showPoiModalFunc = function(id){
+            $rootScope.$broadcast('show-modal', {id: id});
         };
 
         function retriveSiteAndAddToSites(site) {

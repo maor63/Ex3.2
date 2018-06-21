@@ -32,7 +32,7 @@ angular.module('citiesApp')
 
 
         $scope.$on('show-modal', function(ev, args){
-            self.showPoiModalFunc(args.name);
+            self.showPoiModalFunc(args.id);
         })
 
         self.loadCategoriesFromApi();
@@ -58,9 +58,9 @@ angular.module('citiesApp')
         }
 
 
-        self.showPoiModalFunc = function (name) {
+        self.showPoiModalFunc = function (id) {
 
-            $http.get(serverUrl + "sites/search/" + name)
+            $http.get(serverUrl + "sites/site/" + id)
                 .then(function (response) {
                     //First function handles success
                     self.poi = response.data;

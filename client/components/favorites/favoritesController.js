@@ -5,9 +5,9 @@ angular.module('citiesApp')
         if (userManager.getUser() !== undefined) {
             self.favorites = Object.values(userManager.favorites);
         }
-        self.showPoiModalFunc = function(name){
-            $rootScope.$broadcast('show-modal', {name: name});
-        }
+        self.showPoiModalFunc = function(id){
+            $rootScope.$broadcast('show-modal', {id: id});
+        };
         self.categories = {};
         self.categories[""] = undefined;
         $http.get("http://localhost:8080/users/categories").then(function (answer) {

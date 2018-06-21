@@ -22,18 +22,18 @@
             <div class="col-lg-3"
                  ng-repeat="site in poiCtrl.sites | orderBy : selectedOrder| filter:{category: id } | filter:{name: searchInput}">
                 <div class="gallery" ng-show="poiCtrl.isLoggedIn()">
-                        <img ng-src="{{site.image}}" alt="{{site.name}}" ng-click="poiCtrl.showPoiModalFunc(site.name)" >
+                        <img ng-src="{{site.image}}" alt="{{site.name}}" ng-click="poiCtrl.showPoiModalFunc(site.id)" >
                     <div class="desc"><p>
                         <img ng-src="{{site.favoritImgUrl}}" ng-click="poiCtrl.toggleImage(site)" class="star"
                              alt="star" width="50" height="50">
-                        <span id="descName" ng-bind="site.name" ng-click="poiCtrl.showPoiModalFunc(site.name)"></span>
+                        <span id="descName" ng-bind="site.name" ng-click="poiCtrl.showPoiModalFunc(site.id)"></span>
                         <input type="button" value="Rank or review this site" ng-click="indexCtrl.openRankModal(site.id,true)">
                     </p>
                     </div>
                 </div>
                 <div class="gallery" ng-show="!poiCtrl.isLoggedIn()">
-                        <img ng-src="{{site.image}}" alt="{{site.name}}" ng-click="poiCtrl.showPoiModalFunc(site.name)">
-                    <div class="desc"><span ng-bind="site.name"  ng-click="poiCtrl.showPoiModalFunc(site.name)"></span>
+                        <img ng-src="{{site.image}}" alt="{{site.name}}" ng-click="poiCtrl.showPoiModalFunc(site.id)">
+                    <div class="desc"><span ng-bind="site.name"  ng-click="poiCtrl.showPoiModalFunc(site.id)"></span>
                     </div>
                 </div>
             </div>
@@ -46,11 +46,11 @@
                  ng-repeat="site in poiCtrl.sites |orderBy : selectedOrder | filter:{category: selectedCategory }| filter:{name: searchInput}">
 
                 <div class="gallery" ng-show="poiCtrl.isLoggedIn()">
-                        <img ng-src="{{site.image}}" alt="{{site.name}}" ng-click="poiCtrl.showPoiModalFunc(site.name)">
+                        <img ng-src="{{site.image}}" alt="{{site.name}}" ng-click="poiCtrl.showPoiModalFunc(site.id)">
                     <div class="desc"><p>
                         <img ng-src="{{site.favoritImgUrl}}" ng-click="poiCtrl.toggleImage(site)" class="star"
                              alt="star" width="50px" height="50px">
-                        <span ng-bind="site.name"  ng-click="poiCtrl.showPoiModalFunc(site.name)"></span>
+                        <span ng-bind="site.name"  ng-click="poiCtrl.showPoiModalFunc(site.id)"></span>
                     </p>
                     </div>
                 </div>

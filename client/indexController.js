@@ -58,6 +58,14 @@ angular.module('citiesApp')
                     //First function handles success
                     self.poi = response.data;
                     //     self.poi.id = self.login.content[0].siteID;
+                    var mymap = L.map('mapid').setView(JSON.parse(self.poi[0].location), 13);
+                    L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiYXNhZndsbyIsImEiOiJjamllZTRmMTMwbDltM3ZxbGhlM29kZDBpIn0.-0ZZJdMhqW_KMr0jixoh7A', {
+                        attribution: '',
+                        maxZoom: 18,
+                        id: 'mapbox.streets'
+                    }).addTo(mymap);
+                    L.marker(JSON.parse(response.data[0].location)).addTo(mymap)
+                        .openPopup();
                     if(userManager.isFavorite(self.poi[0].siteID))
                         self.poi[0].favoritImgUrl="pictures/star.png";
                     else

@@ -4,7 +4,7 @@
 <!--<br> <img ng-style="{'height': '100px'}"" ng-src="{{city.image}}">-->
 
 <!--</p>-->
-<h1> Welcome to our site about</h1>
+<h1>Welcome to our site about</h1>
 <h3>New York City - NYU</h3>
 
 <div ng-switch="homeCtrl.isLoggedIn()">
@@ -18,7 +18,7 @@
         </p>
     </div>
     <div ng-switch-default>
-        <h2 class="line"><span>Your last saved sites</span></h2>
+        <p class="subtitle fancy"><span>Your last saved sites</span></p>
         <table border="0" width="80%" align="center">
             <tr>
                 <td ng-repeat="site in homeCtrl.favorits | limitTo: 2" align="center">
@@ -80,11 +80,11 @@
         </table>
     </div>
     <div ng-switch-default>
-        <p class="subtitle fancy"><span>Explore these popular sites:</span></p>
+        <p class="subtitle fancy"><span>Recommended for you: </span></p>
         <table border="0" width="80%" align="center">
             <tr>
                 <td ng-repeat="(id , site) in homeCtrl.sitesForUserCategories" align="center">
-                    <p class="subtitle fancy"><span>{{homeCtrl.userCategories[id]}}</span></p>
+                    <h2 ><span>{{homeCtrl.userCategories[id]}}</span></h2>
                     <table border="0">
                         <tr>
                             <td align="center">

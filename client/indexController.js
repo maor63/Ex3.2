@@ -65,13 +65,25 @@ angular.module('citiesApp')
                     self.getSiteReviews(self.poi[0].siteID);
                     self.getImagesModal(self.poi[0].siteID);
                     self.poiCategory= self.categories[self.poi[0].categoryID-1];
-                    self.poiCategoryName= self.poiCategory.categoryName
+                    self.poiCategoryName= self.poiCategory.categoryName;
+
+                    $http.post(serverUrl + "sites/views/" + self.poi[0].siteID)
+                        .then(function (response) {
+                            //First function handles success
+                            alert('view added');
+                        }, function (response) {
+                            console.log(response);
+                            alert('No work views')
+                        });
                 }, function (response) {
                     console.log(response);
                     alert('No details on this site')
                 });
 
             modal.style.display = "block";
+            //add view to site
+
+
         };
         self.openRankModal= function () {
             modalRank.style.display = "block";

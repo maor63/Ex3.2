@@ -4,17 +4,17 @@
 <!--<br> <img ng-style="{'height': '100px'}"" ng-src="{{city.image}}">-->
 
 <!--</p>-->
-<h1>Welcome to our site about</h1>
-<h3>New York City - NYU</h3>
+<h1 class="welcome">Things to do in</h1>
+<h3 id="nyu">New York City - NYU</h3>
 
 <div ng-switch="homeCtrl.isLoggedIn()">
     <div ng-switch-when="false">
-        <p> To see more details we advice you register or login to our site.</p>
+        <p class="homedet"> To see more details we advice you register or login to our site.</p>
         <p>
-            <a href="#/register">Register here</a>
-        </p>
-        <p>
-            <a href="#/login">Login here</a>
+        <div class="wrap">
+            <a href="#/register" class="button">Register here</a>
+            <a href="#/login" class="button2">Login here</a>
+            </div>
         </p>
     </div>
     <div ng-switch-default>

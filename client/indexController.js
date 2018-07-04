@@ -49,11 +49,10 @@ angular.module('citiesApp')
 
         self.getFavoritesCount = function () {
             return Object.keys(userManager.favorites).length;
-        }
+        };
 
 
         self.showPoiModalFunc = function (id) {
-
             $http.get(serverUrl + "sites/site/" + id)
                 .then(function (response) {
                     //First function handles success
@@ -111,22 +110,23 @@ angular.module('citiesApp')
 
         window.onclick = function(event) {
             if (event.target == modal) {
-                modal.style.display = "none";
-                mymap.off();
-                mymap.remove();
+                clearMap();
             }
         };
 
         span.onclick = function() {
+            clearMap();
+        };
+
+        span2.onclick = function() {
+            modalRank.style.display = "none"
+            // clearMap();
+        };
+        function clearMap() {
             modal.style.display = "none";
             mymap.off();
             mymap.remove();
-        };
-        span2.onclick = function() {
-            modalRank.style.display = "none";
-            mymap.off();
-            mymap.remove();
-        };
+        }
 
         self.getImagesModal= function (siteID) {
             $http.get(serverUrl + "sites/photo_url/" + siteID)
@@ -231,7 +231,6 @@ angular.module('citiesApp')
                     alert('no success posting review')
 
                 });
-
         };
         self.submitRankReview= function () {
             $http.post(serverUrl + "reg/rank/",self.rankObject)

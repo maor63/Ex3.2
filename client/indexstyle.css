@@ -268,6 +268,7 @@ div.desc {
     overflow: auto; /* Enable scroll if needed */
     background-color: rgb(0,0,0); /* Fallback color */
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+
 }
 
 /* Modal Content */
@@ -282,7 +283,8 @@ div.desc {
     -webkit-animation-name: animatetop;
     -webkit-animation-duration: 0.4s;
     animation-name: animatetop;
-    animation-duration: 0.4s
+    animation-duration: 0.4s;
+    border-radius: 10px;
 }
 
 /* Add Animation */
@@ -313,8 +315,9 @@ div.desc {
 
 .modal-header {
     padding: 2px 16px;
-    background-color: #5cb85c;
+    background-color: #e2618b;
     color: white;
+    border-radius: 10px;
 }
 
 .modal-body {
@@ -323,12 +326,15 @@ div.desc {
     padding: 2px 16px;
     overflow-y: auto;
     text-align: left;
+    /*border-radius: 10px;*/
+    background-color: white;
 }
 
 .modal-footer {
     padding: 2px 16px;
-    background-color: #5cb85c;
+    background-color: rgba(226, 97, 139, 0.75);
     color: white;
+    border-radius: 10px;
 }
 .column {
     float: left;
@@ -483,4 +489,29 @@ div.desc {
     -webkit-text-stroke-color: #fdf454;
     -webkit-text-stroke-width: 1px;
     color: #ffffff;
+}
+.poiLables{
+    font-weight: bold;
+    color: #ffffff;
+    padding-right: 10px;
+    padding-left: 5px;
+
+}
+.poiHeader{
+    display: inline-block;
+    position: relative;
+    font-size: 45px;
+    font-family: "Arial";
+    position: relative;
+    text-align: center;
+    /*font-weight: bold;*/
+    text-shadow: 3px 2px #000000;
+    -webkit-text-stroke-color: #000000;
+    -webkit-text-stroke-width: 1px;
+    color: #000000;
+    padding-top: 10px;
+}
+.views{
+    color: #020b28;
+    font-size: 25px;
 }

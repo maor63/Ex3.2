@@ -35,8 +35,8 @@
     <div class="modal-content">
         <div class="modal-header">
             <span class="close">&times;</span>
-            <p class="subtitle fancy"><span>{{indexCtrl.poi[0].siteName}}</span></p>
-            <span>Views: {{indexCtrl.poiViews}}</span>
+            <p class="poiHeader"><span>{{indexCtrl.poi[0].siteName}}</span></p><br>
+            <span class="views">Views: {{indexCtrl.poiViews}}</span>
         </div>
         <div class="modal-body">
             <h3>A little bit about the site...</h3>
@@ -69,8 +69,11 @@
                 <input type="button" value="Rank or review this site" ng-click="indexCtrl.openRankModal(0,false)">
                 <img ng-src="{{indexCtrl.poi[0].favoritImgUrl}}" ng-click="indexCtrl.toggleImage(indexCtrl.poi[0])" class="star" alt="star">
             </div>
+            <br>
+            <br>
             <div id="location">
                 <label>Location:</label>
+                <br>
                 <div id="mapid" style="height: 180px; width: 240px;"></div>
             </div>
         </div>
@@ -85,7 +88,7 @@
     <div class="modal-content">
         <div class="modal-header">
             <span class="close">&times;</span>
-            <p class="subtitle fancy"><span>Review the site:</span></p>
+            <p class="poiHeader"><span>Review the site:</span></p><br>
         </div>
         <div class="modal-body">
             <h3>Add a review here:</h3>
@@ -125,7 +128,7 @@
             </form>
         </div>
         <div class="modal-footer">
-            <input type="submit" value="Submit" ng-click="indexCtrl.submitRanking(indexCtrl.reviewText)">
+            <input style="color: #111111" type="submit" value="Submit" ng-click="indexCtrl.submitRanking(indexCtrl.reviewText)">
         </div>
     </div>
 

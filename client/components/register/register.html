@@ -1,6 +1,6 @@
 
 <p class="subtitle fancy"><span>Register here:</span></p>
-<div class="formContainer">
+<div class="formContainer" align="center">
 <form name="registerForm" ng-submit="regCtrl.register(registerForm.$valid)" novalidate>
     <p>
         <label>First Name: </label>
@@ -44,8 +44,9 @@
     <p>
         <label>Choose at least 2 categories you like: </label><br>
         <label ng-repeat="category in regCtrl.categories">
-            <input type="checkbox" checklist-model="regCtrl.categories" checklist-value="category.id"  value="{{category.id}}" ng-required="value.length!=0" ng-click="regCtrl.updateChoise(category.id)"> {{category.name}}<br>
-        </label>
+            <input type="checkbox" checklist-model="regCtrl.categories" checklist-value="category.id"  value="{{category.id}}" ng-required="value.length!=0" ng-click="regCtrl.updateChoise(category.id)"> {{category.name}} </br>
+
+        </label><br>
         <!--https://vitalets.github.io/checklist-model/-->
     </p>
     <p>

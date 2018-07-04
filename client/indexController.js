@@ -86,10 +86,8 @@ angular.module('citiesApp')
                     $http.post(serverUrl + "sites/views/" ,self.siteVIEWS)
                         .then(function (response) {
                             //First function handles success
-                            alert('view added');
                         }, function (response) {
                             console.log(response);
-                            alert('No work views')
                         });
                 }, function (response) {
                     console.log(response);

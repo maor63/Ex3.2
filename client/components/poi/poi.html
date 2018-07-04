@@ -2,9 +2,12 @@
 <p class="subtitle fancy"><span>Points of interest in NEW YORK:</span></p>
 
 <form action="">
-    <input ng-model="searchInput">
+
+    <input ng-model="searchInput" placeholder="Search by name..." >
+    <label class="poiLables">Choose category:   </label>
     <select ng-options="category for (category, id) in poiCtrl.categories" ng-model="selectedCategory">
     </select>
+    <label class="poiLables">Order by:   </label>
     <select ng-model="selectedOrder">
         <option value="undefined"></option>
         <option value="rank">rank</option>

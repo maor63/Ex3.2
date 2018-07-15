@@ -10,7 +10,7 @@ angular.module('citiesApp')
         self.favorits = [];
         self.poi = {};
         self.poiUrls = {};
-        self.reviews = {};
+        self.reviews = [];
         self.categories = {};
         var mymap;
         self.loadCategoriesFromApi = function () {

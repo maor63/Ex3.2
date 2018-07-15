@@ -58,10 +58,10 @@
                     <td class="td_review">Review</td>
                     <td class="td_review">Date added</td>
                 </tr>
-                <tr class="tr_review" ng-repeat="x in indexCtrl.reviews | limitTo:2">
+                <tr class="tr_review" ng-repeat="x in indexCtrl.reviews | orderBy: '-date' | limitTo:2">
                     <td class="td_review">{{x.userName}}</td>
                     <td class="td_review">{{x.review}}</td>
-                    <td class="td_review">{{x.date}}</td>
+                    <td class="td_review">{{x.date | date}}</td>
                 </tr>
             </table>
 

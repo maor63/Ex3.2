@@ -218,8 +218,11 @@ angular.module('citiesApp')
                     }
                 self.submitRankReview();
             }
+
+
         };
         self.submitTextReview = function () {
+            self.reviews.push(self.reviewObject);
             $http.post(serverUrl + "reg/review/", self.reviewObject)
                 .then(function (response) {
                     //First function handles success

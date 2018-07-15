@@ -35,8 +35,8 @@ angular.module('citiesApp')
                 .then(function (response) {
                     //First function handles success
                     if (response.data.success === true) {
-                        alert('your answer has been confirmed' + response.data.password.password);
-
+                        alert('your answer has been confirmed, your password is:  ' + response.data.password.password);
+                        $window.location.href = '#/';
                     }
                     else {
                         alert('password recovery failed please try again or register');
@@ -58,11 +58,8 @@ angular.module('citiesApp')
                     //First function handles success
                     if (true) {
                         self.login.content = response.data;
-                        console.log(self.login.content[0].question + '11111111111111111111111111111111111111');
-                        console.log(self.login.content[0].questionID + '  11111111111111111111111111111111111111');
                         self.user.question = self.login.content[0].question;
                         self.user.question_id = self.login.content[0].questionID;
-
                     }
                     else {
                         self.login.content = "Something went wrong";
@@ -83,8 +80,6 @@ angular.module('citiesApp')
             else {
                 self.recovery = !(self.recovery);
                 if (self.recovery) {
-                    alert('im im recovery');
-                    alert(self.user.userName)
                     self.getQuestion();
                 }
             }

@@ -81,6 +81,7 @@ angular.module('citiesApp')
             $http.get("http://localhost:8080/reg/categories/" + userManager.getUser().userName)
                 .then(function (answer) {
                     let categoriesData = answer.data;
+                    categoriesData = tools.getRandomSubarray(categoriesData, 2);
                     for (let i = 0; i < categoriesData.length; i++) {
                         self.userCategories[categoriesData[i].id] = categoriesData[i].categoryName;
                         $http.get("http://localhost:8080/sites/all_by_category_id/" + categoriesData[i].id)
